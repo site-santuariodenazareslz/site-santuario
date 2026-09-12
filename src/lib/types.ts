@@ -12,6 +12,20 @@ export type HeroBlock = {
   caption: string;
 };
 
+export type BannerCarouselSlide = {
+  image: string;
+  imageAlt: string;
+  /** Exibida apenas quando preenchida. */
+  category?: string;
+  title: string;
+  href: string;
+};
+
+export type BannerCarouselBlock = {
+  type: "banner-carousel";
+  slides: BannerCarouselSlide[];
+};
+
 export type FragmentBlock = {
   type: "fragment";
   name: string;
@@ -89,6 +103,7 @@ export type Block =
   | HeaderBlock
   | FooterBlock
   | HeroBlock
+  | BannerCarouselBlock
   | MassScheduleBlock
   | NewsBannerBlock
   | NewsTextBlock

@@ -13,9 +13,42 @@
       "highlight": "Fé",
       "titleAfter": "Esperança e Amor",
       "description": "O Santuário Nossa Senhora de Nazaré é um espaço sagrado de fé e espiritualidade.",
-      "image": "/images/591ebc41192e1f39.webp",
+      "image": "/images/c16f84889145e092.webp",
       "imageAlt": "Fachada do Santuário",
-      "caption": "Santuário Nossa Senhora de Nazaré — Cohatrac"
+      "caption": "Teste"
+    },
+    {
+      "type": "banner-carousel",
+      "slides": [
+        {
+          "image": "Imagem",
+          "imageAlt": "Texto Alternativo",
+          "category": "Categoria (opcional)",
+          "title": "Título",
+          "href": "Link"
+        },
+        {
+          "image": "/images/17ccfa2cf99554d8.webp",
+          "imageAlt": "Fiéis durante celebração",
+          "category": "Festividade",
+          "title": "Festa de Nossa Senhora de Nazaré",
+          "href": "#teste"
+        },
+        {
+          "image": "/images/efdd3a27da0778f4.webp",
+          "imageAlt": "Fachada do santuário",
+          "category": "",
+          "title": "Confira os horários das missas",
+          "href": "#teste"
+        },
+        {
+          "image": "/images/efdd3a27da0778f4.webp",
+          "imageAlt": "Comunidade reunida",
+          "category": "Comunicado",
+          "title": "Acompanhe as novidades da comunidade",
+          "href": "#teste"
+        }
+      ]
     },
     {
       "type": "mass-schedule",

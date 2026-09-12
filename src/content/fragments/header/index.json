@@ -4,7 +4,7 @@
   "blocks": [
     {
       "type": "header",
-      "logo": "/images/f5a2ca68e766d230.webp",
+      "logo": "/images/99f2a40cbf6fe023.webp",
       "eyebrow": "Santuário",
       "brand": "Nossa Senhora de Nazaré",
       "cta": {
@@ -14,11 +14,11 @@
       "links": [
         {
           "label": "A Paróquia",
-          "href": "/a-paroquia"
+          "href": "/"
         },
         {
           "label": "Missas",
-          "href": "/missas"
+          "href": "/"
         },
         {
           "label": "Notícias",
@@ -26,7 +26,7 @@
         },
         {
           "label": "Contato",
-          "href": "/contato"
+          "href": "/"
         }
       ]
     }

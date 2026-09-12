@@ -2,11 +2,11 @@
 
 Prova de conceito de um site Astro que converte tabelas de um Google Doc em blocks e gera HTML estático.
 
-## Executar a demonstração local
+## Executar localmente
 
 ```bash
 npm install
-npm run sync:demo
+npm run sync:google
 npm run dev
 ```
 
@@ -26,9 +26,8 @@ Secrets necessários em **Settings → Secrets and variables → Actions**:
 | ------ | -------- |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | JSON completo da chave da conta de serviço |
 | `GOOGLE_DRIVE_FOLDER_ID` | ID da pasta raiz no Drive (site multipágina) |
-| `GOOGLE_DOCUMENT_ID` | Só se o site for um único documento |
 
-Compartilhe a pasta (ou o documento) no Drive com o e-mail da conta de serviço, com permissão de **Leitor**. Sem esse compartilhamento a API não vê os arquivos.
+Compartilhe a pasta no Drive com o e-mail da conta de serviço, com permissão de **Leitor**. Sem esse compartilhamento a API não vê os arquivos.
 
 Para ativar a publicação no GitHub:
 
@@ -40,7 +39,7 @@ Para ativar a publicação no GitHub:
 
 Para republicar sem push, use **Actions → Deploy Astro to GitHub Pages → Run workflow**.
 
-Abra `http://localhost:4321`. Ao editar as fixtures e rodar `npm run sync:demo`, o conteúdo em `src/content/pages/` é regenerado. O build de produção é validado com:
+Abra `http://localhost:4321`. O conteúdo é atualizado ao executar `npm run sync:google`. O build de produção é validado com:
 
 ```bash
 npm run build
@@ -85,6 +84,8 @@ Na primeira célula da primeira linha de dados, cole a imagem do logo diretament
 
 Durante `npm run sync:google`, imagens remotas do header são baixadas, convertidas para WebP com qualidade 85 e salvas em `public/images/`. O JSON passa a apontar para a URL local `/images/...webp`, evitando a expiração das URLs temporárias fornecidas pelo Google Docs. URLs de imagens inseridas nos próximos componentes podem usar a mesma etapa de materialização em `scripts/image-assets.ts`.
 
+Os arquivos recebem um nome calculado a partir do conteúdo da imagem, não da URL temporária do Google. Assim, a mesma imagem usada em mais de um local gera apenas um WebP e uma sincronização sem mudanças mantém as mesmas URLs. Ao fim da sincronização, WebPs gerados que não são mais referenciados são removidos; imagens com nomes próprios em `public/images/` são preservadas.
+
 O menu desktop aparece em telas largas e o menu mobile é aberto pelo botão no canto direito. Os links e o CTA são definidos no Google Docs; o comportamento responsivo pertence ao componente Astro.
 
 ### Hero
@@ -102,6 +103,23 @@ Exemplo:
 | Bem-vindo ao Santuário | Um lugar de | Fé  | Esperança e Amor | O Santuário Nossa Senhora de Nazaré é um espaço sagrado de fé e espiritualidade. | imagem da igreja | Fachada do Santuário Nossa Senhora de Nazaré | Santuário Nossa Senhora de Nazaré — Cohatrac |
 
 O campo `destaque` aparece em dourado e itálico. A imagem pode ser colada diretamente no Google Docs; durante `npm run sync:google`, ela é baixada, convertida para WebP e salva localmente em `public/images/`.
+
+### Carrossel de banners
+
+Use `banner-carousel` (ou `carousel`) para criar uma faixa de destaques com uma linha por slide. A categoria é opcional: deixe a terceira célula vazia quando não quiser exibi-la. O carrossel avança automaticamente a cada cinco segundos, pausa ao passar o mouse ou navegar pelo teclado e também oferece setas e indicadores.
+
+| banner-carousel |                  |           |        |     |
+| --------------- | ---------------- | --------- | ------ | --- |
+| imagem          | texto alternativo | categoria | título | link |
+
+Exemplo:
+
+| banner-carousel |                              |           |                                               |             |
+| --------------- | ---------------------------- | --------- | --------------------------------------------- | ----------- |
+| imagem do evento | Pessoas em uma celebração | Festividade | Festa de Nossa Senhora de Nazaré | /eventos/ |
+| imagem da igreja | Fachada do Santuário | | Conheça os horários das missas | /missas/ |
+
+Cada slide precisa de imagem e título. A imagem pode ser colada na primeira célula ou informada como URL e é materializada em WebP durante a sincronização.
 
 ### Horários de missas
 
@@ -210,17 +228,10 @@ Em cada página, referencie o fragmento com:
 2. Crie uma conta de serviço (por exemplo `drive-santuario-github@poc-drive-505413.iam.gserviceaccount.com`).
 3. Gere uma chave JSON e **não** commite o arquivo.
 4. No Drive, compartilhe a pasta raiz (ou o documento) com o e-mail da conta de serviço, como **Leitor**.
-5. Localmente, salve a chave como `credentials.json` na raiz (já ignorado pelo Git) **ou** coloque o JSON em `GOOGLE_SERVICE_ACCOUNT_JSON` no `.env`.
+5. No `.env`, defina `GOOGLE_SERVICE_ACCOUNT_JSON` com o conteúdo completo da chave. Cole o JSON em uma única linha e envolva-o em aspas simples; o modelo está no `.env.example`.
 6. No GitHub, grave os secrets descritos na seção de GitHub Pages.
 
-O sincronizador detecta `type: "service_account"` e autentica sem abrir o navegador.
-
-### OAuth interativo (opcional, só local)
-
-1. Em **Google Auth platform → Clients**, crie um cliente OAuth do tipo **Desktop app** e baixe o JSON.
-2. Salve o download como `credentials.json` na raiz do projeto.
-
-Na primeira execução de `npm run sync:google` com esse arquivo, o navegador abre para consentir a leitura dos Docs e do Drive.
+O sincronizador usa exclusivamente a conta de serviço informada por `GOOGLE_SERVICE_ACCOUNT_JSON`; não abre o navegador e não procura arquivos de credenciais locais.
 
 ### Variáveis de ambiente
 

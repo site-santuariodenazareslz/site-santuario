@@ -1,0 +1,102 @@
+---
+import type { BannerCarouselBlock } from "../../../lib/types";
+import { siteUrl } from "../../../lib/urls";
+import "./BannerCarousel.scss";
+
+const { slides } = Astro.props as BannerCarouselBlock;
+---
+
+<section class="banner-carousel" aria-label="Destaques" data-carousel>
+  <div class="banner-carousel__slides" aria-live="polite">
+    {
+      slides.map((slide, index) => (
+        <a
+          class:list={["banner-carousel__slide", { "is-active": index === 0 }]}
+          href={siteUrl(slide.href)}
+          aria-hidden={index === 0 ? "false" : "true"}
+          tabindex={index === 0 ? 0 : -1}
+          data-carousel-slide
+        >
+          <img src={siteUrl(slide.image)} alt={slide.imageAlt} />
+          <span class="banner-carousel__overlay" aria-hidden="true" />
+          <span class="banner-carousel__content">
+            {slide.category && <span class="banner-carousel__category">{slide.category}</span>}
+            <span class="banner-carousel__title">{slide.title}</span>
+            <span class="banner-carousel__cta">Saiba mais <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    slides.length > 1 && (
+      <>
+        <button class="banner-carousel__arrow banner-carousel__arrow--previous" type="button" aria-label="Destaque anterior" data-carousel-previous>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <button class="banner-carousel__arrow banner-carousel__arrow--next" type="button" aria-label="Próximo destaque" data-carousel-next>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+        <div class="banner-carousel__dots" role="tablist" aria-label="Selecionar destaque">
+          {slides.map((_, index) => <button type="button" role="tab" aria-label={`Ir para destaque ${index + 1}`} aria-selected={index === 0 ? "true" : "false"} data-carousel-dot />)}
+        </div>
+        <div class="banner-carousel__progress" aria-hidden="true"><span data-carousel-progress /></div>
+      </>
+    )
+  }
+</section>
+
+<script>
+  const interval = 5000;
+  document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((carousel) => {
+    const slides = [...carousel.querySelectorAll<HTMLElement>("[data-carousel-slide]")];
+    const dots = [...carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]")];
+    const previous = carousel.querySelector<HTMLButtonElement>("[data-carousel-previous]");
+    const next = carousel.querySelector<HTMLButtonElement>("[data-carousel-next]");
+    const progress = carousel.querySelector<HTMLElement>("[data-carousel-progress]");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let active = 0;
+    let timer: number | undefined;
+
+    const show = (index: number) => {
+      active = (index + slides.length) % slides.length;
+      slides.forEach((slide, slideIndex) => {
+        const selected = slideIndex === active;
+        slide.classList.toggle("is-active", selected);
+        slide.setAttribute("aria-hidden", String(!selected));
+        slide.tabIndex = selected ? 0 : -1;
+      });
+      dots.forEach((dot, dotIndex) => dot.setAttribute("aria-selected", String(dotIndex === active)));
+    };
+    const stop = () => {
+      if (timer) window.clearInterval(timer);
+      timer = undefined;
+      progress?.classList.remove("is-playing");
+    };
+    const start = () => {
+      if (reducedMotion.matches || slides.length < 2) return;
+      stop();
+      progress?.classList.add("is-playing");
+      timer = window.setInterval(() => { show(active + 1); progress?.classList.remove("is-playing"); void progress?.offsetWidth; progress?.classList.add("is-playing"); }, interval);
+    };
+    const move = (index: number) => { show(index); start(); };
+
+    previous?.addEventListener("click", () => move(active - 1));
+    next?.addEventListener("click", () => move(active + 1));
+    dots.forEach((dot, index) => dot.addEventListener("click", () => move(index)));
+    carousel.addEventListener("mouseenter", stop);
+    carousel.addEventListener("mouseleave", start);
+    carousel.addEventListener("focusin", stop);
+    carousel.addEventListener("focusout", (event) => {
+      if (!carousel.contains(event.relatedTarget as Node | null)) start();
+    });
+    carousel.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") { event.preventDefault(); move(active - 1); }
+      if (event.key === "ArrowRight") { event.preventDefault(); move(active + 1); }
+    });
+    document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+    reducedMotion.addEventListener("change", () => reducedMotion.matches ? stop() : start());
+    start();
+  });
+</script>

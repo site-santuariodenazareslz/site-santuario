@@ -1,0 +1,204 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.banner-carousel {
+  position: relative;
+  width: 100%;
+  max-width: $width;
+  height: clamp(280px, 42vw, 520px);
+  overflow: hidden;
+  background: $color-cream-dark;
+  margin-left: auto;
+  margin-right: auto;
+
+  &__slides,
+  &__slide,
+  &__slide img,
+  &__overlay {
+    position: absolute;
+    inset: 0;
+  }
+  &__slides {
+    width: 100%;
+  }
+  &__slide {
+    display: block;
+    color: $color-header-text;
+    opacity: 0;
+    pointer-events: none;
+    text-decoration: none;
+    transition: opacity 800ms ease;
+    &.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+  &__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__overlay {
+    background: linear-gradient(
+      to top,
+      rgba($color-brown, 0.92) 0%,
+      rgba($color-brown, 0.38) 52%,
+      rgba($color-brown, 0.08) 100%
+    );
+  }
+  &__content {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+    padding: clamp(24px, 4vw, 48px) clamp(24px, 5vw, 64px);
+    @media (max-width: $breakpoint-mobile) {
+      margin-bottom: 52px;
+    }
+  }
+  &__category {
+    padding: 4px 11px;
+    border-radius: $radius-sm;
+    color: $color-white;
+    background: $color-gold;
+    font-family: $font-sans;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  &__title {
+    max-width: 700px;
+    font-family: $font-serif;
+    font-size: clamp(1.4rem, 3vw, 2.35rem);
+    font-weight: 700;
+    line-height: 1.22;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.42);
+  }
+  &__cta {
+    color: $color-gold-light;
+    font-family: $font-sans;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  &__arrow {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 1px solid rgba($color-gold, 0.65);
+    border-radius: 50%;
+    color: $color-gold-light;
+    background: rgba($color-brown, 0.5);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color 160ms ease;
+    &:hover,
+    &:focus-visible {
+      background: rgba($color-gold, 0.6);
+    }
+    svg {
+      width: 19px;
+    }
+    path {
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    &--previous {
+      left: 24px;
+    }
+    &--next {
+      right: 24px;
+      svg {
+        margin-left: 3px;
+      }
+    }
+  }
+  &__dots {
+    position: absolute;
+    z-index: 2;
+    right: clamp(24px, 4vw, 48px);
+    bottom: clamp(14px, 2vw, 22px);
+    display: flex;
+    gap: 7px;
+  }
+  &__dots button {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: $radius-pill;
+    background: rgba($color-white, 0.5);
+    cursor: pointer;
+    transition:
+      width 240ms ease,
+      background-color 240ms ease;
+    &[aria-selected="true"] {
+      width: 22px;
+      background: $color-gold;
+    }
+  }
+  &__progress {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba($color-brown, 0.28);
+    span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: $color-gold;
+      &.is-playing {
+        animation: banner-carousel-progress 5s linear;
+      }
+    }
+  }
+}
+
+@keyframes banner-carousel-progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .banner-carousel {
+    &__arrow {
+      top: auto;
+      bottom: 17px;
+      transform: none;
+      &--previous {
+        left: 16px;
+      }
+      &--next {
+        left: 66px;
+        right: auto;
+      }
+    }
+    &__dots {
+      right: 16px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-carousel * {
+    transition-duration: 0ms !important;
+    animation: none !important;
+  }
+}

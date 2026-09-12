@@ -2,7 +2,11 @@ import "dotenv/config";
 import { google } from "googleapis";
 import { parseGoogleDocument } from "./google-doc-parser";
 import { createGoogleAuth, getAuthAccessToken } from "./google-auth";
-import { materializePageImages, prepareImageDirectory } from "./image-assets";
+import {
+  materializePageImages,
+  prepareImageDirectory,
+  removeUnusedImages,
+} from "./image-assets";
 import { writeFragments, writeNews, writePages } from "./content-writer";
 import type { NewsItem } from "../src/lib/types";
 
@@ -203,6 +207,11 @@ if (rootFolderId) {
 await writePages(pages);
 await writeFragments(fragments);
 await writeNews(news);
+await removeUnusedImages([
+  ...pages.map(({ page }) => page),
+  ...fragments.map(({ page }) => page),
+  ...news.map(({ page }) => page),
+]);
 console.log(`${pages.length} página(s) sincronizada(s) em src/content/pages/.`);
 console.log(
   `${fragments.length} fragmento(s) sincronizado(s) em src/content/fragments/.`,

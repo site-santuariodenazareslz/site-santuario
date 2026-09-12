@@ -10,12 +10,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "sync:demo": "tsx scripts/sync-demo.ts",
     "sync:google": "tsx scripts/sync-google-docs.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@google-cloud/local-auth": "^3.0.1",
     "astro": "^5.14.1",
     "dotenv": "^16.6.1",
     "googleapis": "^148.0.0",
