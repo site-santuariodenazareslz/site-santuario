@@ -101,6 +101,35 @@
       "allHref": "/noticias/"
     },
     {
+      "type": "donation",
+      "eyebrow": "Colabore",
+      "title": "Dízimo e Contribuição",
+      "quote": "",
+      "pixKey": "00.000.000/0001-00",
+      "qrCode": "/images/438d1ee6ad63a321.webp",
+      "qrCodeAlt": "QR Code Pix do Santuário",
+      "qrInstruction": "Aponte a câmera para o QR Code acima.",
+      "inPersonNote": "Também aceitamos contribuições presencialmente na secretaria.",
+      "bankDetails": [
+        {
+          "label": "Banco",
+          "value": "Banco do Brasil"
+        },
+        {
+          "label": "Agência",
+          "value": "1234-5"
+        },
+        {
+          "label": "Conta Corrente",
+          "value": "00001-0"
+        },
+        {
+          "label": "Favorecido",
+          "value": "Santuário Nossa Senhora de Nazaré"
+        }
+      ]
+    },
+    {
       "type": "fragment",
       "name": "footer"
     }

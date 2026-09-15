@@ -26,6 +26,24 @@ export type BannerCarouselBlock = {
   slides: BannerCarouselSlide[];
 };
 
+export type DonationBankDetail = {
+  label: string;
+  value: string;
+};
+
+export type DonationBlock = {
+  type: "donation";
+  eyebrow: string;
+  title: string;
+  quote: string;
+  pixKey: string;
+  qrCode: string;
+  qrCodeAlt: string;
+  qrInstruction: string;
+  inPersonNote: string;
+  bankDetails: DonationBankDetail[];
+};
+
 export type FragmentBlock = {
   type: "fragment";
   name: string;
@@ -104,6 +122,7 @@ export type Block =
   | FooterBlock
   | HeroBlock
   | BannerCarouselBlock
+  | DonationBlock
   | MassScheduleBlock
   | NewsBannerBlock
   | NewsTextBlock

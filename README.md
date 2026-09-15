@@ -121,6 +121,21 @@ Exemplo:
 
 Cada slide precisa de imagem e título. A imagem pode ser colada na primeira célula ou informada como URL e é materializada em WebP durante a sincronização.
 
+### Doações e Pix
+
+Use uma tabela `donation` (também são aceitos `doacao` e `doação`). A primeira linha de dados configura a seção; as linhas seguintes são os dados bancários. O QR Code deve ser **colado ou inserido como imagem na quinta célula** da primeira linha de dados, e não como texto ou link.
+
+| donation |  |  |  |  |  |  |  |
+| -------- | - | - | - | - | - | - | - |
+| texto pequeno | título | citação | chave Pix | imagem do QR Code | texto alternativo | instrução do QR Code | observação presencial |
+| Colabore | Dízimo e Contribuição | Deus ama quem dá com alegria. | 00.000.000/0001-00 | Cole o QR Code aqui | QR Code Pix do Santuário | Aponte a câmera para o QR Code acima. | Também aceitamos contribuições presencialmente na secretaria. |
+| Banco | Banco do Brasil |
+| Agência | 1234-5 |
+| Conta Corrente | 00001-0 |
+| Favorecido | Santuário Nossa Senhora de Nazaré |
+
+Título, chave Pix e imagem do QR Code são obrigatórios. A chave Pix ganha um botão para cópia; os dados bancários e os textos complementares são opcionais. A imagem do QR Code é convertida para WebP e armazenada em `public/images/` durante `npm run sync:google`.
+
 ### Horários de missas
 
 Use o identificador `mass-schedule` (ou `missas`) na primeira linha. A primeira linha de dados define título, descrição e observação. As linhas seguintes usam três colunas: grupo, dia e horário. O componente agrupa automaticamente as linhas com o mesmo grupo e não solicita local, pois todas as celebrações acontecem na mesma igreja.

@@ -69,6 +69,12 @@ export async function materializePageImages(
           ),
         };
       }
+      if (block.type === "donation") {
+        return {
+          ...block,
+          qrCode: await toWebp(block.qrCode, getAccessToken),
+        };
+      }
       if (block.type === "news-banner" && block.image) {
         return {
           ...block,
@@ -99,6 +105,7 @@ function imagePathsFromPage(page: Page): string[] {
       return [block.image];
     if (block.type === "banner-carousel")
       return block.slides.map((slide) => slide.image);
+    if (block.type === "donation") return [block.qrCode];
     return [];
   });
 }

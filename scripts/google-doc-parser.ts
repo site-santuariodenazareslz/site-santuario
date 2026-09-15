@@ -230,6 +230,46 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     return { type: "banner-carousel", slides };
   }
 
+  if (blockName === "donation" || blockName === "doacao" || blockName === "doação") {
+    const [
+      eyebrowCell,
+      titleCell,
+      quoteCell,
+      pixKeyCell,
+      qrCodeCell,
+      qrCodeAltCell,
+      qrInstructionCell,
+      inPersonNoteCell,
+    ] = body[0] ?? [];
+    const qrCode = qrCodeCell?.image ?? qrCodeCell?.text ?? "";
+    const bankDetails = body
+      .slice(1)
+      .map(([labelCell, valueCell]) => ({
+        label: labelCell?.text ?? "",
+        value: valueCell?.text ?? "",
+      }))
+      .filter((detail) => detail.label && detail.value);
+
+    if (!titleCell?.text || !pixKeyCell?.text || !qrCode) {
+      throw new Error(
+        "O block donation precisa informar título, chave Pix e a imagem do QR Code.",
+      );
+    }
+    return {
+      type: "donation",
+      eyebrow: eyebrowCell?.text ?? "Colabore",
+      title: titleCell.text,
+      quote: quoteCell?.text ?? "",
+      pixKey: pixKeyCell.text,
+      qrCode,
+      qrCodeAlt: qrCodeAltCell?.text ?? "QR Code Pix",
+      qrInstruction:
+        qrInstructionCell?.text ?? "Aponte a câmera do celular para o QR Code acima.",
+      inPersonNote: inPersonNoteCell?.text ?? "",
+      bankDetails,
+    };
+  }
+
   if (blockName === "mass-schedule" || blockName === "missas") {
     const [titleCell, descriptionCell, noteCell] = body[0] ?? [];
     const entries = body
@@ -344,7 +384,7 @@ export function parseGoogleDocument(document: GoogleDocument): Page {
     const paragraphs = content.filter((element) => element.paragraph).length;
     throw new Error(
       `Nenhum block válido foi encontrado. A API recebeu ${tables.length} tabela(s) e ${paragraphs} parágrafo(s). ` +
-        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-carousel, mass-schedule, news, all-news, banner, text, image ou fragment.",
+        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-carousel, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
     );
   }
 

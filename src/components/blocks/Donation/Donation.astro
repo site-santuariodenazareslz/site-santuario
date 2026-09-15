@@ -1,0 +1,106 @@
+---
+import type { DonationBlock } from "../../../lib/types";
+import { siteUrl } from "../../../lib/urls";
+import "./Donation.scss";
+
+const {
+  eyebrow,
+  title,
+  quote,
+  pixKey,
+  qrCode,
+  qrCodeAlt,
+  qrInstruction,
+  inPersonNote,
+  bankDetails,
+} = Astro.props as DonationBlock;
+---
+
+<section
+  id="dizimo"
+  class="donation"
+  aria-labelledby="donation-title"
+  data-donation
+  data-pix-key={pixKey}
+>
+  <div class="donation__intro">
+    {
+      eyebrow && (
+        <p class="donation__label">
+          <span aria-hidden="true" />
+          {eyebrow}
+          <span aria-hidden="true" />
+        </p>
+      )
+    }
+    <h2 id="donation-title">{title}</h2>
+    {quote && <p class="donation__quote">{quote}</p>}
+  </div>
+
+  <div class="donation__card">
+    <div class="donation__details">
+      {
+        bankDetails.length > 0 && (
+          <>
+            <p class="donation__heading">Dados bancários</p>
+            <dl>
+              {bankDetails.map((detail) => (
+                <div class="donation__detail">
+                  <dt>{detail.label}</dt>
+                  <dd>{detail.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </>
+        )
+      }
+      <div class="donation__pix">
+        <p class="donation__pix-label">Chave Pix</p>
+        <div>
+          <strong>{pixKey}</strong>
+          <button type="button" data-copy-pix aria-label="Copiar chave Pix">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"
+              ><rect x="9" y="9" width="13" height="13" rx="2"></rect><path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              ></path></svg
+            >
+            <span>Copiar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="donation__qr">
+      <p class="donation__heading">Pague via Pix</p>
+      <div class="donation__qr-frame">
+        <img src={siteUrl(qrCode)} alt={qrCodeAlt} />
+      </div>
+      <p class="donation__instruction">{qrInstruction}</p>
+      {inPersonNote && <p class="donation__in-person">{inPersonNote}</p>}
+    </div>
+  </div>
+</section>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-donation]")
+    .forEach((donation) => {
+      const button =
+        donation.querySelector<HTMLButtonElement>("[data-copy-pix]");
+      if (!button) return;
+      const label = button.querySelector("span");
+      button.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(donation.dataset.pixKey ?? "");
+          button.classList.add("is-copied");
+          if (label) label.textContent = "Copiado!";
+          window.setTimeout(() => {
+            button.classList.remove("is-copied");
+            if (label) label.textContent = "Copiar";
+          }, 2500);
+        } catch {
+          if (label) label.textContent = "Não foi possível copiar";
+        }
+      });
+    });
+</script>
