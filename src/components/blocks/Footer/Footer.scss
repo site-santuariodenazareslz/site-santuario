@@ -111,9 +111,19 @@
     border-radius: 50%;
     color: $color-gold;
     background: $color-white;
-    font-size: 0.65rem;
-    font-weight: 700;
     text-decoration: none;
+  }
+  &__social svg {
+    width: 17px;
+    height: 17px;
+  }
+  &__social svg path,
+  &__social svg rect,
+  &__social svg circle {
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   &__social a:hover {
     background: rgba($color-gold-light, 0.35);
@@ -150,13 +160,20 @@
     display: flex;
     gap: 10px;
     margin: 0;
-    white-space: pre-line;
     font-size: 0.82rem;
     line-height: 1.5;
   }
-  &__contact-list span {
+  &__contact-list p > span:first-child {
     flex: 1 0 20px;
     color: $color-gold;
+  }
+  &__contact-text {
+    display: grid;
+    gap: 2px;
+  }
+  &__contact-text > span,
+  &__office p > span {
+    display: block;
   }
   &__office {
     margin-top: 20px;
@@ -165,7 +182,6 @@
     margin: 5px 0 0;
     font-size: 0.8rem;
     line-height: 1.6;
-    white-space: pre-line;
   }
   &__legal {
     display: flex;

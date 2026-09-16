@@ -90,7 +90,8 @@
     align-items: center;
     gap: clamp(14px, 2vw, 28px);
   }
-  &__nav a,
+  &__nav > a,
+  &__dropdown > a,
   &__mobile-nav a {
     color: $color-text-mid;
     font-family: sans-serif;
@@ -98,12 +99,64 @@
     font-weight: 500;
     text-decoration: none;
   }
-  &__nav a:hover,
+  &__nav > a:hover,
+  &__dropdown > a:hover,
   &__mobile-nav a:hover {
     color: $color-gold;
   }
-  &__nav a:first-child {
+  &__dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  &__dropdown-toggle {
+    display: grid;
+    width: 20px;
+    height: 24px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    color: $color-text-mid;
+    background: none;
+    cursor: pointer;
+  }
+  &__dropdown-toggle svg {
+    width: 15px;
+  }
+  &__dropdown-toggle path {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  &__dropdown-toggle:hover,
+  &__dropdown-toggle:focus-visible {
     color: $color-gold;
+  }
+  &__dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: -14px;
+    min-width: 190px;
+    padding: $space-2;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-white;
+    box-shadow: 0 12px 24px rgba($color-brown, 0.12);
+  }
+  &__dropdown-menu a {
+    display: block;
+    padding: 9px 10px;
+    border-radius: 3px;
+    color: $color-text-mid;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+  &__dropdown-menu a:hover,
+  &__dropdown-menu a:focus-visible {
+    color: $color-brown;
+    background: $color-cream;
   }
   &__actions {
     display: flex;
@@ -176,6 +229,19 @@
     padding: $space-3 $space-1;
     border-bottom: 1px solid $color-beige;
     font-size: 0.9rem;
+  }
+  &__mobile-dropdown {
+    border-bottom: 1px solid $color-beige;
+  }
+  &__mobile-dropdown summary {
+    padding: $space-3 $space-1;
+    color: $color-text-mid;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  &__mobile-dropdown a {
+    padding-left: $space-4;
   }
   &__mobile-cta {
     margin-top: $space-3;

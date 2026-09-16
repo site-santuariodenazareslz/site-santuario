@@ -23,6 +23,7 @@ export type StructuralElement = {
       } | null;
       inlineObjectElement?: { inlineObjectId?: string | null } | null;
     }> | null;
+    bullet?: unknown;
   } | null;
   inlineObjectElement?: { inlineObjectId?: string | null } | null;
   table?: {
@@ -43,20 +44,23 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-type ParsedCell = { text: string; html: string; image?: string };
+type ParsedCell = { text: string; rawText: string; html: string; image?: string };
 
 function cellFromContent(
   content: StructuralElement[] | null | undefined,
   inlineObjects: GoogleDocument["inlineObjects"],
 ): ParsedCell {
   let text = "";
+  let rawText = "";
   let html = "";
   let image: string | undefined;
   for (const element of content ?? []) {
     const parts = element.paragraph?.elements ?? [];
+    if (element.paragraph?.bullet) rawText += "• ";
     for (const part of parts) {
       const value = part.textRun?.content ?? "";
       text += value;
+      rawText += value;
       if (value) {
         const style = part.textRun?.textStyle;
         const formatted = escapeHtml(value);
@@ -78,8 +82,15 @@ function cellFromContent(
       : undefined;
     if (contentUri) image = contentUri;
   }
-  return { text: clean(text), html, image };
+  return { text: clean(text), rawText: cleanMultiline(rawText), html, image };
 }
+
+const cleanMultiline = (value = "") =>
+  value
+    .split(/\r?\n/)
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .join("\n");
 
 function rowsFromTable(
   element: StructuralElement,
@@ -110,13 +121,43 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     const [eyebrow = "", brand = "", ctaLabel = "", ctaHref = "#"] = (
       hasLogoCell ? settings.slice(1) : settings
     ).map((cell) => cell.text);
-    const links = body
-      .slice(1)
-      .map(([labelCell, hrefCell]) => ({
-        label: labelCell?.text ?? "",
-        href: hrefCell?.text ?? "#",
-      }))
-      .filter((link) => link.label);
+    const links: Array<{
+      label: string;
+      href: string;
+      children?: Array<{ label: string; href: string }>;
+    }> = [];
+    for (const [kindCell, labelCell, hrefCell, childHrefCell] of body.slice(1)) {
+      const kind = kindCell?.text.toLowerCase();
+      // Compatibilidade: a tabela antiga usa apenas "rótulo | URL".
+      if (kind !== "link" && kind !== "dropdown" && kind !== "submenu") {
+        if (kindCell?.text)
+          links.push({ label: kindCell.text, href: labelCell?.text ?? "#" });
+        continue;
+      }
+      if (kind === "link" && labelCell?.text) {
+        links.push({ label: labelCell.text, href: hrefCell?.text ?? "#" });
+        continue;
+      }
+      if (kind === "dropdown" && labelCell?.text) {
+        links.push({
+          label: labelCell.text,
+          href: hrefCell?.text ?? "#",
+          children: [],
+        });
+        continue;
+      }
+      if (kind === "submenu" && labelCell?.text && hrefCell?.text) {
+        const parent = links.find((link) => link.label === labelCell.text);
+        if (!parent?.children)
+          throw new Error(
+            `O submenu "${hrefCell.text}" precisa vir depois do dropdown "${labelCell.text}".`,
+          );
+        parent.children.push({
+          label: hrefCell.text,
+          href: childHrefCell?.text ?? "#",
+        });
+      }
+    }
     if (!brand)
       throw new Error("O block header precisa informar o nome da marca.");
     return {
@@ -165,10 +206,13 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       if (kind === "service")
         footer.services.push({ label: value, href: hrefCell?.text ?? "#" });
       if (kind === "contact")
-        footer.contacts.push({ icon: value, text: hrefCell?.text ?? "" });
+        footer.contacts.push({
+          icon: value,
+          text: hrefCell?.rawText ?? hrefCell?.text ?? "",
+        });
       if (kind === "office") {
         footer.officeLabel = value;
-        footer.officeHours = hrefCell?.text ?? "";
+        footer.officeHours = hrefCell?.rawText ?? hrefCell?.text ?? "";
       }
     }
     if (!footer.brand)

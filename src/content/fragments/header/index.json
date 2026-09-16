@@ -13,11 +13,7 @@
       },
       "links": [
         {
-          "label": "A Paróquia",
-          "href": "/"
-        },
-        {
-          "label": "Missas",
+          "label": "Início",
           "href": "/"
         },
         {
@@ -25,8 +21,18 @@
           "href": "/noticias"
         },
         {
-          "label": "Contato",
-          "href": "/"
+          "label": "Círio de Nazaré",
+          "href": "/cirio",
+          "children": [
+            {
+              "label": "História",
+              "href": "/cirio/historia"
+            },
+            {
+              "label": "Círio Ecológico",
+              "href": "/cirio/cirio-ecologico"
+            }
+          ]
         }
       ]
     }

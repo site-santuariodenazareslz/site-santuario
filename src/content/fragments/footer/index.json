@@ -22,18 +22,18 @@
       ],
       "services": [
         {
-          "label": "Matrimônio",
-          "href": "/"
+          "label": "Círio de Nazaré",
+          "href": "/cirio"
         },
         {
-          "label": "Batismo",
-          "href": "/"
+          "label": "Círio Ecológico",
+          "href": "/cirio/cirio-ecologico"
         }
       ],
       "contacts": [
         {
           "icon": "Tel",
-          "text": "(98)3238-3640 | (98)99909-5939"
+          "text": "(98)3238-3640\n(98)99909-5939"
         },
         {
           "icon": "E-mail",
@@ -49,7 +49,7 @@
         }
       ],
       "officeLabel": "Atendimento",
-      "officeHours": "Ter - Sex: 07h00 às 12h00; Sábado: 08h00 às 12h00 Domingo: 7h às 11h00; Seg - Sáb: 14h às 20h;"
+      "officeHours": "• Ter - Sex: 07h00 às 12h00\n• Sábado: 08h00 às 12h00\n• Domingo: 7h às 11h00\n• Seg - Sáb: 14h às 20h"
     }
   ]
 }

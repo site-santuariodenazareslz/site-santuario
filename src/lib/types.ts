@@ -55,7 +55,11 @@ export type HeaderBlock = {
   eyebrow: string;
   brand: string;
   cta: Cta;
-  links: Array<{ label: string; href: string }>;
+  links: Array<{
+    label: string;
+    href: string;
+    children?: Array<{ label: string; href: string }>;
+  }>;
 };
 
 export type FooterLink = { label: string; href: string };

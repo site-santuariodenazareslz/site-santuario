@@ -24,7 +24,29 @@ const { logo, eyebrow, brand, cta, links } = Astro.props as HeaderBlock;
       </span>
     </a>
     <nav class="site-header__nav" aria-label="Navegação principal">
-      {links.map((link) => <a href={siteUrl(link.href)}>{link.label}</a>)}
+      {
+        links.map((link) =>
+          link.children?.length ? (
+            <div class="site-header__dropdown">
+              <a href={siteUrl(link.href)} data-dropdown-link>{link.label}</a>
+              <button
+                class="site-header__dropdown-toggle"
+                type="button"
+                aria-label={`Abrir submenu ${link.label}`}
+                aria-expanded="false"
+                data-dropdown-toggle
+              >
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
+              </button>
+              <div class="site-header__dropdown-menu" role="menu" hidden>
+                {link.children.map((child) => <a role="menuitem" href={siteUrl(child.href)}>{child.label}</a>)}
+              </div>
+            </div>
+          ) : (
+            <a href={siteUrl(link.href)}>{link.label}</a>
+          ),
+        )
+      }
     </nav>
     <div class="site-header__actions">
       <a class="site-header__cta" href={siteUrl(cta.href)}>{cta.label}</a>
@@ -39,7 +61,19 @@ const { logo, eyebrow, brand, cta, links } = Astro.props as HeaderBlock;
     </div>
   </div>
   <nav class="site-header__mobile-nav" aria-label="Navegação mobile" hidden>
-    {links.map((link) => <a href={siteUrl(link.href)}>{link.label}</a>)}
+    {
+      links.map((link) =>
+        link.children?.length ? (
+          <details class="site-header__mobile-dropdown">
+            <summary>{link.label}</summary>
+            <a href={siteUrl(link.href)}>{`Ver ${link.label}`}</a>
+            {link.children.map((child) => <a href={siteUrl(child.href)}>{child.label}</a>)}
+          </details>
+        ) : (
+          <a href={siteUrl(link.href)}>{link.label}</a>
+        ),
+      )
+    }
     <a class="site-header__mobile-cta" href={siteUrl(cta.href)}>{cta.label}</a>
   </nav>
 </header>
@@ -57,6 +91,47 @@ const { logo, eyebrow, brand, cta, links } = Astro.props as HeaderBlock;
       toggle.setAttribute("aria-label", isOpen ? "Abrir menu" : "Fechar menu");
       menu.hidden = isOpen;
       header.classList.toggle("site-header--open", !isOpen);
+    });
+
+    const closeDropdowns = () => {
+      header.querySelectorAll<HTMLButtonElement>("[data-dropdown-toggle]").forEach((button) => {
+        button.setAttribute("aria-expanded", "false");
+        const dropdownMenu = button.closest<HTMLElement>(".site-header__dropdown")?.querySelector<HTMLElement>(".site-header__dropdown-menu");
+        if (dropdownMenu) dropdownMenu.hidden = true;
+      });
+    };
+
+    header.querySelectorAll<HTMLButtonElement>("[data-dropdown-toggle]").forEach((button) => {
+      const dropdown = button.closest<HTMLElement>(".site-header__dropdown");
+      const dropdownMenu = dropdown?.querySelector<HTMLElement>(".site-header__dropdown-menu");
+      if (!dropdown || !dropdownMenu) return;
+      button.addEventListener("click", () => {
+        const isOpen = button.getAttribute("aria-expanded") === "true";
+        closeDropdowns();
+        button.setAttribute("aria-expanded", String(!isOpen));
+        dropdownMenu.hidden = isOpen;
+      });
+    });
+    header.querySelectorAll<HTMLAnchorElement>("[data-dropdown-link]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const dropdown = link.closest<HTMLElement>(".site-header__dropdown");
+        const button = dropdown?.querySelector<HTMLButtonElement>("[data-dropdown-toggle]");
+        const dropdownMenu = dropdown?.querySelector<HTMLElement>(".site-header__dropdown-menu");
+        if (!button || !dropdownMenu || !dropdownMenu.hidden) return;
+        event.preventDefault();
+        closeDropdowns();
+        button.setAttribute("aria-expanded", "true");
+        dropdownMenu.hidden = false;
+      });
+    });
+    document.addEventListener("click", (event) => {
+      const openMenu = header.querySelector<HTMLElement>(
+        ".site-header__dropdown-menu:not([hidden])",
+      );
+      const openDropdown = openMenu?.closest<HTMLElement>(
+        ".site-header__dropdown",
+      );
+      if (!openDropdown?.contains(event.target as Node)) closeDropdowns();
     });
   });
 </script>

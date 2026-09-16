@@ -88,6 +88,21 @@ Os arquivos recebem um nome calculado a partir do conteúdo da imagem, não da U
 
 O menu desktop aparece em telas largas e o menu mobile é aberto pelo botão no canto direito. Os links e o CTA são definidos no Google Docs; o comportamento responsivo pertence ao componente Astro.
 
+#### Dropdown no menu
+
+As linhas antigas com duas colunas (`rótulo | URL`) continuam criando links simples. Para um dropdown, use quatro colunas e informe o tipo na primeira: `link`, `dropdown` ou `submenu`. Cada `submenu` precisa vir depois do seu `dropdown` pai.
+
+| header |  |  |  |  |
+| ------ | - | - | - | - |
+| logo | Santuário | Nossa Senhora de Nazaré | Contribuir | #dizimo |
+| link | Início | / |
+| dropdown | A Paróquia | /a-paroquia/ |
+| submenu | A Paróquia | História | /a-paroquia/historia/ |
+| submenu | A Paróquia | Equipe | /a-paroquia/equipe/ |
+| link | Notícias | /noticias/ |
+
+No desktop, o texto **A Paróquia** continua sendo um link e a seta ao lado abre o submenu. No mobile, o grupo é expansível e inclui o link principal e seus itens.
+
 ### Hero
 
 O Hero usa uma tabela com uma linha de configuração. A imagem pode ser uma URL pública ou uma imagem colada na célula correspondente:
@@ -221,13 +236,13 @@ Para o footer, crie o documento `footer` em `fragmentos/footer/` e use uma tabel
 | Logo (opcional) | Santuário   | Nossa Senhora de Nazaré                           | Descrição da comunidade | © 2025 Santuário. Todos os direitos reservados. | Diocese de Belém do Pará |
 | quick           | Início      | /                                                 |
 | quick           | Notícias    | /noticias/                                        |
-| service         | Batismo     | /batismo/                                         |
-| service         | Matrimônio  | /matrimonio/                                      |
+| service         | Círio de Nazaré | /cirio/                                      |
+| service         | Círio Ecológico | /cirio/cirio-ecologico/                     |
 | contact         | Tel         | (91) 3234-5678                                    |
 | contact         | E-mail      | secretaria@santuarionazare.org.br                 |
 | office          | Atendimento | Seg - Sex: 08h00 às 18h00; Sábado: 08h00 às 12h00 |
 
-A primeira linha de dados contém, nesta ordem: logo opcional, texto pequeno da marca, nome da marca, descrição, copyright e diocese. Cole a imagem diretamente na primeira célula ou informe uma URL pública. Se a primeira célula ficar vazia, use a tabela antiga sem a coluna de logo e o footer exibirá a cruz dourada. Nas linhas seguintes, `quick` cria links rápidos, `service` cria links de sacramentos, `contact` cria informações de contato e `office` define o atendimento. Para redes sociais, use `contact` com o primeiro valor começando por `@`, por exemplo `@Instagram`, e a URL no terceiro campo. A imagem será convertida para WebP durante `npm run sync:google`.
+A primeira linha de dados contém, nesta ordem: logo opcional, texto pequeno da marca, nome da marca, descrição, copyright e diocese. Cole a imagem diretamente na primeira célula ou informe uma URL pública. Se a primeira célula ficar vazia, use a tabela antiga sem a coluna de logo e o footer exibirá a cruz dourada. Nas linhas seguintes, `quick` cria links rápidos, `service` cria links da seção **Círios**, `contact` cria informações de contato e `office` define o atendimento. Para redes sociais, use `contact` com o primeiro valor começando por `@`, por exemplo `@Instagram`, e a URL no terceiro campo; Instagram, YouTube, Facebook e WhatsApp aparecem com seus respectivos ícones. Em `contact` e `office`, use quebras de linha ou uma lista com marcadores no Google Docs para exibir cada informação em sua própria linha. A imagem será convertida para WebP durante `npm run sync:google`.
 
 Em cada página, referencie o fragmento com:
 
