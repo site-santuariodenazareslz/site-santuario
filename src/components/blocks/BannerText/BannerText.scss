@@ -1,0 +1,116 @@
+@use "../../../styles/tokens" as *;
+
+.banner-text {
+  max-width: $width;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(56px, 8vw, 80px) $space-5 clamp(44px, 6vw, 64px);
+  border-bottom: 3px solid $color-gold;
+  background: linear-gradient(
+    160deg,
+    $color-cream-dark 0%,
+    #f5ead5 50%,
+    $color-cream-dark 100%
+  );
+  text-align: center;
+
+  &__content {
+    position: relative;
+    z-index: 1;
+  }
+  &__arch {
+    position: absolute;
+    width: 200px;
+    height: 240px;
+    opacity: 0.3;
+    pointer-events: none;
+    path {
+      stroke: $color-gold;
+      fill: none;
+    }
+    path:first-child {
+      stroke-width: 1.5;
+    }
+    path:last-child {
+      stroke-width: 1;
+      opacity: 0.6;
+    }
+    &--left {
+      top: -5%;
+      left: -3%;
+    }
+    &--right {
+      right: -3%;
+      bottom: -5%;
+      transform: rotate(180deg);
+    }
+  }
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2;
+    margin: 0;
+    color: $color-gold;
+    font-family: $font-sans;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    span {
+      width: 7px;
+      height: 7px;
+      transform: rotate(45deg);
+      background: $color-gold;
+    }
+  }
+  h1 {
+    margin: $space-3 0 $space-1;
+    color: $color-brown;
+    font-family: $font-serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.1;
+  }
+  &__highlight {
+    margin: 0 0 $space-3;
+    color: $color-gold;
+    font-family: $font-serif;
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+    font-style: italic;
+    line-height: 1.2;
+  }
+  &__rule {
+    width: 60px;
+    height: 3px;
+    margin: 0 auto $space-4;
+    border-radius: 2px;
+    background: linear-gradient(90deg, $color-gold, $color-gold-light);
+  }
+  &__subtitle {
+    margin: 0 0 $space-2;
+    color: $color-text-mid;
+    font-family: $font-serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+  }
+  &__date {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: $space-2 0 0;
+    padding: 8px 24px;
+    border-radius: $radius-sm;
+    color: $color-gold-light;
+    background: $color-brown;
+    font-family: $font-sans;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+}

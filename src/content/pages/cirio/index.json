@@ -7,6 +7,14 @@
       "name": "header"
     },
     {
+      "type": "banner-text",
+      "eyebrow": "Programação Geral",
+      "title": "Círio de Nazaré",
+      "highlight": "2026",
+      "subtitle": "Santuário de Luz",
+      "date": "2 a 18 de Outubro de 2026"
+    },
+    {
       "type": "fragment",
       "name": "footer"
     }

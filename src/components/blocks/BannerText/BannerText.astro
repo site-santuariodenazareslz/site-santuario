@@ -1,0 +1,52 @@
+---
+import type { BannerTextBlock } from "../../../lib/types";
+import "./BannerText.scss";
+
+const { eyebrow, title, highlight, subtitle, date } =
+  Astro.props as BannerTextBlock;
+---
+
+<section class="banner-text" aria-labelledby="banner-text-title">
+  <svg
+    class="banner-text__arch banner-text__arch--left"
+    viewBox="0 0 120 140"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path d="M10 140V60Q10 10 60 10t50 50v80"></path>
+    <path d="M25 140V65Q25 25 60 25t35 40v75"></path>
+  </svg>
+  <svg
+    class="banner-text__arch banner-text__arch--right"
+    viewBox="0 0 120 140"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path d="M10 140V60Q10 10 60 10t50 50v80"></path>
+    <path d="M25 140V65Q25 25 60 25t35 40v75"></path>
+  </svg>
+  <div class="banner-text__content">
+    {
+      eyebrow && (
+        <p class="banner-text__eyebrow">
+          <span aria-hidden="true" />
+          {eyebrow}
+          <span aria-hidden="true" />
+        </p>
+      )
+    }
+    <h1 id="banner-text-title">{title}</h1>
+    {highlight && <p class="banner-text__highlight">{highlight}</p>}
+    <div class="banner-text__rule" aria-hidden="true"></div>
+    {subtitle && <p class="banner-text__subtitle">{subtitle}</p>}
+    {
+      date && (
+        <p class="banner-text__date">
+          <span aria-hidden="true">◆</span>
+          {date}
+          <span aria-hidden="true">◆</span>
+        </p>
+      )
+    }
+  </div>
+</section>

@@ -26,6 +26,15 @@ export type BannerCarouselBlock = {
   slides: BannerCarouselSlide[];
 };
 
+export type BannerTextBlock = {
+  type: "banner-text";
+  eyebrow: string;
+  title: string;
+  highlight: string;
+  subtitle: string;
+  date: string;
+};
+
 export type DonationBankDetail = {
   label: string;
   value: string;
@@ -126,6 +135,7 @@ export type Block =
   | FooterBlock
   | HeroBlock
   | BannerCarouselBlock
+  | BannerTextBlock
   | DonationBlock
   | MassScheduleBlock
   | NewsBannerBlock

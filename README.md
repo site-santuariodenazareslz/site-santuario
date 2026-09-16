@@ -119,6 +119,17 @@ Exemplo:
 
 O campo `destaque` aparece em dourado e itálico. A imagem pode ser colada diretamente no Google Docs; durante `npm run sync:google`, ela é baixada, convertida para WebP e salva localmente em `public/images/`.
 
+### Banner de texto
+
+O block `banner-text` cria uma abertura decorativa para páginas especiais, como o Círio. Sua tabela usa uma linha de dados sem imagem:
+
+| banner-text |  |  |  |  |
+| ------ | - | - | - | - |
+| texto pequeno | título | destaque | subtítulo | período |
+| Programação Geral | Círio de Nazaré | 2026 | Santuário de Luz | 2 a 18 de Outubro de 2026 |
+
+O título é obrigatório; os demais campos são opcionais. O block `banner` continua exclusivo para a imagem de capa dos documentos de notícias (`imagem | texto alternativo | categoria`).
+
 ### Carrossel de banners
 
 Use `banner-carousel` (ou `carousel`) para criar uma faixa de destaques com uma linha por slide. A categoria é opcional: deixe a terceira célula vazia quando não quiser exibi-la. O carrossel avança automaticamente a cada cinco segundos, pausa ao passar o mouse ou navegar pelo teclado e também oferece setas e indicadores.
