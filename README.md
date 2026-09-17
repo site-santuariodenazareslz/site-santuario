@@ -130,6 +130,20 @@ O block `banner-text` cria uma abertura decorativa para páginas especiais, como
 
 O título é obrigatório; os demais campos são opcionais. O block `banner` continua exclusivo para a imagem de capa dos documentos de notícias (`imagem | texto alternativo | categoria`).
 
+### Card de evento
+
+Use `card-event` (ou `event-card`) para uma programação com datas e horários. A primeira linha de dados contém a tag opcional, título, texto rico e um identificador opcional para âncoras. As demais linhas são a programação: data, título, horário e descrição opcional. Negrito, itálico e quebras de linha no texto e nas descrições são preservados.
+
+| card-event |  |  |  |
+| ---------- | - | - | - |
+| tag (opcional) | título | texto rico | id (opcional) |
+| Setembro | Missas de Rua | Durante o mês de setembro as equipes de serviço do Círio irão peregrinar com a Imagem da Virgem de Nazaré: | peregrinacoes |
+| 07/09 Seg | Missa no Ponto Final da Linha – Cohatrac IV | 19h30 | |
+| 08/09 Ter | Missa na Praça da Escola Maria Pinha – Cohatrac I | 19h30 | |
+| 09/09 Qua | Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré | 18h | Todos os grupos, pastorais e equipes do Círio |
+
+Tag e texto são opcionais. Para cada item da programação, data, título e horário são obrigatórios.
+
 ### Carrossel de banners
 
 Use `banner-carousel` (ou `carousel`) para criar uma faixa de destaques com uma linha por slide. A categoria é opcional: deixe a terceira célula vazia quando não quiser exibi-la. O carrossel avança automaticamente a cada cinco segundos, pausa ao passar o mouse ou navegar pelo teclado e também oferece setas e indicadores.

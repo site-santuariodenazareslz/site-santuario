@@ -35,6 +35,22 @@ export type BannerTextBlock = {
   date: string;
 };
 
+export type EventProgramEntry = {
+  date: string;
+  title: string;
+  time: string;
+  description?: string;
+};
+
+export type CardEventBlock = {
+  type: "card-event";
+  id?: string;
+  tag?: string;
+  title: string;
+  text: string;
+  program: EventProgramEntry[];
+};
+
 export type DonationBankDetail = {
   label: string;
   value: string;
@@ -136,6 +152,7 @@ export type Block =
   | HeroBlock
   | BannerCarouselBlock
   | BannerTextBlock
+  | CardEventBlock
   | DonationBlock
   | MassScheduleBlock
   | NewsBannerBlock

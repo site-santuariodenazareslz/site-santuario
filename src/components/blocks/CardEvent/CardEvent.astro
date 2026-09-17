@@ -1,0 +1,56 @@
+---
+import type { CardEventBlock } from "../../../lib/types";
+import "./CardEvent.scss";
+
+const { id, tag, title, text, program } = Astro.props as CardEventBlock;
+---
+
+<section
+  id={id}
+  class="card-event"
+  aria-labelledby={`${id ?? "card-event"}-title`}
+>
+  <article class="card-event__card">
+    {tag && <p class="card-event__tag">{tag}</p>}
+    <h2 id={`${id ?? "card-event"}-title`}>{title}</h2>
+    {text && <div class="card-event__text" set:html={text} />}
+
+    {
+      program.length > 0 && (
+        <div class="card-event__program">
+          <p class="card-event__program-title">
+            <span aria-hidden="true" />
+            Programação
+            <span aria-hidden="true" />
+          </p>
+          <ol>
+            {program.map((entry) => (
+              <li>
+                <time>{entry.date}</time>
+                <div>
+                  <h3>{entry.title}</h3>
+                  <p class="card-event__time">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 32 32"
+                      aria-hidden="true"
+                    >
+                      <path d="M16 .75C7.58.75.75 7.58.75 16S7.58 31.25 16 31.25 31.25 24.42 31.25 16C31.24 7.58 24.42.76 16 .75Zm0 28C8.96 28.75 3.25 23.04 3.25 16S8.96 3.25 16 3.25 28.75 8.96 28.75 16 23.04 28.75 16 28.75Zm1.25-13.27V6a1.25 1.25 0 1 0-2.5 0v10c0 .35.14.66.37.88l4 4a1.25 1.25 0 0 0 1.77-1.77l-3.64-3.63Z" />
+                    </svg>
+                    {entry.time}
+                  </p>
+                  {entry.description && entry.description.length > 1 && (
+                    <div
+                      class="card-event__entry-description"
+                      set:html={entry.description}
+                    />
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
+  </article>
+</section>

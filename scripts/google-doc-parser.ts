@@ -364,6 +364,29 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     };
   }
 
+  if (blockName === "card-event" || blockName === "event-card") {
+    const [tagCell, titleCell, textCell, idCell] = body[0] ?? [];
+    const program = body
+      .slice(1)
+      .map(([dateCell, eventTitleCell, timeCell, descriptionCell]) => ({
+        date: dateCell?.text ?? "",
+        title: eventTitleCell?.text ?? "",
+        time: timeCell?.text ?? "",
+        description: descriptionCell?.html ?? "",
+      }))
+      .filter((entry) => entry.date && entry.title && entry.time);
+    if (!titleCell?.text)
+      throw new Error("O block card-event precisa informar um título.");
+    return {
+      type: "card-event",
+      id: idCell?.text || undefined,
+      tag: tagCell?.text || undefined,
+      title: titleCell.text,
+      text: textCell?.html ?? "",
+      program,
+    };
+  }
+
   if (blockName === "banner") {
     const [imageCell, imageAltCell, categoryCell] = body[0] ?? [];
     const image = imageCell?.image ?? imageCell?.text ?? "";
@@ -442,7 +465,7 @@ export function parseGoogleDocument(document: GoogleDocument): Page {
     const paragraphs = content.filter((element) => element.paragraph).length;
     throw new Error(
       `Nenhum block válido foi encontrado. A API recebeu ${tables.length} tabela(s) e ${paragraphs} parágrafo(s). ` +
-        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
+        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
     );
   }
 

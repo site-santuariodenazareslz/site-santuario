@@ -15,6 +15,83 @@
       "date": "2 a 18 de Outubro de 2026"
     },
     {
+      "type": "card-event",
+      "id": "peregrinacoes",
+      "tag": "Setembro",
+      "title": "Peregrinações",
+      "text": "Durante o mês de setembro as equipes de serviço do Círio irão peregrinar com a Imagem da Virgem de Nazaré:\nNas Instituições\nNas escolas de Bairro do Cohatrac\nNos hospitais da Cidade\nNas onze Foranias de Arquidiocese de São Luís do Maranhão\nNas ruas da Paróquia e famílias\n",
+      "program": []
+    },
+    {
+      "type": "card-event",
+      "id": "missas-de-rua",
+      "tag": "Setembro",
+      "title": "Missas de Rua",
+      "text": "Missa de envio de todas as peregrinações com\ntodas as imagens peregrinas.\n",
+      "program": [
+        {
+          "date": "07/09 Seg",
+          "title": "Missa no Ponto Final da Linha – Cohatrac IV",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "08/09 Ter",
+          "title": "Missa na Praça da Escola Maria Pinha – Cohatrac I",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "09/09 Ter",
+          "title": "Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré",
+          "time": "19h30",
+          "description": "Todos os grupos, pastorais e equipes do Círio\n"
+        },
+        {
+          "date": "14/09 Seg",
+          "title": "Missa na Praça Verão",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "15/09 Ter",
+          "title": "Missa no Cohatrac II – Quadra Esportiva",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "21/09 Seg",
+          "title": "Missa na Praça Juventude (Araçagy)",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "22/09 Ter",
+          "title": "Missa no Alvorada / Ithaguará",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "28/09 Seg",
+          "title": "Missa na Praça do Primavera Residencial Primavera",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "29/09 Ter",
+          "title": "Missa Jardim das Margaridas – Ponto Final",
+          "time": "19h30",
+          "description": "\n"
+        },
+        {
+          "date": "30/09 Qua",
+          "title": "Missa de encerramento de todas as peregrinações - Praça Nossa Senhora de Nazaré",
+          "time": "19h30",
+          "description": "\n"
+        }
+      ]
+    },
+    {
       "type": "fragment",
       "name": "footer"
     }
