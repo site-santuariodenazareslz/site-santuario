@@ -58,6 +58,15 @@ export async function materializePageImages(
       if (block.type === "hero" && block.image) {
         return { ...block, image: await toWebp(block.image, getAccessToken) };
       }
+      if (block.type === "banner-text" && block.backgroundImage) {
+        return {
+          ...block,
+          backgroundImage: await toWebp(
+            block.backgroundImage,
+            getAccessToken,
+          ),
+        };
+      }
       if (block.type === "banner-carousel") {
         return {
           ...block,
@@ -103,6 +112,8 @@ function imagePathsFromPage(page: Page): string[] {
       block.type === "news-image"
     )
       return [block.image];
+    if (block.type === "banner-text")
+      return block.backgroundImage ? [block.backgroundImage] : [];
     if (block.type === "banner-carousel")
       return block.slides.map((slide) => slide.image);
     if (block.type === "donation") return [block.qrCode];

@@ -123,12 +123,12 @@ O campo `destaque` aparece em dourado e itálico. A imagem pode ser colada diret
 
 O block `banner-text` cria uma abertura decorativa para páginas especiais, como o Círio. Sua tabela usa uma linha de dados sem imagem:
 
-| banner-text |  |  |  |  |
-| ------ | - | - | - | - |
-| texto pequeno | título | destaque | subtítulo | período |
-| Programação Geral | Círio de Nazaré | 2026 | Santuário de Luz | 2 a 18 de Outubro de 2026 |
+| banner-text |  |  |  |  |  |
+| ------ | - | - | - | - | - |
+| texto pequeno | título | destaque | subtítulo | período | imagem de fundo (opcional) |
+| Programação Geral | Círio de Nazaré | 2026 | Santuário de Luz | 2 a 18 de Outubro de 2026 | Cole a imagem aqui |
 
-O título é obrigatório; os demais campos são opcionais. O block `banner` continua exclusivo para a imagem de capa dos documentos de notícias (`imagem | texto alternativo | categoria`).
+O título é obrigatório; os demais campos são opcionais. Quando houver imagem na última célula, ela se torna o fundo do banner com overlay escuro de 70% e os arcos decorativos não são exibidos. Sem imagem, o visual atual é mantido. O block `banner` continua exclusivo para a imagem de capa dos documentos de notícias (`imagem | texto alternativo | categoria`).
 
 ### Card de evento
 
@@ -143,6 +143,14 @@ Use `card-event` (ou `event-card`) para uma programação com datas e horários.
 | 09/09 Qua | Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré | 18h | Todos os grupos, pastorais e equipes do Círio |
 
 Tag e texto são opcionais. Para cada item da programação, data, título e horário são obrigatórios.
+
+### Citação
+
+Use `quote` (ou `citation` / `citacao`) para destacar uma frase. A primeira célula é o texto, que aceita negrito, itálico e quebras de linha; a segunda é a autoria opcional.
+
+| quote |  |
+| ----- | - |
+| O sacerdote é o amor do coração de Jesus. | São João Maria Vianney |
 
 ### Carrossel de banners
 

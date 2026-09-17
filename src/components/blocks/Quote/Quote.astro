@@ -1,0 +1,13 @@
+---
+import type { QuoteBlock } from "../../../lib/types";
+import "./Quote.scss";
+
+const { text, author } = Astro.props as QuoteBlock;
+---
+
+<section class="quote" aria-label={author ? `Citação de ${author}` : "Citação"}>
+  <blockquote>
+    <div class="quote__text" set:html={text} />
+    {author && <cite>— {author}</cite>}
+  </blockquote>
+</section>

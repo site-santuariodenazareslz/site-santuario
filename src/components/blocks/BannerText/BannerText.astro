@@ -1,30 +1,45 @@
 ---
 import type { BannerTextBlock } from "../../../lib/types";
+import { siteUrl } from "../../../lib/urls";
 import "./BannerText.scss";
 
-const { eyebrow, title, highlight, subtitle, date } =
+const { eyebrow, title, highlight, subtitle, date, backgroundImage } =
   Astro.props as BannerTextBlock;
 ---
 
-<section class="banner-text" aria-labelledby="banner-text-title">
-  <svg
-    class="banner-text__arch banner-text__arch--left"
-    viewBox="0 0 120 140"
-    fill="none"
-    aria-hidden="true"
-  >
-    <path d="M10 140V60Q10 10 60 10t50 50v80"></path>
-    <path d="M25 140V65Q25 25 60 25t35 40v75"></path>
-  </svg>
-  <svg
-    class="banner-text__arch banner-text__arch--right"
-    viewBox="0 0 120 140"
-    fill="none"
-    aria-hidden="true"
-  >
-    <path d="M10 140V60Q10 10 60 10t50 50v80"></path>
-    <path d="M25 140V65Q25 25 60 25t35 40v75"></path>
-  </svg>
+<section
+  class:list={["banner-text", { "banner-text--with-image": backgroundImage }]}
+  aria-labelledby="banner-text-title"
+>
+  {
+    backgroundImage ? (
+      <>
+        <img class="banner-text__background" src={siteUrl(backgroundImage)} alt="" />
+        <span class="banner-text__overlay" aria-hidden="true" />
+      </>
+    ) : (
+      <>
+        <svg
+          class="banner-text__arch banner-text__arch--left"
+          viewBox="0 0 120 140"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M10 140V60Q10 10 60 10t50 50v80"></path>
+          <path d="M25 140V65Q25 25 60 25t35 40v75"></path>
+        </svg>
+        <svg
+          class="banner-text__arch banner-text__arch--right"
+          viewBox="0 0 120 140"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M10 140V60Q10 10 60 10t50 50v80"></path>
+          <path d="M25 140V65Q25 25 60 25t35 40v75"></path>
+        </svg>
+      </>
+    )
+  }
   <div class="banner-text__content">
     {
       eyebrow && (

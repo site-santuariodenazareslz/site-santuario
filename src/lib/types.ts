@@ -33,6 +33,7 @@ export type BannerTextBlock = {
   highlight: string;
   subtitle: string;
   date: string;
+  backgroundImage?: string;
 };
 
 export type EventProgramEntry = {
@@ -49,6 +50,12 @@ export type CardEventBlock = {
   title: string;
   text: string;
   program: EventProgramEntry[];
+};
+
+export type QuoteBlock = {
+  type: "quote";
+  text: string;
+  author?: string;
 };
 
 export type DonationBankDetail = {
@@ -153,6 +160,7 @@ export type Block =
   | BannerCarouselBlock
   | BannerTextBlock
   | CardEventBlock
+  | QuoteBlock
   | DonationBlock
   | MassScheduleBlock
   | NewsBannerBlock

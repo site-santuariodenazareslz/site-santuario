@@ -351,7 +351,14 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
   }
 
   if (blockName === "banner-text") {
-    const [firstCell, secondCell, thirdCell, fourthCell, fifthCell] = body[0] ?? [];
+    const [
+      firstCell,
+      secondCell,
+      thirdCell,
+      fourthCell,
+      fifthCell,
+      backgroundImageCell,
+    ] = body[0] ?? [];
     if (!secondCell?.text)
       throw new Error("O block banner-text precisa informar pelo menos um título.");
     return {
@@ -361,6 +368,8 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       highlight: thirdCell?.text ?? "",
       subtitle: fourthCell?.text ?? "",
       date: fifthCell?.text ?? "",
+      backgroundImage:
+        backgroundImageCell?.image ?? backgroundImageCell?.text ?? undefined,
     };
   }
 
@@ -384,6 +393,17 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       title: titleCell.text,
       text: textCell?.html ?? "",
       program,
+    };
+  }
+
+  if (blockName === "quote" || blockName === "citation" || blockName === "citacao") {
+    const [textCell, authorCell] = body[0] ?? [];
+    if (!textCell?.text)
+      throw new Error("O block quote precisa informar o texto da citação.");
+    return {
+      type: "quote",
+      text: textCell.html || textCell.text,
+      author: authorCell?.text || undefined,
     };
   }
 
@@ -465,7 +485,7 @@ export function parseGoogleDocument(document: GoogleDocument): Page {
     const paragraphs = content.filter((element) => element.paragraph).length;
     throw new Error(
       `Nenhum block válido foi encontrado. A API recebeu ${tables.length} tabela(s) e ${paragraphs} parágrafo(s). ` +
-        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
+        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, quote, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
     );
   }
 
