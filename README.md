@@ -152,6 +152,17 @@ Use `quote` (ou `citation` / `citacao`) para destacar uma frase. A primeira cél
 | ----- | - |
 | O sacerdote é o amor do coração de Jesus. | São João Maria Vianney |
 
+### Página 404
+
+O layout da página de erro é fixo, mas seus textos e botão podem ser alterados pelo Google Docs. Na pasta `fragmentos`, crie a pasta `404` e coloque dentro dela um Google Doc (o nome do documento é livre). Use uma tabela `not-found` com uma linha de dados:
+
+| not-found |  |  |  |  |
+| --------- | - | - | - | - |
+| texto pequeno | título | descrição | texto do botão | link do botão |
+| Página não encontrada | Este caminho não nos levou até aqui. | Talvez o endereço esteja incorreto ou a página tenha sido movida. | Voltar para o início | / |
+
+Depois de salvar o documento, execute `npm run sync:google` (ou publique o repositório) para atualizar a página. Se o fragmento ainda não existir, o site usa os textos padrão acima.
+
 ### Carrossel de banners
 
 Use `banner-carousel` (ou `carousel`) para criar uma faixa de destaques com uma linha por slide. A categoria é opcional: deixe a terceira célula vazia quando não quiser exibi-la. O carrossel avança automaticamente a cada cinco segundos, pausa ao passar o mouse ou navegar pelo teclado e também oferece setas e indicadores.

@@ -1,0 +1,55 @@
+---
+import Header from "../components/blocks/Header/Header.astro";
+import Footer from "../components/blocks/Footer/Footer.astro";
+import NotFound from "../components/blocks/NotFound/NotFound.astro";
+import type { FooterBlock, HeaderBlock, NotFoundBlock, Page } from "../lib/types";
+import "../styles/global.scss";
+
+import headerFragment from "../content/fragments/header/index.json";
+import footerFragment from "../content/fragments/footer/index.json";
+
+const header = headerFragment.blocks.find(
+  (block) => block.type === "header",
+) as HeaderBlock;
+const footer = footerFragment.blocks.find(
+  (block) => block.type === "footer",
+) as FooterBlock;
+
+const fragmentModules = import.meta.glob("../content/fragments/404/index.json", {
+  eager: true,
+});
+const notFoundFragment = (
+  fragmentModules["../content/fragments/404/index.json"] as
+    | { default: Page }
+    | undefined
+)?.default;
+const fallback: NotFoundBlock = {
+  type: "not-found",
+  eyebrow: "Página não encontrada",
+  title: "Este caminho não nos levou até aqui.",
+  description: "Talvez o endereço esteja incorreto ou a página tenha sido movida.",
+  actionLabel: "Voltar para o início",
+  actionHref: "/",
+};
+const notFound =
+  (notFoundFragment?.blocks.find(
+    (block): block is NotFoundBlock => block.type === "not-found",
+  ) ?? fallback);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Página não encontrada." />
+    <title>Página não encontrada | Santuário Nossa Senhora de Nazaré</title>
+  </head>
+  <body>
+    <Header {...header} />
+    <main>
+      <NotFound {...notFound} />
+    </main>
+    <Footer {...footer} />
+  </body>
+</html>

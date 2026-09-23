@@ -1,0 +1,14 @@
+{
+  "title": "Página não encontrada",
+  "description": "Página gerada automaticamente a partir de um Google Doc.",
+  "blocks": [
+    {
+      "type": "not-found",
+      "eyebrow": "Página não encontrada",
+      "title": "Essa página não existe :/",
+      "description": "Talvez o endereço esteja incorreto ou a página tenha sido movida.",
+      "actionLabel": "Voltar para o início",
+      "actionHref": "/"
+    }
+  ]
+}

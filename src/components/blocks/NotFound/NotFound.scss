@@ -1,0 +1,85 @@
+@use "../../../styles/tokens" as *;
+
+.not-found {
+  display: grid;
+  min-height: min(620px, calc(100vh - 80px));
+  place-items: center;
+  padding: 72px 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 14% 18%,
+      rgba($color-gold, 0.2),
+      transparent 28rem
+    ),
+    linear-gradient(145deg, $color-cream, $color-cream-dark);
+}
+
+.not-found__content {
+  max-width: 640px;
+  text-align: center;
+}
+.not-found__code {
+  margin: 0;
+  color: rgba($color-gold, 0.32);
+  font-family: $font-serif;
+  font-size: clamp(7rem, 20vw, 13rem);
+  font-weight: 700;
+  line-height: 0.76;
+  letter-spacing: -0.08em;
+}
+.not-found__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 36px 0 12px;
+  color: $color-gold;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.not-found__eyebrow::before,
+.not-found__eyebrow::after {
+  width: 7px;
+  height: 7px;
+  content: "";
+  transform: rotate(45deg);
+  background: currentColor;
+}
+.not-found h1 {
+  max-width: 14ch;
+  margin: 0 auto 20px;
+  color: $color-brown;
+  font-family: $font-serif;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1.08;
+}
+.not-found__content > p:last-of-type {
+  max-width: 48ch;
+  margin: 0 auto;
+  color: $color-text-mid;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+.not-found__action {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 14px 24px;
+  border-radius: $radius-sm;
+  color: $color-white;
+  background: $color-brown;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+.not-found__action:hover {
+  background: $color-text-mid;
+  transform: translateY(-2px);
+}
+.not-found__action:focus-visible {
+  outline: 3px solid $color-gold;
+  outline-offset: 4px;
+}

@@ -58,6 +58,15 @@ export type QuoteBlock = {
   author?: string;
 };
 
+export type NotFoundBlock = {
+  type: "not-found";
+  eyebrow: string;
+  title: string;
+  description: string;
+  actionLabel: string;
+  actionHref: string;
+};
+
 export type DonationBankDetail = {
   label: string;
   value: string;
@@ -161,6 +170,7 @@ export type Block =
   | BannerTextBlock
   | CardEventBlock
   | QuoteBlock
+  | NotFoundBlock
   | DonationBlock
   | MassScheduleBlock
   | NewsBannerBlock
