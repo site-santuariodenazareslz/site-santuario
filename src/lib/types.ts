@@ -37,7 +37,12 @@ export type BannerTextBlock = {
 };
 
 export type EventProgramEntry = {
+  /** Rótulo exibido para a data. */
   date: string;
+  /** Data inicial no formato YYYY-MM-DD, usada para ordenar a programação. */
+  startDate?: string;
+  /** Data final opcional no formato YYYY-MM-DD para eventos contínuos. */
+  endDate?: string;
   title: string;
   time: string;
   description?: string;

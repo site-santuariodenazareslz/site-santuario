@@ -23,9 +23,13 @@ const { id, tag, title, text, program } = Astro.props as CardEventBlock;
             Programação
             <span aria-hidden="true" />
           </p>
-          <ol>
-            {program.map((entry) => (
-              <li>
+          <ol data-event-list>
+            {program.map((entry, index) => (
+              <li
+                class:list={{ "is-selected": index === 0 }}
+                data-start-date={entry.startDate}
+                data-end-date={entry.endDate}
+              >
                 <time>{entry.date}</time>
                 <div>
                   <h3>{entry.title}</h3>
@@ -49,8 +53,72 @@ const { id, tag, title, text, program } = Astro.props as CardEventBlock;
               </li>
             ))}
           </ol>
+          {
+            program.length > 1 && (
+              <button
+                class="card-event__toggle"
+                type="button"
+                aria-expanded="false"
+                data-event-toggle
+              >
+                <span data-collapsed-label>Ver programação completa</span>
+                <span data-expanded-label>Ocultar programação</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+              </button>
+            )
+          }
         </div>
       )
     }
   </article>
 </section>
+
+<script>
+  const parseDate = (value?: string) => {
+    if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return undefined;
+    const [year, month, day] = value.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  document.querySelectorAll<HTMLElement>(".card-event").forEach((card) => {
+    const list = card.querySelector<HTMLOListElement>("[data-event-list]");
+    const toggle = card.querySelector<HTMLButtonElement>("[data-event-toggle]");
+    if (!list) return;
+
+    const entries = [...list.querySelectorAll<HTMLLIElement>("li")];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const datedEntries: Array<{
+      entry: HTMLLIElement;
+      start: Date;
+      end: Date | undefined;
+    }> = [];
+    entries.forEach((entry) => {
+      const start = parseDate(entry.dataset.startDate);
+      if (start) {
+        datedEntries.push({
+          entry,
+          start,
+          end: parseDate(entry.dataset.endDate),
+        });
+      }
+    });
+
+    if (datedEntries.length) {
+      const current = datedEntries.filter(({ start, end }) =>
+        start <= today && (end ?? start) >= today,
+      );
+      const upcoming = datedEntries.filter(({ start }) => start > today);
+      const selected = current.at(-1) ?? upcoming[0] ?? datedEntries.at(-1);
+      if (selected) {
+        entries.forEach((entry) => entry.classList.toggle("is-selected", entry === selected.entry));
+      }
+    }
+
+    toggle?.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      list.classList.toggle("is-expanded", !expanded);
+    });
+  });
+</script>

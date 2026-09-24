@@ -20,28 +20,32 @@
       "id": "programacao-setembro",
       "tag": "Setembro",
       "title": "Programação do Cirio",
-      "text": "Próximos eventos da programação do Círio de Nazaré\n\n",
+      "text": "Próximos eventos da programação do Círio de Nazaré\n",
       "program": [
         {
-          "date": "27/09 Dom",
+          "date": "27 de set",
+          "startDate": "2026-09-27",
           "title": "4ª Romaria Ciclística",
           "time": "Concentração às 6h",
           "description": "Praça Nossa Senhora de Nazaré – Cohatrac I. Percurso: avenidas da cidade\n"
         },
         {
-          "date": "28/09 Seg",
+          "date": "28 de set",
+          "startDate": "2026-09-28",
           "title": "Missa de Rua",
           "time": "19h30",
           "description": "Praça do Primavera – Residencial Primavera\n"
         },
         {
-          "date": "29/09 Ter",
+          "date": "29 de set",
+          "startDate": "2026-09-29",
           "title": "Missa de Rua",
           "time": "19h30",
           "description": "Jardim das Margaridas – Ponto Final\n\n"
         },
         {
-          "date": "30/09 Qua",
+          "date": "30 de set",
+          "startDate": "2026-09-30",
           "title": "Missa de encerramento das peregrinações",
           "time": "19h30",
           "description": "Praça Nossa Senhora de Nazaré\n"
@@ -56,25 +60,29 @@
       "text": "Programação de outubro do Círio de Nazaré 2026 \n",
       "program": [
         {
-          "date": "02/10 Sex",
+          "date": "02 de out",
+          "startDate": "2026-10-02",
           "title": "Círio das Crianças",
           "time": "18h",
           "description": "Missa, quermesse e apresentação cultural\n\n"
         },
         {
-          "date": "03/10 Sab",
+          "date": "03 de out",
+          "startDate": "2026-10-03",
           "title": "Círio das Crianças",
           "time": "18h",
           "description": "Missa, quermesse e apresentação cultural\n\n"
         },
         {
-          "date": "04/10 Dom",
+          "date": "04 de out",
+          "startDate": "2026-10-04",
           "title": "Procissão do Círio das Crianças",
           "time": "16h",
           "description": "Local: Feirinha Livre, Cohab Anil I \n"
         },
         {
-          "date": "04/10 Dom",
+          "date": "04 de out",
+          "startDate": "2026-10-04",
           "title": "Círio das Crianças",
           "time": "18h",
           "description": "Missa, quermesse e apresentação cultural\n\n"
@@ -89,55 +97,66 @@
       "text": "Próximos eventos da programação do Círio de Nazaré\n\n",
       "program": [
         {
-          "date": "08 a 18/10",
+          "date": "08 de out a 18 de out",
+          "startDate": "2026-10-08",
+          "endDate": "2026-10-18",
           "title": "Novenário da Luz",
           "time": "Programação diária",
           "description": "Terço da Alvorada às 6h; Missas às 6h30, 17h e 19h; Terço meditado às 16h; Adoração Eucarística às 18h; Confissões das 7h às 11h e das 14h às 19h; comidas típicas na praça a partir das 16h\n\n"
         },
         {
-          "date": "08, 11, 12 e 15 a 18/10",
+          "date": "08 de out a 18 de out",
+          "startDate": "2026-10-08",
+          "endDate": "2026-10-18",
           "title": "Círio Cultural",
           "time": "A partir das 20h",
           "description": "Quermesse e apresentações artístico-culturais do Maranhão, na Praça Nossa Senhora de Nazaré\n"
         },
         {
-          "date": "10/10 Sáb",
+          "date": "10 de out",
+          "startDate": "2026-10-10",
           "title": "Romaria do Círio",
           "time": "Missa às 22h; saída às 23h",
           "description": "Igreja do Carmo – Centro\n"
         },
         {
-          "date": "12/10 Seg",
+          "date": "12 de out",
+          "startDate": "2026-10-12",
           "title": "Corrida do Círio",
           "time": "6h",
           "description": "Praça Nossa Senhora de Nazaré\n"
         },
         {
-          "date": "12/10 Seg",
+          "date": "12 de out",
+          "startDate": "2026-10-12",
           "title": "Romaria Marítima",
           "time": "7h",
           "description": "Praia Grande → Marina Aven / Ponta d’Areia\n"
         },
         {
-          "date": "17/10 Sáb",
+          "date": "17 de out",
+          "startDate": "2026-10-17",
           "title": "Novenário da Luz",
           "time": "Horários especiais",
           "description": "Missas às 6h30, 9h e 17h\n"
         },
         {
-          "date": "17/10 Sáb",
+          "date": "17 de out",
+          "startDate": "2026-10-17",
           "title": "Procissão da Luz",
           "time": "Após a missa das 17h",
           "description": "Procissão com destino a Igreja Nossa Senhora do Perpétuo Socorro - Cohab\n"
         },
         {
-          "date": "18/10 Dom",
+          "date": "18 de out",
+          "startDate": "2026-10-18",
           "title": "Procissão de Encerramento",
           "time": "17h",
           "description": "Procissão com destino ao Santuário Nossa Senhora de Nazaré\n"
         },
         {
-          "date": "18/10 Dom",
+          "date": "18 de out",
+          "startDate": "2026-10-18",
           "title": "Grande Missa de Encerramento",
           "time": "Horários especiais",
           "description": "Missas às 6h30, 9h, 12h e 18h30\n\n\n"

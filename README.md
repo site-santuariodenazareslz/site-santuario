@@ -132,17 +132,17 @@ O título é obrigatório; os demais campos são opcionais. Quando houver imagem
 
 ### Card de evento
 
-Use `card-event` (ou `event-card`) para uma programação com datas e horários. A primeira linha de dados contém a tag opcional, título, texto rico e um identificador opcional para âncoras. As demais linhas são a programação: data, título, horário e descrição opcional. Negrito, itálico e quebras de linha no texto e nas descrições são preservados.
+Use `card-event` (ou `event-card`) para uma programação com datas e horários. A primeira linha de dados contém a tag opcional, título, texto rico e um identificador opcional para âncoras. As demais linhas são a programação: data inicial, data final opcional, título, horário e descrição opcional. As datas usam o formato `AAAA-MM-DD` e o componente exibe automaticamente um evento em andamento ou, se não houver, o próximo. A seta revela todos os eventos com animação. Negrito, itálico e quebras de linha no texto e nas descrições são preservados.
 
-| card-event |  |  |  |
-| ---------- | - | - | - |
-| tag (opcional) | título | texto rico | id (opcional) |
-| Setembro | Missas de Rua | Durante o mês de setembro as equipes de serviço do Círio irão peregrinar com a Imagem da Virgem de Nazaré: | peregrinacoes |
-| 07/09 Seg | Missa no Ponto Final da Linha – Cohatrac IV | 19h30 | |
-| 08/09 Ter | Missa na Praça da Escola Maria Pinha – Cohatrac I | 19h30 | |
-| 09/09 Qua | Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré | 18h | Todos os grupos, pastorais e equipes do Círio |
+| card-event |  |  |  | |
+| ---------- | - | - | - | - |
+| tag (opcional) | título | texto rico | id (opcional) | |
+| Setembro | Missas de Rua | Durante o mês de setembro as equipes de serviço do Círio irão peregrinar com a Imagem da Virgem de Nazaré: | peregrinacoes | |
+| 2026-09-07 | | Missa no Ponto Final da Linha – Cohatrac IV | 19h30 | |
+| 2026-09-08 | | Missa na Praça da Escola Maria Pinha – Cohatrac I | 19h30 | |
+| 2026-09-09 | | Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré | 18h | Todos os grupos, pastorais e equipes do Círio |
 
-Tag e texto são opcionais. Para cada item da programação, data, título e horário são obrigatórios.
+Tag e texto são opcionais. Para cada item da programação, data inicial, título e horário são obrigatórios. Para um evento contínuo por vários dias, preencha também a data final — por exemplo, `2026-10-08` e `2026-10-18`. Para o mesmo evento em dias não consecutivos, crie uma linha para cada data com o mesmo título; assim ele só aparece como próximo ou em andamento nos dias corretos.
 
 ### Citação
 

@@ -377,13 +377,29 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     const [tagCell, titleCell, textCell, idCell] = body[0] ?? [];
     const program = body
       .slice(1)
-      .map(([dateCell, eventTitleCell, timeCell, descriptionCell]) => ({
-        date: dateCell?.text ?? "",
+      .map(([startDateCell, endDateCell, eventTitleCell, timeCell, descriptionCell]) => {
+        const startDate = startDateCell?.text ?? "";
+        const endDate = endDateCell?.text ?? "";
+        const formatDate = (value: string) => {
+          const [year, month, day] = value.split("-").map(Number);
+          if (!year || !month || !day) return value;
+          return new Intl.DateTimeFormat("pt-BR", {
+            day: "2-digit",
+            month: "short",
+          })
+            .format(new Date(year, month - 1, day))
+            .replace(".", "");
+        };
+        return {
+        date: endDate ? `${formatDate(startDate)} a ${formatDate(endDate)}` : formatDate(startDate),
+        startDate,
+        endDate: endDate || undefined,
         title: eventTitleCell?.text ?? "",
         time: timeCell?.text ?? "",
         description: descriptionCell?.html ?? "",
-      }))
-      .filter((entry) => entry.date && entry.title && entry.time);
+        };
+      })
+      .filter((entry) => entry.startDate && entry.title && entry.time);
     if (!titleCell?.text)
       throw new Error("O block card-event precisa informar um título.");
     return {
