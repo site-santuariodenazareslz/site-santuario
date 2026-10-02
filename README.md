@@ -144,6 +144,35 @@ Use `card-event` (ou `event-card`) para uma programação com datas e horários.
 
 Tag e texto são opcionais. Para cada item da programação, data inicial, título e horário são obrigatórios. Para um evento contínuo por vários dias, preencha também a data final — por exemplo, `2026-10-08` e `2026-10-18`. Para o mesmo evento em dias não consecutivos, crie uma linha para cada data com o mesmo título; assim ele só aparece como próximo ou em andamento nos dias corretos.
 
+### Agenda de eventos
+
+A agenda é formada por dois blocks independentes, que você pode inserir ou não em qualquer documento de página:
+
+- `upcoming-events` mostra os três próximos eventos cadastrados em todos os blocks `events-list` do site.
+- `events-list` (também aceita `events`) mostra a lista completa e é onde os eventos são cadastrados.
+
+Para mostrar os próximos eventos, inclua esta tabela, por exemplo, no documento da página inicial:
+
+| upcoming-events |  |  |  |  |
+| --------------- | - | - | - | - |
+| texto pequeno | título | texto do link | URL da lista | id opcional |
+| Agenda | Próximos Eventos | Ver todos | /eventos/ | eventos |
+
+O título é obrigatório. Os demais campos são opcionais. Se a tabela não estiver no documento, a seção simplesmente não aparece naquela página.
+
+Para criar a página de agenda, crie uma pasta `eventos` no Drive e coloque nela um Google Doc com os fragments desejados (como `header` e `footer`) e a tabela abaixo. Cada linha após a configuração é um evento. A imagem pode ser uma URL pública ou ser colada na primeira célula; durante a sincronização ela é convertida para WebP e salva localmente.
+
+| events-list |  |  |  |  |  |  |  |
+| ----------- | - | - | - | - | - | - | - |
+| texto pequeno | título | descrição da seção | id opcional |  |  |  |  |
+| Agenda | Eventos | Participe dos momentos de fé e celebração da comunidade. | eventos |  |  |  |  |
+| imagem | texto alternativo | categoria | título do evento | descrição | local | data | hora |
+| Cole a imagem aqui | Fiéis em celebração | Festividade | Festa de Nossa Senhora de Nazaré | Celebração solene com procissão e missa festiva. | Santuário Nossa Senhora de Nazaré | 2026-10-14 | 19:00 |
+
+Imagem, título, descrição, local, data e hora são obrigatórios. Use datas no formato `AAAA-MM-DD` e horas no formato `HH:MM`. Categoria e texto alternativo são opcionais. O botão **Adicionar ao calendário** gera um arquivo `.ics` com duração de uma hora, que o visitante pode abrir no Google Calendar, Calendário do iPhone, Outlook ou aplicativo equivalente.
+
+Quando `npm run sync:google` é executado, todos os eventos de `events-list` são reunidos em `src/content/events.json`. Esse arquivo é a fonte do `upcoming-events`; por isso a home e a lista completa ficam sempre sincronizadas. Evite cadastrar o mesmo evento em mais de um `events-list`.
+
 ### Citação
 
 Use `quote` (ou `citation` / `citacao`) para destacar uma frase. A primeira célula é o texto, que aceita negrito, itálico e quebras de linha; a segunda é a autoria opcional.

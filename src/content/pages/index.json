@@ -51,6 +51,14 @@
       ]
     },
     {
+      "type": "upcoming-events",
+      "id": "proximos-eventos",
+      "eyebrow": "texto pequeno",
+      "title": "título",
+      "allLabel": "texto do link",
+      "allHref": "/eventos/"
+    },
+    {
       "type": "mass-schedule",
       "title": "Horários das Missas",
       "description": "Venha participar das celebrações eucarísticas.",

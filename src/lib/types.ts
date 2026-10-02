@@ -48,6 +48,38 @@ export type EventProgramEntry = {
   description?: string;
 };
 
+/** Um evento da agenda geral. Datas usam o formato YYYY-MM-DD. */
+export type EventItem = {
+  id: string;
+  image: string;
+  imageAlt: string;
+  category: string;
+  title: string;
+  description: string;
+  location: string;
+  startDate: string;
+  startTime: string;
+};
+
+export type UpcomingEventsBlock = {
+  type: "upcoming-events";
+  id?: string;
+  eyebrow: string;
+  title: string;
+  allLabel: string;
+  allHref: string;
+};
+
+export type EventsListBlock = {
+  type: "events-list";
+  id?: string;
+  eyebrow: string;
+  title: string;
+  description?: string;
+  /** Eventos definidos na própria tabela events-list do Google Docs. */
+  events?: EventItem[];
+};
+
 export type CardEventBlock = {
   type: "card-event";
   id?: string;
@@ -173,6 +205,8 @@ export type Block =
   | HeroBlock
   | BannerCarouselBlock
   | BannerTextBlock
+  | UpcomingEventsBlock
+  | EventsListBlock
   | CardEventBlock
   | QuoteBlock
   | NotFoundBlock

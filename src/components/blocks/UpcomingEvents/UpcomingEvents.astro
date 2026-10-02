@@ -1,0 +1,42 @@
+---
+import type { UpcomingEventsBlock } from "../../../lib/types";
+import { events } from "../../../lib/events";
+import { siteUrl } from "../../../lib/urls";
+import EventCard from "../EventCard/EventCard.astro";
+import "./UpcomingEvents.scss";
+
+const block = Astro.props as UpcomingEventsBlock;
+---
+
+<section id={block.id ?? "eventos"} class="upcoming-events" aria-labelledby="upcoming-events-title">
+  <div class="upcoming-events__heading">
+    <div>
+      <p class="upcoming-events__eyebrow">{block.eyebrow}</p>
+      <h2 id="upcoming-events-title">{block.title}</h2>
+    </div>
+    <a href={siteUrl(block.allHref)}>{block.allLabel} <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="upcoming-events__grid" data-upcoming-events>
+    {events.map((event) => <EventCard event={event} hidden />)}
+  </div>
+  <p class="upcoming-events__empty" data-upcoming-events-empty hidden>Nenhum evento próximo está programado.</p>
+</section>
+
+<script>
+  const dateFromValue = (value: string) => new Date(`${value}T00:00:00`);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  document.querySelectorAll<HTMLElement>("[data-upcoming-events]").forEach((grid) => {
+    const cards = [...grid.querySelectorAll<HTMLElement>("[data-event-card]")];
+    const nextEvents = cards
+      .filter((card) => {
+        const startDate = card.dataset.startDate;
+        return startDate && dateFromValue(startDate) >= today;
+      })
+      .slice(0, 3);
+    nextEvents.forEach((card) => { card.hidden = false; });
+    const empty = grid.parentElement?.querySelector<HTMLElement>("[data-upcoming-events-empty]");
+    if (empty) empty.hidden = nextEvents.length > 0;
+  });
+</script>

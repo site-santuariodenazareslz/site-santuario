@@ -36,6 +36,14 @@ export type StructuralElement = {
 const clean = (value = "") =>
   value.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
 
+const slugify = (value: string) =>
+  value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 const escapeHtml = (value: string) =>
   value
     .replace(/&/g, "&amp;")
@@ -412,6 +420,64 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     };
   }
 
+  if (blockName === "upcoming-events" || blockName === "next-events") {
+    const [eyebrowCell, titleCell, allLabelCell, allHrefCell, idCell] = body[0] ?? [];
+    if (!titleCell?.text)
+      throw new Error("O block upcoming-events precisa informar um título.");
+    return {
+      type: "upcoming-events",
+      id: idCell?.text || undefined,
+      eyebrow: eyebrowCell?.text ?? "Agenda",
+      title: titleCell.text,
+      allLabel: allLabelCell?.text ?? "Ver todos",
+      allHref: allHrefCell?.text ?? "/eventos/",
+    };
+  }
+
+  if (blockName === "events-list" || blockName === "events") {
+    const [eyebrowCell, titleCell, descriptionCell, idCell] = body[0] ?? [];
+    if (!titleCell?.text)
+      throw new Error("O block events-list precisa informar um título.");
+    const events = body
+      .slice(1)
+      .map(([
+        imageCell, imageAltCell, categoryCell, eventTitleCell,
+        eventDescriptionCell, locationCell, startDateCell, startTimeCell,
+      ]) => {
+        const title = eventTitleCell?.text ?? "";
+        const startDate = startDateCell?.text ?? "";
+        return {
+          id: slugify(`${startDate}-${title}`),
+          image: imageCell?.image ?? imageCell?.text ?? "",
+          imageAlt: imageAltCell?.text ?? "",
+          category: categoryCell?.text ?? "",
+          title,
+          description: eventDescriptionCell?.rawText ?? "",
+          location: locationCell?.rawText ?? "",
+          startDate,
+          startTime: startTimeCell?.text ?? "",
+        };
+      })
+      .filter(
+        (event) =>
+          event.image && event.title && event.description && event.location &&
+          /^\d{4}-\d{2}-\d{2}$/.test(event.startDate) &&
+          /^\d{2}:\d{2}$/.test(event.startTime),
+      );
+    if (!events.length)
+      throw new Error(
+        "O block events-list precisa informar pelo menos um evento com imagem, título, descrição, local, data e hora.",
+      );
+    return {
+      type: "events-list",
+      id: idCell?.text || undefined,
+      eyebrow: eyebrowCell?.text ?? "Agenda",
+      title: titleCell.text,
+      description: descriptionCell?.rawText ?? "",
+      events,
+    };
+  }
+
   if (blockName === "quote" || blockName === "citation" || blockName === "citacao") {
     const [textCell, authorCell] = body[0] ?? [];
     if (!textCell?.text)
@@ -519,7 +585,7 @@ export function parseGoogleDocument(document: GoogleDocument): Page {
     const paragraphs = content.filter((element) => element.paragraph).length;
     throw new Error(
       `Nenhum block válido foi encontrado. A API recebeu ${tables.length} tabela(s) e ${paragraphs} parágrafo(s). ` +
-        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, quote, not-found, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
+        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, upcoming-events, events-list, quote, not-found, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
     );
   }
 

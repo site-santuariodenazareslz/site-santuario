@@ -7,8 +7,8 @@ import {
   prepareImageDirectory,
   removeUnusedImages,
 } from "./image-assets";
-import { writeFragments, writeNews, writePages } from "./content-writer";
-import type { NewsItem } from "../src/lib/types";
+import { writeEvents, writeFragments, writeNews, writePages } from "./content-writer";
+import type { EventItem, NewsItem, Page } from "../src/lib/types";
 
 const documentId = process.env.GOOGLE_DOCUMENT_ID;
 const rootFolderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
@@ -172,6 +172,14 @@ async function newsInFolder(folderId: string): Promise<NewsItem[]> {
   return allNews.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
+function eventsFromPages(pages: Page[]): EventItem[] {
+  return pages.flatMap((page) =>
+    page.blocks.flatMap((block) =>
+      block.type === "events-list" ? (block.events ?? []) : [],
+    ),
+  );
+}
+
 let pages;
 let fragments: Array<{
   path: string[];
@@ -207,6 +215,12 @@ if (rootFolderId) {
 await writePages(pages);
 await writeFragments(fragments);
 await writeNews(news);
+await writeEvents(
+  eventsFromPages([
+    ...pages.map(({ page }) => page),
+    ...fragments.map(({ page }) => page),
+  ]),
+);
 await removeUnusedImages([
   ...pages.map(({ page }) => page),
   ...fragments.map(({ page }) => page),

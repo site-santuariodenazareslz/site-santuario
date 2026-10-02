@@ -1,0 +1,27 @@
+@use "../../../styles/tokens" as *;
+
+.event-card {
+  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  background: $color-white;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+
+  &:hover { box-shadow: 0 12px 40px rgba($color-brown, .12); transform: translateY(-2px); }
+  &__image-wrap { position: relative; overflow: hidden; background: $color-cream-dark; }
+  &__image { display: block; width: 100%; height: 200px; object-fit: cover; transition: transform 400ms ease; }
+  &:hover &__image { transform: scale(1.05); }
+  &__date { position: absolute; top: 14px; left: 14px; display: grid; padding: 7px 11px; border-radius: 6px; color: $color-white; background: $color-brown; text-align: center; }
+  &__date strong { font-family: $font-serif; font-size: 1.2rem; line-height: 1; }
+  &__date span { margin-top: 2px; font-family: $font-sans; font-size: .58rem; letter-spacing: .1em; opacity: .75; text-transform: uppercase; }
+  &__body { padding: 22px; }
+  &__category { display: inline-block; padding: 3px 9px; border-radius: 4px; color: $color-gold; background: rgba($color-gold-light, .22); font-family: $font-sans; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  h3 { margin: 9px 0 8px; color: $color-brown; font-family: $font-serif; font-size: 1.1rem; line-height: 1.3; }
+  &__description { margin: 0; color: $color-text-mid; font-family: $font-sans; font-size: .82rem; line-height: 1.65; }
+  &__details { display: grid; gap: 6px; margin: 16px 0; padding: 12px 0; border-top: 1px solid $color-beige; border-bottom: 1px solid $color-beige; font-family: $font-sans; font-size: .75rem; }
+  &__details div { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 6px; }
+  &__details dt { color: $color-text-mid; font-weight: 700; }
+  &__details dd { margin: 0; color: $color-brown; line-height: 1.4; }
+  &__calendar { width: 100%; padding: 10px 12px; border: 1px solid $color-gold; border-radius: 5px; color: $color-brown; background: transparent; cursor: pointer; font-family: $font-sans; font-size: .78rem; font-weight: 700; }
+  &__calendar:hover, &__calendar:focus-visible { color: $color-white; background: $color-gold; outline: none; }
+}

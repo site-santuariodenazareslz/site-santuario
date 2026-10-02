@@ -1,0 +1,15 @@
+@use "../../../styles/tokens" as *;
+
+.upcoming-events {
+  padding: 80px $space-5;
+  background: $color-cream;
+
+  &__heading, &__grid, &__empty { max-width: $width; margin-right: auto; margin-left: auto; }
+  &__heading { display: flex; align-items: flex-end; justify-content: space-between; gap: $space-4; margin-bottom: 48px; }
+  &__eyebrow { margin: 0 0 $space-2; color: $color-gold; font-family: $font-sans; font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+  h2 { margin: 0; color: $color-brown; font-family: $font-serif; font-size: clamp(1.8rem, 3vw, 2.5rem); letter-spacing: 0; }
+  &__heading > a { padding-bottom: 2px; border-bottom: 2px solid $color-gold; color: $color-brown; font-family: $font-sans; font-size: .82rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  &__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  &__empty { color: $color-text-mid; font-family: $font-sans; text-align: center; }
+}
+@media (max-width: 700px) { .upcoming-events { padding-block: 56px; &__grid { grid-template-columns: 1fr; } } }

@@ -14,6 +14,8 @@ import AllNews from "./blocks/AllNews/AllNews.astro";
 import NewsBanner from "./blocks/NewsBanner/NewsBanner.astro";
 import NewsText from "./blocks/NewsText/NewsText.astro";
 import NewsImage from "./blocks/NewsImage/NewsImage.astro";
+import UpcomingEvents from "./blocks/UpcomingEvents/UpcomingEvents.astro";
+import EventsList from "./blocks/EventsList/EventsList.astro";
 import FragmentRenderer from "./FragmentRenderer.astro";
 import type { Block, Page } from "../lib/types";
 
@@ -37,6 +39,8 @@ const componentFor = {
   "news-banner": NewsBanner,
   "news-text": NewsText,
   "news-image": NewsImage,
+  "upcoming-events": UpcomingEvents,
+  "events-list": EventsList,
 } as const;
 
 function fragmentFor(name: string): Page | undefined {

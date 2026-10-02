@@ -1,0 +1,20 @@
+---
+import type { EventsListBlock } from "../../../lib/types";
+import { events } from "../../../lib/events";
+import EventCard from "../EventCard/EventCard.astro";
+import "./EventsList.scss";
+
+const block = Astro.props as EventsListBlock;
+const listedEvents = block.events ?? events;
+---
+
+<section id={block.id ?? "eventos"} class="events-list" aria-labelledby="events-list-title">
+  <div class="events-list__heading">
+    <p>{block.eyebrow}</p>
+    <h1 id="events-list-title">{block.title}</h1>
+    {block.description && <div>{block.description}</div>}
+  </div>
+  <div class="events-list__grid">
+    {listedEvents.map((event) => <EventCard event={event} />)}
+  </div>
+</section>
