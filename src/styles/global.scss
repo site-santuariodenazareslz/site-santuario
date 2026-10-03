@@ -21,6 +21,11 @@ footer {
   @include content-width;
 }
 
+/* O ritmo vertical entre blocks é controlado exclusivamente pelo spacer. */
+main > :not(.block-spacer) {
+  margin-block: 0 !important;
+}
+
 h2 {
   font-size: clamp(2rem, 4vw, 3.5rem);
   letter-spacing: -0.05em;

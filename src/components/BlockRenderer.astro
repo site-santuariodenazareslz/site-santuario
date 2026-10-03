@@ -13,9 +13,11 @@ import News from "./blocks/News/News.astro";
 import AllNews from "./blocks/AllNews/AllNews.astro";
 import NewsBanner from "./blocks/NewsBanner/NewsBanner.astro";
 import NewsText from "./blocks/NewsText/NewsText.astro";
+import NewsTitle from "./blocks/NewsTitle/NewsTitle.astro";
 import NewsImage from "./blocks/NewsImage/NewsImage.astro";
 import UpcomingEvents from "./blocks/UpcomingEvents/UpcomingEvents.astro";
 import EventsList from "./blocks/EventsList/EventsList.astro";
+import SectionHeader from "./blocks/SectionHeader/SectionHeader.astro";
 import FragmentRenderer from "./FragmentRenderer.astro";
 import type { Block, Page } from "../lib/types";
 
@@ -38,9 +40,11 @@ const componentFor = {
   "all-news": AllNews,
   "news-banner": NewsBanner,
   "news-text": NewsText,
+  "news-title": NewsTitle,
   "news-image": NewsImage,
   "upcoming-events": UpcomingEvents,
   "events-list": EventsList,
+  "section-header": SectionHeader,
 } as const;
 
 function fragmentFor(name: string): Page | undefined {
@@ -55,15 +59,22 @@ if (block.type === "fragment" && !fragment) {
     `Fragmento "${block.name}" não foi encontrado em src/content/fragments/.`,
   );
 }
+
+const legacyNewsText = block.type === "news-text"
+  ? (block as typeof block & { title?: string; titleHtml?: string })
+  : undefined;
 ---
 
 {
   block.type === "fragment" ? (
     <FragmentRenderer blocks={fragment?.blocks ?? []} />
   ) : (
-    (() => {
+    <>
+      {legacyNewsText?.title && <NewsTitle title={legacyNewsText.title} titleHtml={legacyNewsText.titleHtml} />}
+      {(() => {
       const Component = componentFor[block.type];
       return <Component {...block} />;
-    })()
+      })()}
+    </>
   )
 }

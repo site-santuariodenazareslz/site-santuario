@@ -4,9 +4,6 @@ import { siteUrl } from "../../../lib/urls";
 import "./Donation.scss";
 
 const {
-  eyebrow,
-  title,
-  quote,
   pixKey,
   qrCode,
   qrCodeAlt,
@@ -19,24 +16,9 @@ const {
 <section
   id="dizimo"
   class="donation"
-  aria-labelledby="donation-title"
   data-donation
   data-pix-key={pixKey}
 >
-  <div class="donation__intro">
-    {
-      eyebrow && (
-        <p class="donation__label">
-          <span aria-hidden="true" />
-          {eyebrow}
-          <span aria-hidden="true" />
-        </p>
-      )
-    }
-    <h2 id="donation-title">{title}</h2>
-    {quote && <p class="donation__quote">{quote}</p>}
-  </div>
-
   <div class="donation__card">
     <div class="donation__details">
       {

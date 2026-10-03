@@ -64,18 +64,21 @@ export type EventItem = {
 export type UpcomingEventsBlock = {
   type: "upcoming-events";
   id?: string;
-  eyebrow: string;
-  title: string;
   allLabel: string;
   allHref: string;
+};
+
+/** Cabeçalho reutilizável para apresentar uma seção. */
+export type SectionHeaderBlock = {
+  type: "section-header";
+  eyebrow?: string;
+  title: string;
+  description?: string;
 };
 
 export type EventsListBlock = {
   type: "events-list";
   id?: string;
-  eyebrow: string;
-  title: string;
-  description?: string;
   /** Eventos definidos na própria tabela events-list do Google Docs. */
   events?: EventItem[];
 };
@@ -111,9 +114,6 @@ export type DonationBankDetail = {
 
 export type DonationBlock = {
   type: "donation";
-  eyebrow: string;
-  title: string;
-  quote: string;
   pixKey: string;
   qrCode: string;
   qrCodeAlt: string;
@@ -171,9 +171,6 @@ export type MassScheduleGroup = {
 
 export type MassScheduleBlock = {
   type: "mass-schedule";
-  title: string;
-  description: string;
-  note: string;
   groups: MassScheduleGroup[];
 };
 
@@ -186,9 +183,13 @@ export type NewsBannerBlock = {
 
 export type NewsTextBlock = {
   type: "news-text";
+  text: string;
+};
+
+export type NewsTitleBlock = {
+  type: "news-title";
   title: string;
   titleHtml?: string;
-  text: string;
 };
 
 export type NewsImageBlock = {
@@ -205,6 +206,7 @@ export type Block =
   | HeroBlock
   | BannerCarouselBlock
   | BannerTextBlock
+  | SectionHeaderBlock
   | UpcomingEventsBlock
   | EventsListBlock
   | CardEventBlock
@@ -213,6 +215,7 @@ export type Block =
   | DonationBlock
   | MassScheduleBlock
   | NewsBannerBlock
+  | NewsTitleBlock
   | NewsTextBlock
   | NewsImageBlock
   | NewsListingBlock;
@@ -225,11 +228,9 @@ export type NewsItem = {
 
 export type NewsListingBlock = {
   type: "news" | "all-news";
-  eyebrow: string;
-  title: string;
-  description: string;
-  allLabel: string;
-  allHref: string;
+  id?: string;
+  allLabel?: string;
+  allHref?: string;
   currentPage?: number;
 };
 

@@ -1,0 +1,10 @@
+---
+import type { NewsTitleBlock } from "../../../lib/types";
+import "./NewsTitle.scss";
+
+const { title, titleHtml } = Astro.props as NewsTitleBlock;
+---
+
+<section class="news-title">
+  <h1 set:html={titleHtml || title} />
+</section>

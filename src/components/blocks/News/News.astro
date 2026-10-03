@@ -16,29 +16,12 @@ const news = Object.values(modules)
   .map(summarizeNews);
 ---
 
-<section id="noticias" class="news-container">
+<section id={block.id ?? "noticias"} class="news-container">
   <div class="news-preview__background"></div>
   <div class="news-preview">
-    <div class="news-preview__heading">
-      <div>
-        <p class="news-preview__label">
-          <span aria-hidden="true"></span>{block.eyebrow}<span
-            aria-hidden="true"></span>
-        </p>
-        <h2>{block.title}</h2>
-        {
-          block.description && (
-            <p class="news-preview__description">{block.description}</p>
-          )
-        }
-      </div>
-      <a class="news-preview__all" href={siteUrl(block.allHref)}>
-        {block.allLabel}
-        <span aria-hidden="true">→</span>
-      </a>
-    </div>
     <div class="news-preview__grid">
       {news.map((item) => <NewsCard news={item} />)}
     </div>
+    {block.allLabel && block.allHref && <a class="news-preview__all" href={siteUrl(block.allHref)}>{block.allLabel} <span aria-hidden="true">→</span></a>}
   </div>
 </section>

@@ -3,24 +3,14 @@
 .news-text {
   max-width: 760px;
   margin: 0 auto;
-  padding-block: 32px 32px;
+  padding-block: 0;
 
-  > div {
+  &__content {
     margin: 0 $space-5;
+    color: $color-text-mid;
+    font-family: $font-sans;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    white-space: pre-line;
   }
-}
-.news-text h1 {
-  margin: 0 0 24px;
-  color: $color-brown;
-  font-family: $font-serif;
-  font-size: clamp(2rem, 5vw, 3.6rem);
-  line-height: 1.12;
-  white-space: pre-line;
-}
-.news-text__content {
-  color: $color-text-mid;
-  font-family: $font-sans;
-  font-size: 1.05rem;
-  line-height: 1.85;
-  white-space: pre-line;
 }

@@ -1,0 +1,11 @@
+@use "../styles/tokens" as *;
+
+.block-spacer {
+  height: 48px;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .block-spacer {
+    height: 24px;
+  }
+}

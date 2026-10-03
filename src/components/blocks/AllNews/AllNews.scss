@@ -1,55 +1,11 @@
 @use "../../../styles/tokens" as *;
 
 .all-news {
-  padding-block: 80px;
+  padding: 0;
   max-width: $width;
   margin-left: auto;
   margin-right: auto;
 
-  &__heading {
-    max-width: 620px;
-    margin-bottom: 48px;
-    justify-self: center;
-    margin-left: $space-5;
-    margin-right: $space-5;
-    p {
-      text-align: center;
-    }
-  }
-  &__label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: $space-2;
-    margin: 0 0 $space-3;
-    color: $color-gold;
-    font-family: $font-sans;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-  &__label span {
-    width: 7px;
-    height: 7px;
-    display: inline-block;
-    transform: rotate(45deg);
-    background: $color-gold;
-  }
-  h1 {
-    margin: 0 0 12px;
-    color: $color-brown;
-    font-family: $font-serif;
-    font-size: clamp(2.2rem, 5vw, 3.6rem);
-    line-height: 1.1;
-    text-align: center;
-  }
-  &__heading p:last-child {
-    margin: 0;
-    color: $color-text-mid;
-    font-family: $font-sans;
-    line-height: 1.7;
-  }
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -82,7 +38,7 @@
 
 @media (max-width: 700px) {
   .all-news {
-    padding-block: 56px;
+    padding-bottom: 0;
   }
   .all-news__grid {
     grid-template-columns: 1fr;

@@ -1,5 +1,6 @@
 ---
 import BlockRenderer from "./BlockRenderer.astro";
+import BlockSpacer from "./BlockSpacer.astro";
 import type { Page } from "../lib/types";
 import "../styles/global.scss";
 
@@ -16,7 +17,14 @@ const { page } = Astro.props as { page: Page };
   </head>
   <body>
     <main>
-      {page.blocks.map((block) => <BlockRenderer block={block} />)}
+      {
+        page.blocks.map((block, index) => (
+          <>
+            <BlockRenderer block={block} />
+            {index < page.blocks.length - 1 && <BlockSpacer />}
+          </>
+        ))
+      }
     </main>
   </body>
 </html>

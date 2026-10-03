@@ -22,10 +22,10 @@ O workflow em `.github/workflows/deploy.yml` executa automaticamente quando houv
 
 Secrets necessários em **Settings → Secrets and variables → Actions**:
 
-| Secret | Conteúdo |
-| ------ | -------- |
-| `GOOGLE_SERVICE_ACCOUNT_JSON` | JSON completo da chave da conta de serviço |
-| `GOOGLE_DRIVE_FOLDER_ID` | ID da pasta raiz no Drive (site multipágina) |
+| Secret                        | Conteúdo                                     |
+| ----------------------------- | -------------------------------------------- |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | JSON completo da chave da conta de serviço   |
+| `GOOGLE_DRIVE_FOLDER_ID`      | ID da pasta raiz no Drive (site multipágina) |
 
 Compartilhe a pasta no Drive com o e-mail da conta de serviço, com permissão de **Leitor**. Sem esse compartilhamento a API não vê os arquivos.
 
@@ -49,6 +49,12 @@ npm run build
 
 Cada tabela representa um block. A primeira linha contém apenas seu identificador; as demais linhas são os dados.
 
+### Linhas de orientação nas tabelas
+
+Para adicionar cabeçalhos de coluna, lembretes ou instruções sem que apareçam no site, faça a primeira célula da linha começar com `#`. Essas linhas são ignoradas pelo sincronizador em todos os blocks. As demais células podem descrever as colunas normalmente.
+
+Por exemplo, em um `card-event`, use `# data inicial` na primeira célula da linha de cabeçalho. Um valor como `#teste` em outra coluna continua sendo lido normalmente, pois somente a primeira célula define se a linha é uma orientação.
+
 ## Organização dos componentes
 
 Cada componente Astro fica em uma pasta própria, com o markup e o estilo separados em Sass:
@@ -69,18 +75,33 @@ O arquivo `.astro` concentra props, HTML e comportamento do componente. O arquiv
 
 Os tokens ficam em `src/styles/_tokens.scss` e incluem cores, tipografia, espaçamento, raios e breakpoints (`$breakpoint-mobile`, `$breakpoint-tablet` e `$breakpoint-header`). Os mixins compartilhados ficam em `src/styles/_mixins.scss`. Para criar um novo block, siga esse padrão e registre o componente em `BlockRenderer.astro` e `FragmentRenderer.astro`.
 
+### Cabeçalho de seção
+
+Use `section-header` (ou `section-title`) antes de qualquer componente que precise de texto pequeno, título e descrição. Ele é opcional e pode ser usado com `events-list`, `donation`, `mass-schedule`, `upcoming-events`, `news` e `all-news` — ou com qualquer outro block que venha depois dele.
+
+| section-header           |                  |                                                     |
+| ------------------------ | ---------------- | --------------------------------------------------- |
+| texto pequeno (opcional) | título           | descrição (opcional)                                |
+| Agenda                   | Próximos Eventos | Confira os momentos de fé e encontro da comunidade. |
+
+O título é obrigatório. Para não exibir cabeçalho em uma seção, basta não adicionar essa tabela ao documento.
+
 ### Header
 
-O header é um block que pode ser usado diretamente em uma página ou dentro de um fragmento `header`. A primeira linha de dados define o texto pequeno da marca, o nome da marca, o CTA e sua URL. As linhas seguintes definem os links do menu:
+O header é um block que pode ser usado diretamente em uma página ou dentro de um fragmento `header`. A primeira linha de dados configura a marca e o CTA; as linhas seguintes criam os links, dropdowns e submenus do menu:
 
-| header                |              |                         |            |         |
-| --------------------- | ------------ | ----------------------- | ---------- | ------- |
-| URL ou imagem do logo | Santuário    | Nossa Senhora de Nazaré | Contribuir | #dizimo |
-| Início                | /            |
-| A Paróquia            | /a-paroquia/ |
-| Missas                | /missas/     |
+| header            |               |                          |                       |            |
+| ----------------- | ------------- | ------------------------ | --------------------- | ---------- |
+| # logo (opcional) | texto pequeno | nome da marca            | texto do CTA          | URL do CTA |
+| Cole o logo aqui  | Santuário     | Nossa Senhora de Nazaré  | Contribuir            | #dizimo    |
+| # tipo            | rótulo/pai    | URL ou rótulo do submenu | URL do submenu        |            |
+| link              | Início        | /                        |                       |            |
+| dropdown          | A Paróquia    | /a-paroquia/             |                       |            |
+| submenu           | A Paróquia    | História                 | /a-paroquia/historia/ |            |
+| submenu           | A Paróquia    | Equipe                   | /a-paroquia/equipe/   |            |
+| link              | Notícias      | /noticias/               |                       |            |
 
-Na primeira célula da primeira linha de dados, cole a imagem do logo diretamente no Google Docs ou informe uma URL pública da imagem. As células seguintes são o texto pequeno da marca, o nome da marca, o CTA e a URL do CTA. Quando uma imagem é colada, o sincronizador lê o `inlineObject` da Google Docs API e usa sua imagem no header. Se a primeira célula ficar vazia, o header usa a cruz de fallback.
+Na primeira célula da configuração, cole a imagem do logo diretamente no Google Docs ou informe uma URL pública. As células seguintes são o texto pequeno da marca, o nome da marca, o CTA e a URL do CTA. Quando uma imagem é colada, o sincronizador lê o `inlineObject` da Google Docs API e usa sua imagem no header. Se a primeira célula ficar vazia, o header usa a cruz de fallback. As linhas que começam com `#` são apenas cabeçalhos de orientação e não aparecem no site.
 
 Durante `npm run sync:google`, imagens remotas do header são baixadas, convertidas para WebP com qualidade 85 e salvas em `public/images/`. O JSON passa a apontar para a URL local `/images/...webp`, evitando a expiração das URLs temporárias fornecidas pelo Google Docs. URLs de imagens inseridas nos próximos componentes podem usar a mesma etapa de materialização em `scripts/image-assets.ts`.
 
@@ -88,20 +109,15 @@ Os arquivos recebem um nome calculado a partir do conteúdo da imagem, não da U
 
 O menu desktop aparece em telas largas e o menu mobile é aberto pelo botão no canto direito. Os links e o CTA são definidos no Google Docs; o comportamento responsivo pertence ao componente Astro.
 
-#### Dropdown no menu
+#### Tipos de item do menu
 
-As linhas antigas com duas colunas (`rótulo | URL`) continuam criando links simples. Para um dropdown, use quatro colunas e informe o tipo na primeira: `link`, `dropdown` ou `submenu`. Cada `submenu` precisa vir depois do seu `dropdown` pai.
+- `link`: cria um link simples; informe `rótulo` e `URL` nas três primeiras colunas.
+- `dropdown`: cria o item pai; informe o `rótulo` e sua `URL` nas três primeiras colunas.
+- `submenu`: adiciona um item ao dropdown; informe o rótulo do dropdown pai na segunda coluna, o texto do submenu na terceira e sua URL na quarta.
 
-| header |  |  |  |  |
-| ------ | - | - | - | - |
-| logo | Santuário | Nossa Senhora de Nazaré | Contribuir | #dizimo |
-| link | Início | / |
-| dropdown | A Paróquia | /a-paroquia/ |
-| submenu | A Paróquia | História | /a-paroquia/historia/ |
-| submenu | A Paróquia | Equipe | /a-paroquia/equipe/ |
-| link | Notícias | /noticias/ |
+Cada `submenu` precisa vir depois do respectivo `dropdown`. No desktop, o texto do dropdown continua sendo um link e a seta ao lado abre os subitens. No mobile, o grupo é expansível e inclui tanto o link principal como seus subitens.
 
-No desktop, o texto **A Paróquia** continua sendo um link e a seta ao lado abre o submenu. No mobile, o grupo é expansível e inclui o link principal e seus itens.
+As tabelas antigas com duas colunas (`rótulo | URL`) continuam criando links simples para manter compatibilidade com conteúdos já existentes.
 
 ### Hero
 
@@ -123,10 +139,10 @@ O campo `destaque` aparece em dourado e itálico. A imagem pode ser colada diret
 
 O block `banner-text` cria uma abertura decorativa para páginas especiais, como o Círio. Sua tabela usa uma linha de dados sem imagem:
 
-| banner-text |  |  |  |  |  |
-| ------ | - | - | - | - | - |
-| texto pequeno | título | destaque | subtítulo | período | imagem de fundo (opcional) |
-| Programação Geral | Círio de Nazaré | 2026 | Santuário de Luz | 2 a 18 de Outubro de 2026 | Cole a imagem aqui |
+| banner-text       |                 |          |                  |                           |                            |
+| ----------------- | --------------- | -------- | ---------------- | ------------------------- | -------------------------- |
+| texto pequeno     | título          | destaque | subtítulo        | período                   | imagem de fundo (opcional) |
+| Programação Geral | Círio de Nazaré | 2026     | Santuário de Luz | 2 a 18 de Outubro de 2026 | Cole a imagem aqui         |
 
 O título é obrigatório; os demais campos são opcionais. Quando houver imagem na última célula, ela se torna o fundo do banner com overlay escuro de 70% e os arcos decorativos não são exibidos. Sem imagem, o visual atual é mantido. O block `banner` continua exclusivo para a imagem de capa dos documentos de notícias (`imagem | texto alternativo | categoria`).
 
@@ -134,13 +150,13 @@ O título é obrigatório; os demais campos são opcionais. Quando houver imagem
 
 Use `card-event` (ou `event-card`) para uma programação com datas e horários. A primeira linha de dados contém a tag opcional, título, texto rico e um identificador opcional para âncoras. As demais linhas são a programação: data inicial, data final opcional, título, horário e descrição opcional. As datas usam o formato `AAAA-MM-DD` e o componente exibe automaticamente um evento em andamento ou, se não houver, o próximo. A seta revela todos os eventos com animação. Negrito, itálico e quebras de linha no texto e nas descrições são preservados.
 
-| card-event |  |  |  | |
-| ---------- | - | - | - | - |
-| tag (opcional) | título | texto rico | id (opcional) | |
-| Setembro | Missas de Rua | Durante o mês de setembro as equipes de serviço do Círio irão peregrinar com a Imagem da Virgem de Nazaré: | peregrinacoes | |
-| 2026-09-07 | | Missa no Ponto Final da Linha – Cohatrac IV | 19h30 | |
-| 2026-09-08 | | Missa na Praça da Escola Maria Pinha – Cohatrac I | 19h30 | |
-| 2026-09-09 | | Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré | 18h | Todos os grupos, pastorais e equipes do Círio |
+| card-event     |               |                                                                                                            |               |                                               |
+| -------------- | ------------- | ---------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------- |
+| tag (opcional) | título        | texto rico                                                                                                 | id (opcional) |                                               |
+| Setembro       | Missas de Rua | Durante o mês de setembro as equipes de serviço do Círio irão peregrinar com a Imagem da Virgem de Nazaré: | peregrinacoes |                                               |
+| 2026-09-07     |               | Missa no Ponto Final da Linha – Cohatrac IV                                                                | 19h30         |                                               |
+| 2026-09-08     |               | Missa na Praça da Escola Maria Pinha – Cohatrac I                                                          | 19h30         |                                               |
+| 2026-09-09     |               | Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré                                              | 18h           | Todos os grupos, pastorais e equipes do Círio |
 
 Tag e texto são opcionais. Para cada item da programação, data inicial, título e horário são obrigatórios. Para um evento contínuo por vários dias, preencha também a data final — por exemplo, `2026-10-08` e `2026-10-18`. Para o mesmo evento em dias não consecutivos, crie uma linha para cada data com o mesmo título; assim ele só aparece como próximo ou em andamento nos dias corretos.
 
@@ -153,23 +169,23 @@ A agenda é formada por dois blocks independentes, que você pode inserir ou nã
 
 Para mostrar os próximos eventos, inclua esta tabela, por exemplo, no documento da página inicial:
 
-| upcoming-events |  |  |  |  |
-| --------------- | - | - | - | - |
-| texto pequeno | título | texto do link | URL da lista | id opcional |
-| Agenda | Próximos Eventos | Ver todos | /eventos/ | eventos |
+| upcoming-events          |                         |             |
+| ------------------------ | ----------------------- | ----------- |
+| texto do link (opcional) | URL da lista (opcional) | id opcional |
+| Ver todos                | /eventos/               | eventos     |
 
-O título é obrigatório. Os demais campos são opcionais. Se a tabela não estiver no documento, a seção simplesmente não aparece naquela página.
+Se a tabela não estiver no documento, a seção simplesmente não aparece naquela página. Para incluir texto pequeno, título ou descrição antes dela, use uma tabela `section-header` imediatamente antes.
 
 Para criar a página de agenda, crie uma pasta `eventos` no Drive e coloque nela um Google Doc com os fragments desejados (como `header` e `footer`) e a tabela abaixo. Cada linha após a configuração é um evento. A imagem pode ser uma URL pública ou ser colada na primeira célula; durante a sincronização ela é convertida para WebP e salva localmente.
 
-| events-list |  |  |  |  |  |  |  |
-| ----------- | - | - | - | - | - | - | - |
-| texto pequeno | título | descrição da seção | id opcional |  |  |  |  |
-| Agenda | Eventos | Participe dos momentos de fé e celebração da comunidade. | eventos |  |  |  |  |
-| imagem | texto alternativo | categoria | título do evento | descrição | local | data | hora |
+| events-list        |                     |             |                                  |                                                  |                                   |            |       |
+| ------------------ | ------------------- | ----------- | -------------------------------- | ------------------------------------------------ | --------------------------------- | ---------- | ----- |
+| id opcional        |                     |             |                                  |                                                  |                                   |            |       |
+| eventos            |                     |             |                                  |                                                  |                                   |            |       |
+| imagem             | texto alternativo   | categoria   | título do evento                 | descrição                                        | local                             | data       | hora  |
 | Cole a imagem aqui | Fiéis em celebração | Festividade | Festa de Nossa Senhora de Nazaré | Celebração solene com procissão e missa festiva. | Santuário Nossa Senhora de Nazaré | 2026-10-14 | 19:00 |
 
-Imagem, título, descrição, local, data e hora são obrigatórios. Use datas no formato `AAAA-MM-DD` e horas no formato `HH:MM`. Categoria e texto alternativo são opcionais. O botão **Adicionar ao calendário** gera um arquivo `.ics` com duração de uma hora, que o visitante pode abrir no Google Calendar, Calendário do iPhone, Outlook ou aplicativo equivalente.
+Imagem, título, descrição, local, data e hora são obrigatórios. Use datas no formato `AAAA-MM-DD` e horas no formato `HH:MM`. Categoria e texto alternativo são opcionais. Para incluir texto pequeno, título ou descrição antes da lista, use uma tabela `section-header` imediatamente antes. O botão **Adicionar ao calendário** gera um arquivo `.ics` com duração de uma hora, que o visitante pode abrir no Google Calendar, Calendário do iPhone, Outlook ou aplicativo equivalente.
 
 Quando `npm run sync:google` é executado, todos os eventos de `events-list` são reunidos em `src/content/events.json`. Esse arquivo é a fonte do `upcoming-events`; por isso a home e a lista completa ficam sempre sincronizadas. Evite cadastrar o mesmo evento em mais de um `events-list`.
 
@@ -177,18 +193,18 @@ Quando `npm run sync:google` é executado, todos os eventos de `events-list` sã
 
 Use `quote` (ou `citation` / `citacao`) para destacar uma frase. A primeira célula é o texto, que aceita negrito, itálico e quebras de linha; a segunda é a autoria opcional.
 
-| quote |  |
-| ----- | - |
+| quote                                     |                        |
+| ----------------------------------------- | ---------------------- |
 | O sacerdote é o amor do coração de Jesus. | São João Maria Vianney |
 
 ### Página 404
 
 O layout da página de erro é fixo, mas seus textos e botão podem ser alterados pelo Google Docs. Na pasta `fragmentos`, crie a pasta `404` e coloque dentro dela um Google Doc (o nome do documento é livre). Use uma tabela `not-found` com uma linha de dados:
 
-| not-found |  |  |  |  |
-| --------- | - | - | - | - |
-| texto pequeno | título | descrição | texto do botão | link do botão |
-| Página não encontrada | Este caminho não nos levou até aqui. | Talvez o endereço esteja incorreto ou a página tenha sido movida. | Voltar para o início | / |
+| not-found             |                                      |                                                                   |                      |               |
+| --------------------- | ------------------------------------ | ----------------------------------------------------------------- | -------------------- | ------------- |
+| texto pequeno         | título                               | descrição                                                         | texto do botão       | link do botão |
+| Página não encontrada | Este caminho não nos levou até aqui. | Talvez o endereço esteja incorreto ou a página tenha sido movida. | Voltar para o início | /             |
 
 Depois de salvar o documento, execute `npm run sync:google` (ou publique o repositório) para atualizar a página. Se o fragmento ainda não existir, o site usa os textos padrão acima.
 
@@ -196,47 +212,47 @@ Depois de salvar o documento, execute `npm run sync:google` (ou publique o repos
 
 Use `banner-carousel` (ou `carousel`) para criar uma faixa de destaques com uma linha por slide. A categoria é opcional: deixe a terceira célula vazia quando não quiser exibi-la. O carrossel avança automaticamente a cada cinco segundos, pausa ao passar o mouse ou navegar pelo teclado e também oferece setas e indicadores.
 
-| banner-carousel |                  |           |        |     |
-| --------------- | ---------------- | --------- | ------ | --- |
+| banner-carousel |                   |           |        |      |
+| --------------- | ----------------- | --------- | ------ | ---- |
 | imagem          | texto alternativo | categoria | título | link |
 
 Exemplo:
 
-| banner-carousel |                              |           |                                               |             |
-| --------------- | ---------------------------- | --------- | --------------------------------------------- | ----------- |
+| banner-carousel  |                           |             |                                  |           |
+| ---------------- | ------------------------- | ----------- | -------------------------------- | --------- |
 | imagem do evento | Pessoas em uma celebração | Festividade | Festa de Nossa Senhora de Nazaré | /eventos/ |
-| imagem da igreja | Fachada do Santuário | | Conheça os horários das missas | /missas/ |
+| imagem da igreja | Fachada do Santuário      |             | Conheça os horários das missas   | /missas/  |
 
 Cada slide precisa de imagem e título. A imagem pode ser colada na primeira célula ou informada como URL e é materializada em WebP durante a sincronização.
 
 ### Doações e Pix
 
-Use uma tabela `donation` (também são aceitos `doacao` e `doação`). A primeira linha de dados configura a seção; as linhas seguintes são os dados bancários. O QR Code deve ser **colado ou inserido como imagem na quinta célula** da primeira linha de dados, e não como texto ou link.
+Use uma tabela `donation` (também são aceitos `doacao` e `doação`). A primeira linha de dados configura a contribuição; as linhas seguintes são os dados bancários. O QR Code deve ser **colado ou inserido como imagem na segunda célula** da primeira linha de dados, e não como texto ou link. Para inserir texto pequeno, título ou descrição antes da doação, use `section-header` imediatamente antes.
 
-| donation |  |  |  |  |  |  |  |
-| -------- | - | - | - | - | - | - | - |
-| texto pequeno | título | citação | chave Pix | imagem do QR Code | texto alternativo | instrução do QR Code | observação presencial |
-| Colabore | Dízimo e Contribuição | Deus ama quem dá com alegria. | 00.000.000/0001-00 | Cole o QR Code aqui | QR Code Pix do Santuário | Aponte a câmera para o QR Code acima. | Também aceitamos contribuições presencialmente na secretaria. |
-| Banco | Banco do Brasil |
-| Agência | 1234-5 |
-| Conta Corrente | 00001-0 |
-| Favorecido | Santuário Nossa Senhora de Nazaré |
+| donation           |                                   |                          |                                       |                                                               |
+| ------------------ | --------------------------------- | ------------------------ | ------------------------------------- | ------------------------------------------------------------- |
+| chave Pix          | imagem do QR Code                 | texto alternativo        | instrução do QR Code                  | observação presencial                                         |
+| 00.000.000/0001-00 | Cole o QR Code aqui               | QR Code Pix do Santuário | Aponte a câmera para o QR Code acima. | Também aceitamos contribuições presencialmente na secretaria. |
+| Banco              | Banco do Brasil                   |
+| Agência            | 1234-5                            |
+| Conta Corrente     | 00001-0                           |
+| Favorecido         | Santuário Nossa Senhora de Nazaré |
 
-Título, chave Pix e imagem do QR Code são obrigatórios. A chave Pix ganha um botão para cópia; os dados bancários e os textos complementares são opcionais. A imagem do QR Code é convertida para WebP e armazenada em `public/images/` durante `npm run sync:google`.
+Chave Pix e imagem do QR Code são obrigatórios. A chave Pix ganha um botão para cópia; os dados bancários e os textos complementares são opcionais. A imagem do QR Code é convertida para WebP e armazenada em `public/images/` durante `npm run sync:google`.
 
 ### Horários de missas
 
-Use o identificador `mass-schedule` (ou `missas`) na primeira linha. A primeira linha de dados define título, descrição e observação. As linhas seguintes usam três colunas: grupo, dia e horário. O componente agrupa automaticamente as linhas com o mesmo grupo e não solicita local, pois todas as celebrações acontecem na mesma igreja.
+Use o identificador `mass-schedule` (ou `missas`) na primeira linha. Cada linha de dados usa três colunas: grupo, dia e horário. O componente agrupa automaticamente as linhas com o mesmo grupo e não solicita local, pois todas as celebrações acontecem na mesma igreja. Para inserir texto pequeno, título ou descrição antes dos horários, use `section-header` imediatamente antes.
 
-| mass-schedule       |                                                |                                                               |
-| ------------------- | ---------------------------------------------- | ------------------------------------------------------------- |
-| Horários das Missas | Venha participar das celebrações eucarísticas. | Os horários podem sofrer alterações em celebrações especiais. |
-| Presenciais         | Segunda a Sexta-feira                          | 6h30 e 18h                                                    |
-| Presenciais         | Sábado                                         | 6h30 e 17h                                                    |
-| Presenciais         | Domingo                                        | 6h30, 9h, 17h e 19h                                           |
-| Transmitidas        | Segunda a Sexta-feira                          | 18h                                                           |
-| Transmitidas        | Sábado                                         | 17h                                                           |
-| Transmitidas        | Domingo                                        | 9h e 19h                                                      |
+| mass-schedule |                       |                     |
+| ------------- | --------------------- | ------------------- |
+| grupo         | dia                   | horário             |
+| Presenciais   | Segunda a Sexta-feira | 6h30 e 18h          |
+| Presenciais   | Sábado                | 6h30 e 17h          |
+| Presenciais   | Domingo               | 6h30, 9h, 17h e 19h |
+| Transmitidas  | Segunda a Sexta-feira | 18h                 |
+| Transmitidas  | Sábado                | 17h                 |
+| Transmitidas  | Domingo               | 9h e 19h            |
 
 O resultado é uma seção com cartões por grupo, adaptada para telas menores. Não inclua uma coluna de local.
 
@@ -264,23 +280,42 @@ Cada documento de notícia deve conter estas tabelas:
 
 ```text
 banner  -> imagem | texto alternativo | categoria
-text    -> título | texto completo
+title   -> título
+text    -> texto completo
 image   -> imagem | título da imagem | texto alternativo
 ```
 
-No block `text`, o título e o texto são opcionais separadamente: preenchendo apenas o título, somente o título aparece; preenchendo apenas o texto, somente o texto aparece; deixando ambos vazios, a tabela é ignorada. Quebras de linha, negrito e itálico aplicados no Google Docs são preservados na página da notícia. Para aplicar formatação, selecione o trecho na célula e use os controles normais do Google Docs.
+Use `title` para o título principal da notícia e `text` para cada trecho de conteúdo. Ambos têm uma única célula de dados; `title` é obrigatório para que a notícia apareça nos cards. Quebras de linha, negrito e itálico aplicados no Google Docs são preservados na página da notícia. Para aplicar formatação, selecione o trecho na célula e use os controles normais do Google Docs. O resumo dos cards usa o primeiro block `text`.
 
-No block `text`, título e texto são opcionais individualmente. Se somente um for preenchido, somente ele é renderizado; se os dois estiverem vazios, o block é ignorado. Quebras de linha, `negrito` e `itálico` aplicados no Google Docs são preservados na página. O resumo dos cards remove a formatação e mantém apenas o texto.
+| title                                               |     |
+| --------------------------------------------------- | --- |
+| título da notícia                                   |
+| Festa de Nossa Senhora de Nazaré reúne a comunidade |
 
-A imagem do `banner` é usada nos cards de `News` e `AllNews`. O título e o texto do block `text` também aparecem no card, com o texto sendo usado como resumo. Os blocks `image` aparecem somente na página individual. Imagens coladas ou URLs são convertidas para WebP durante `npm run sync:google`.
+| text                                                     |     |
+| -------------------------------------------------------- | --- |
+| texto completo                                           |
+| A comunidade se reuniu para celebrar este momento de fé. |
+
+A imagem do `banner` é usada nos cards de `News` e `AllNews`. O título do block `title` e o primeiro `text` também aparecem no card, com o texto sendo usado como resumo. Os blocks `image` aparecem somente na página individual. Imagens coladas ou URLs são convertidas para WebP durante `npm run sync:google`.
 
 Para inserir o preview de três notícias em qualquer página, use uma tabela:
 
-| news        |                  |                                       |           |            |
-| ----------- | ---------------- | ------------------------------------- | --------- | ---------- |
-| Comunicados | Últimas Notícias | Acompanhe as novidades da comunidade. | Ver todas | /noticias/ |
+| news          |             |             |
+| ------------- | ----------- | ----------- |
+| texto do link | URL do link | id opcional |
+| Ver todas     | /noticias/  | noticias    |
 
-O componente `AllNews` mostra nove notícias por página e cria URLs como `/noticias/`, `/noticias/pagina/2/` e assim por diante. Cada notícia gera uma página individual em `/noticias/nome-do-documento/`.
+Use `section-header` imediatamente antes de `news` ou `all-news` quando quiser exibir texto pequeno, título e descrição. O componente `AllNews` mostra nove notícias por página e cria URLs como `/noticias/`, `/noticias/pagina/2/` e assim por diante. Cada notícia gera uma página individual em `/noticias/nome-do-documento/`.
+
+Para inserir a listagem paginada de todas as notícias, use uma tabela `all-news` com o identificador opcional da seção:
+
+| all-news    |     |
+| ----------- | --- |
+| id opcional |
+| noticias    |
+
+Coloque um `section-header` imediatamente antes se quiser um título e uma descrição na página. O componente lê automaticamente as notícias da pasta `noticias` e exibe até nove por página. Sem preencher o campo, o id padrão é `noticias`.
 
 ### Fragmentos reutilizáveis
 
@@ -304,16 +339,16 @@ A referência usa o caminho do documento dentro de `fragmentos`, sem a extensão
 
 Para o footer, crie o documento `footer` em `fragmentos/footer/` e use uma tabela com esta estrutura:
 
-| footer          |             |                                                   |                         |                                                 |                          |
-| --------------- | ----------- | ------------------------------------------------- | ----------------------- | ----------------------------------------------- | ------------------------ |
-| Logo (opcional) | Santuário   | Nossa Senhora de Nazaré                           | Descrição da comunidade | © 2025 Santuário. Todos os direitos reservados. | Diocese de Belém do Pará |
-| quick           | Início      | /                                                 |
-| quick           | Notícias    | /noticias/                                        |
-| service         | Círio de Nazaré | /cirio/                                      |
-| service         | Círio Ecológico | /cirio/cirio-ecologico/                     |
-| contact         | Tel         | (91) 3234-5678                                    |
-| contact         | E-mail      | secretaria@santuarionazare.org.br                 |
-| office          | Atendimento | Seg - Sex: 08h00 às 18h00; Sábado: 08h00 às 12h00 |
+| footer          |                 |                                                   |                         |                                                 |                          |
+| --------------- | --------------- | ------------------------------------------------- | ----------------------- | ----------------------------------------------- | ------------------------ |
+| Logo (opcional) | Santuário       | Nossa Senhora de Nazaré                           | Descrição da comunidade | © 2025 Santuário. Todos os direitos reservados. | Diocese de Belém do Pará |
+| quick           | Início          | /                                                 |
+| quick           | Notícias        | /noticias/                                        |
+| service         | Círio de Nazaré | /cirio/                                           |
+| service         | Círio Ecológico | /cirio/cirio-ecologico/                           |
+| contact         | Tel             | (91) 3234-5678                                    |
+| contact         | E-mail          | secretaria@santuarionazare.org.br                 |
+| office          | Atendimento     | Seg - Sex: 08h00 às 18h00; Sábado: 08h00 às 12h00 |
 
 A primeira linha de dados contém, nesta ordem: logo opcional, texto pequeno da marca, nome da marca, descrição, copyright e diocese. Cole a imagem diretamente na primeira célula ou informe uma URL pública. Se a primeira célula ficar vazia, use a tabela antiga sem a coluna de logo e o footer exibirá a cruz dourada. Nas linhas seguintes, `quick` cria links rápidos, `service` cria links da seção **Círios**, `contact` cria informações de contato e `office` define o atendimento. Para redes sociais, use `contact` com o primeiro valor começando por `@`, por exemplo `@Instagram`, e a URL no terceiro campo; Instagram, YouTube, Facebook e WhatsApp aparecem com seus respectivos ícones. Em `contact` e `office`, use quebras de linha ou uma lista com marcadores no Google Docs para exibir cada informação em sua própria linha. A imagem será convertida para WebP durante `npm run sync:google`.
 

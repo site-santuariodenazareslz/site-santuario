@@ -13,6 +13,7 @@ import News from "./blocks/News/News.astro";
 import AllNews from "./blocks/AllNews/AllNews.astro";
 import NewsBanner from "./blocks/NewsBanner/NewsBanner.astro";
 import NewsText from "./blocks/NewsText/NewsText.astro";
+import NewsTitle from "./blocks/NewsTitle/NewsTitle.astro";
 import NewsImage from "./blocks/NewsImage/NewsImage.astro";
 import type { Block } from "../lib/types";
 
@@ -32,6 +33,7 @@ const componentFor = {
   "all-news": AllNews,
   "news-banner": NewsBanner,
   "news-text": NewsText,
+  "news-title": NewsTitle,
   "news-image": NewsImage,
 } as const;
 

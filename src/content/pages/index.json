@@ -21,13 +21,6 @@
       "type": "banner-carousel",
       "slides": [
         {
-          "image": "Imagem",
-          "imageAlt": "Texto Alternativo",
-          "category": "Categoria (opcional)",
-          "title": "Título",
-          "href": "Link"
-        },
-        {
           "image": "/images/17ccfa2cf99554d8.webp",
           "imageAlt": "Fiéis durante celebração",
           "category": "Festividade",
@@ -51,18 +44,24 @@
       ]
     },
     {
+      "type": "section-header",
+      "eyebrow": "Agenda",
+      "title": "Próximos eventos"
+    },
+    {
       "type": "upcoming-events",
       "id": "proximos-eventos",
-      "eyebrow": "texto pequeno",
-      "title": "título",
-      "allLabel": "texto do link",
-      "allHref": "/eventos/"
+      "allLabel": "Ver todos",
+      "allHref": "/eventos"
+    },
+    {
+      "type": "section-header",
+      "eyebrow": "Horários das Missas",
+      "title": "Venha participar das celebrações eucarísticas.",
+      "description": "Os horários podem sofrer alterações."
     },
     {
       "type": "mass-schedule",
-      "title": "Horários das Missas",
-      "description": "Venha participar das celebrações eucarísticas.",
-      "note": "Os horários podem sofrer alterações.",
       "groups": [
         {
           "name": "Presenciais",
@@ -101,18 +100,24 @@
       ]
     },
     {
-      "type": "news",
+      "type": "section-header",
       "eyebrow": "Comunicados",
       "title": "Últimas Notícias",
-      "description": "Acompanhe as novidades da comunidade.",
+      "description": "Acompanhe as novidades da comunidade."
+    },
+    {
+      "type": "news",
+      "id": "ultimas-noticias",
       "allLabel": "Ver todas",
-      "allHref": "/noticias/"
+      "allHref": "/noticias"
+    },
+    {
+      "type": "section-header",
+      "eyebrow": "Colabore",
+      "title": "Dízimo e Contribuição"
     },
     {
       "type": "donation",
-      "eyebrow": "Colabore",
-      "title": "Dízimo e Contribuição",
-      "quote": "",
       "pixKey": "00.000.000/0001-00",
       "qrCode": "/images/438d1ee6ad63a321.webp",
       "qrCodeAlt": "QR Code Pix do Santuário",

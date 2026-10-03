@@ -3,7 +3,7 @@
 .card-event {
   max-width: 960px;
   margin: 0 auto;
-  padding: $space-5 $space-5;
+  padding-inline: $space-5;
 
   &__card {
     padding: clamp(24px, 4vw, 32px);

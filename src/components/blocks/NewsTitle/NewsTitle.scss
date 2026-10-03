@@ -1,0 +1,16 @@
+@use "../../../styles/tokens" as *;
+
+.news-title {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
+
+  h1 {
+    margin: 0 $space-5;
+    color: $color-brown;
+    font-family: $font-serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    line-height: 1.12;
+    white-space: pre-line;
+  }
+}

@@ -24,15 +24,7 @@ const pageHref = (page: number) =>
   page === 1 ? siteUrl("/noticias/") : siteUrl(`/noticias/pagina/${page}/`);
 ---
 
-<section class="all-news" aria-labelledby="all-news-title">
-  <header class="all-news__heading">
-    <p class="all-news__label">
-      <span aria-hidden="true"></span>{block.eyebrow}<span aria-hidden="true"
-      ></span>
-    </p>
-    <h1 id="all-news-title">{block.title}</h1>
-    {block.description && <p>{block.description}</p>}
-  </header>
+<section id={block.id ?? "noticias"} class="all-news">
   <div class="all-news__grid">
     {pageNews.map((item) => <NewsCard news={item} />)}
   </div>

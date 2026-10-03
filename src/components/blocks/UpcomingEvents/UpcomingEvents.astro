@@ -8,17 +8,11 @@ import "./UpcomingEvents.scss";
 const block = Astro.props as UpcomingEventsBlock;
 ---
 
-<section id={block.id ?? "eventos"} class="upcoming-events" aria-labelledby="upcoming-events-title">
-  <div class="upcoming-events__heading">
-    <div>
-      <p class="upcoming-events__eyebrow">{block.eyebrow}</p>
-      <h2 id="upcoming-events-title">{block.title}</h2>
-    </div>
-    <a href={siteUrl(block.allHref)}>{block.allLabel} <span aria-hidden="true">→</span></a>
-  </div>
+<section id={block.id ?? "eventos"} class="upcoming-events">
   <div class="upcoming-events__grid" data-upcoming-events>
     {events.map((event) => <EventCard event={event} hidden />)}
   </div>
+  <a class="upcoming-events__all" href={siteUrl(block.allHref)}>{block.allLabel} <span aria-hidden="true">→</span></a>
   <p class="upcoming-events__empty" data-upcoming-events-empty hidden>Nenhum evento próximo está programado.</p>
 </section>
 

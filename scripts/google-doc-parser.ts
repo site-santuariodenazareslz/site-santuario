@@ -115,9 +115,17 @@ function firstValue(row: ParsedCell[] | undefined): string {
   return row?.find((cell) => cell.text)?.text ?? "";
 }
 
+/** Linhas iniciadas com # servem como cabeçalhos/anotações no Google Docs. */
+function isEditorialNote(row: ParsedCell[] | undefined): boolean {
+  return row?.[0]?.text.trimStart().startsWith("#") ?? false;
+}
+
 function blockFromRows(rows: ParsedCell[][]): Block | null {
   const blockName = firstValue(rows[0]).toLowerCase();
-  const body = rows.slice(1).filter((row) => row.some(Boolean));
+  const body = rows
+    .slice(1)
+    .filter((row) => row.some((cell) => cell.text || cell.image))
+    .filter((row) => !isEditorialNote(row));
 
   if (blockName === "header") {
     const settings = body[0] ?? [];
@@ -284,9 +292,6 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
 
   if (blockName === "donation" || blockName === "doacao" || blockName === "doação") {
     const [
-      eyebrowCell,
-      titleCell,
-      quoteCell,
       pixKeyCell,
       qrCodeCell,
       qrCodeAltCell,
@@ -302,16 +307,13 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       }))
       .filter((detail) => detail.label && detail.value);
 
-    if (!titleCell?.text || !pixKeyCell?.text || !qrCode) {
+    if (!pixKeyCell?.text || !qrCode) {
       throw new Error(
-        "O block donation precisa informar título, chave Pix e a imagem do QR Code.",
+        "O block donation precisa informar chave Pix e a imagem do QR Code.",
       );
     }
     return {
       type: "donation",
-      eyebrow: eyebrowCell?.text ?? "Colabore",
-      title: titleCell.text,
-      quote: quoteCell?.text ?? "",
       pixKey: pixKeyCell.text,
       qrCode,
       qrCodeAlt: qrCodeAltCell?.text ?? "QR Code Pix",
@@ -323,9 +325,7 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
   }
 
   if (blockName === "mass-schedule" || blockName === "missas") {
-    const [titleCell, descriptionCell, noteCell] = body[0] ?? [];
     const entries = body
-      .slice(1)
       .map(([groupCell, dayCell, timeCell]) => ({
         group: groupCell?.text ?? "",
         day: dayCell?.text ?? "",
@@ -344,16 +344,13 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
         });
       return result;
     }, []);
-    if (!titleCell?.text || !entries.length) {
+    if (!entries.length) {
       throw new Error(
-        "O block mass-schedule precisa informar título e pelo menos um horário.",
+        "O block mass-schedule precisa informar pelo menos um horário.",
       );
     }
     return {
       type: "mass-schedule",
-      title: titleCell.text,
-      description: descriptionCell?.text ?? "",
-      note: noteCell?.text ?? "",
       groups,
     };
   }
@@ -421,23 +418,17 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
   }
 
   if (blockName === "upcoming-events" || blockName === "next-events") {
-    const [eyebrowCell, titleCell, allLabelCell, allHrefCell, idCell] = body[0] ?? [];
-    if (!titleCell?.text)
-      throw new Error("O block upcoming-events precisa informar um título.");
+    const [allLabelCell, allHrefCell, idCell] = body[0] ?? [];
     return {
       type: "upcoming-events",
       id: idCell?.text || undefined,
-      eyebrow: eyebrowCell?.text ?? "Agenda",
-      title: titleCell.text,
       allLabel: allLabelCell?.text ?? "Ver todos",
       allHref: allHrefCell?.text ?? "/eventos/",
     };
   }
 
   if (blockName === "events-list" || blockName === "events") {
-    const [eyebrowCell, titleCell, descriptionCell, idCell] = body[0] ?? [];
-    if (!titleCell?.text)
-      throw new Error("O block events-list precisa informar um título.");
+    const [idCell] = body[0] ?? [];
     const events = body
       .slice(1)
       .map(([
@@ -471,9 +462,6 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     return {
       type: "events-list",
       id: idCell?.text || undefined,
-      eyebrow: eyebrowCell?.text ?? "Agenda",
-      title: titleCell.text,
-      description: descriptionCell?.rawText ?? "",
       events,
     };
   }
@@ -519,14 +507,22 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     };
   }
 
+  if (blockName === "title") {
+    const [titleCell] = body[0] ?? [];
+    if (!titleCell?.text) return null;
+    return {
+      type: "news-title",
+      title: titleCell.text,
+      titleHtml: titleCell.html || titleCell.text,
+    };
+  }
+
   if (blockName === "text") {
-    const [titleCell, textCell] = body[0] ?? [];
-    if (!titleCell?.text && !textCell?.text) return null;
+    const [textCell] = body[0] ?? [];
+    if (!textCell?.text) return null;
     return {
       type: "news-text",
-      title: titleCell?.text ?? "",
-      titleHtml: titleCell?.html ?? "",
-      text: textCell?.html ?? "",
+      text: textCell.html || textCell.text,
     };
   }
 
@@ -542,19 +538,19 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     };
   }
 
-  if (blockName === "news" || blockName === "all-news") {
-    const [eyebrowCell, titleCell, descriptionCell, allLabelCell, allHrefCell] =
-      body[0] ?? [];
-    if (!titleCell?.text)
-      throw new Error(`O block ${blockName} precisa informar um título.`);
+  if (blockName === "news") {
+    const [allLabelCell, allHrefCell, idCell] = body[0] ?? [];
     return {
-      type: blockName,
-      eyebrow: eyebrowCell?.text ?? "Comunicados",
-      title: titleCell.text,
-      description: descriptionCell?.text ?? "",
-      allLabel: allLabelCell?.text ?? "Ver todas",
-      allHref: allHrefCell?.text ?? "/noticias/",
+      type: "news",
+      id: idCell?.text || undefined,
+      allLabel: allLabelCell?.text || undefined,
+      allHref: allHrefCell?.text || undefined,
     };
+  }
+
+  if (blockName === "all-news") {
+    const [idCell] = body[0] ?? [];
+    return { type: "all-news", id: idCell?.text || undefined };
   }
 
   if (blockName === "fragment" || blockName === "experience-fragment") {
@@ -564,6 +560,18 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
         "A referência de fragmento precisa informar o nome do fragmento.",
       );
     return { type: "fragment", name };
+  }
+
+  if (blockName === "section-header" || blockName === "section-title") {
+    const [eyebrowCell, titleCell, descriptionCell] = body[0] ?? [];
+    if (!titleCell?.text)
+      throw new Error("O block section-header precisa informar um título.");
+    return {
+      type: "section-header",
+      eyebrow: eyebrowCell?.text || undefined,
+      title: titleCell.text,
+      description: descriptionCell?.rawText || undefined,
+    };
   }
 
   if (blockName)
@@ -585,7 +593,7 @@ export function parseGoogleDocument(document: GoogleDocument): Page {
     const paragraphs = content.filter((element) => element.paragraph).length;
     throw new Error(
       `Nenhum block válido foi encontrado. A API recebeu ${tables.length} tabela(s) e ${paragraphs} parágrafo(s). ` +
-        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, upcoming-events, events-list, quote, not-found, donation, mass-schedule, news, all-news, banner, text, image ou fragment.",
+        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, section-header, upcoming-events, events-list, quote, not-found, donation, mass-schedule, news, all-news, banner, title, text, image ou fragment.",
     );
   }
 

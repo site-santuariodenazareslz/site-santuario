@@ -1,0 +1,50 @@
+@use "../../../styles/tokens" as *;
+
+.section-header {
+  max-width: $width;
+  margin: 0 auto;
+  padding: 0px $space-5;
+  text-align: center;
+
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2;
+    margin: 0 0 $space-2;
+    color: $color-gold;
+    font-family: $font-sans;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+
+    span {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      transform: rotate(45deg);
+      background: $color-gold;
+    }
+  }
+  h2 {
+    margin: 0;
+    color: $color-brown;
+    font-family: $font-serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    letter-spacing: 0;
+  }
+  &__description {
+    max-width: 560px;
+    margin: $space-3 auto 0;
+    color: $color-text-mid;
+    font-family: $font-sans;
+    line-height: 1.7;
+  }
+}
+@media (max-width: 700px) {
+  .section-header {
+    padding-top: 56px;
+    padding-bottom: 32px;
+  }
+}

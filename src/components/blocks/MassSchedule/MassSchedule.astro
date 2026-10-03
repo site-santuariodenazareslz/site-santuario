@@ -2,23 +2,13 @@
 import type { MassScheduleBlock } from "../../../lib/types";
 import "./MassSchedule.scss";
 
-const { title, description, note, groups } = Astro.props as MassScheduleBlock;
+const { groups } = Astro.props as MassScheduleBlock;
 ---
 
 <section
   id="missas"
   class="mass-schedule"
-  aria-labelledby="mass-schedule-title"
 >
-  <div class="mass-schedule__intro">
-    <p class="mass-schedule__label">
-      <span aria-hidden="true"></span>Celebrações<span aria-hidden="true"
-      ></span>
-    </p>
-    <h2 id="mass-schedule-title">{title}</h2>
-    {description && <p class="mass-schedule__description">{description}</p>}
-  </div>
-
   <div class="mass-schedule__groups">
     {
       groups.map((group) => (
@@ -56,6 +46,4 @@ const { title, description, note, groups } = Astro.props as MassScheduleBlock;
       ))
     }
   </div>
-
-  {note && <p class="mass-schedule__note">{note}</p>}
 </section>

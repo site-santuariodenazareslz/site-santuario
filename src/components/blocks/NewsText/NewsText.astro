@@ -2,12 +2,9 @@
 import type { NewsTextBlock } from "../../../lib/types";
 import "./NewsText.scss";
 
-const { title, titleHtml, text } = Astro.props as NewsTextBlock;
+const { text } = Astro.props as NewsTextBlock;
 ---
 
 <section class="news-text">
-  <div>
-    {title && <h1 set:html={titleHtml || title} />}
-    {text && <div class="news-text__content" set:html={text} />}
-  </div>
+  <div class="news-text__content" set:html={text} />
 </section>

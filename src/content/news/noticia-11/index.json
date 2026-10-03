@@ -1,8 +1,8 @@
 {
-  "slug": "noticia-2",
-  "createdAt": "2026-08-27T18:18:29.136Z",
+  "slug": "noticia-11",
+  "createdAt": "2026-09-12T15:11:12.025Z",
   "page": {
-    "title": "notícia 2",
+    "title": "Notícia 11",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
@@ -17,8 +17,8 @@
       },
       {
         "type": "news-title",
-        "title": "noticia 2",
-        "titleHtml": "noticia 2\n"
+        "title": "noticia 11",
+        "titleHtml": "noticia 11\n"
       },
       {
         "type": "news-text",

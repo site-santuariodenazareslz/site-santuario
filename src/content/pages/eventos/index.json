@@ -3,11 +3,13 @@
   "description": "Página gerada automaticamente a partir de um Google Doc.",
   "blocks": [
     {
+      "type": "section-header",
+      "eyebrow": "Agenda",
+      "title": "Eventos"
+    },
+    {
       "type": "events-list",
-      "id": "id",
-      "eyebrow": "texto pequeno",
-      "title": "título",
-      "description": "descrição",
+      "id": "eventos",
       "events": [
         {
           "id": "2026-10-14-titulo",
