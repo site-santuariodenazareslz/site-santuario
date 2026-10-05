@@ -1,6 +1,5 @@
 import eventData from "../content/events.json";
 import type { EventItem } from "./types";
+import { sortEvents } from "./event-utils";
 
-export const events = [...(eventData as EventItem[])].sort((a, b) =>
-  `${a.startDate}T${a.startTime}`.localeCompare(`${b.startDate}T${b.startTime}`),
-);
+export const events = sortEvents(eventData as EventItem[]);

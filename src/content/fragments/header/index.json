@@ -21,18 +21,12 @@
           "href": "/noticias"
         },
         {
-          "label": "Círio de Nazaré",
-          "href": "/cirio",
-          "children": [
-            {
-              "label": "Programação",
-              "href": "/cirio/programacao/"
-            }
-          ]
+          "label": "Eventos",
+          "href": "/eventos"
         },
         {
-          "label": "Associações",
-          "href": "/associacoes"
+          "label": "Círio de Nazaré",
+          "href": "/cirio"
         }
       ]
     }

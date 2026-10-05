@@ -1,124 +1,169 @@
 ---
 import type { CardEventBlock } from "../../../lib/types";
+import { events } from "../../../lib/events";
+import { eventsForCategories } from "../../../lib/event-utils";
+import { eventsOnOrAfterDate } from "../../../lib/event-date";
+import EventCard from "../EventCard/EventCard.astro";
 import "./CardEvent.scss";
 
-const { id, tag, title, text, program } = Astro.props as CardEventBlock;
+const block = Astro.props as CardEventBlock;
+const listedEvents = eventsOnOrAfterDate(
+  eventsForCategories(events, block.categories ?? []),
+);
+const headingId = `${block.id ?? "card-event"}-title`;
 ---
 
 <section
-  id={id}
+  id={block.id}
   class="card-event"
-  aria-labelledby={`${id ?? "card-event"}-title`}
+  aria-labelledby={block.title ? headingId : undefined}
 >
-  <article class="card-event__card">
-    {tag && <p class="card-event__tag">{tag}</p>}
-    <h2 id={`${id ?? "card-event"}-title`}>{title}</h2>
-    {text && <div class="card-event__text" set:html={text} />}
-
-    {
-      program.length > 0 && (
-        <div class="card-event__program">
-          <p class="card-event__program-title">
-            <span aria-hidden="true" />
-            Programação
-            <span aria-hidden="true" />
-          </p>
-          <ol data-event-list>
-            {program.map((entry, index) => (
-              <li
-                class:list={{ "is-selected": index === 0 }}
-                data-start-date={entry.startDate}
-                data-end-date={entry.endDate}
-              >
-                <time>{entry.date}</time>
-                <div>
-                  <h3>{entry.title}</h3>
-                  <p class="card-event__time">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 32 32"
-                      aria-hidden="true"
-                    >
-                      <path d="M16 .75C7.58.75.75 7.58.75 16S7.58 31.25 16 31.25 31.25 24.42 31.25 16C31.24 7.58 24.42.76 16 .75Zm0 28C8.96 28.75 3.25 23.04 3.25 16S8.96 3.25 16 3.25 28.75 8.96 28.75 16 23.04 28.75 16 28.75Zm1.25-13.27V6a1.25 1.25 0 1 0-2.5 0v10c0 .35.14.66.37.88l4 4a1.25 1.25 0 0 0 1.77-1.77l-3.64-3.63Z" />
-                    </svg>
-                    {entry.time}
-                  </p>
-                  {entry.description && entry.description.length > 1 && (
-                    <div
-                      class="card-event__entry-description"
-                      set:html={entry.description}
-                    />
-                  )}
-                </div>
-              </li>
+  {
+    (block.title || block.text) && (
+      <header class="card-event__heading">
+        {block.title && <h2 id={headingId}>{block.title}</h2>}
+        {block.text && <div class="card-event__text" set:html={block.text} />}
+      </header>
+    )
+  }
+  {
+    listedEvents.length > 0 && (
+      <div class="card-event__carousel" data-card-event-carousel>
+        <button
+          class="card-event__arrow card-event__arrow--previous"
+          type="button"
+          aria-label="Eventos anteriores"
+          data-card-event-previous
+          disabled
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <div class="card-event__viewport" data-card-event-viewport>
+          <div class="card-event__track" data-card-event-track>
+            {listedEvents.map((event) => (
+              <div class="card-event__slide">
+                <EventCard event={event} />
+              </div>
             ))}
-          </ol>
-          {
-            program.length > 1 && (
-              <button
-                class="card-event__toggle"
-                type="button"
-                aria-expanded="false"
-                data-event-toggle
-              >
-                <span data-collapsed-label>Ver programação completa</span>
-                <span data-expanded-label>Ocultar programação</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-              </button>
-            )
-          }
+          </div>
         </div>
-      )
-    }
-  </article>
+        <button
+          class="card-event__arrow card-event__arrow--next"
+          type="button"
+          aria-label="Próximos eventos"
+          data-card-event-next
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </button>
+        <div
+          class="card-event__dots"
+          role="group"
+          aria-label="Páginas de eventos"
+          data-card-event-dots
+        />
+      </div>
+    )
+  }
+  {
+    listedEvents.length === 0 && (
+      <p class="card-event__empty">
+        Nenhum evento corresponde às categorias selecionadas.
+      </p>
+    )
+  }
 </section>
 
 <script>
-  const parseDate = (value?: string) => {
-    if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return undefined;
-    const [year, month, day] = value.split("-").map(Number);
-    return new Date(year, month - 1, day);
-  };
-
-  document.querySelectorAll<HTMLElement>(".card-event").forEach((card) => {
-    const list = card.querySelector<HTMLOListElement>("[data-event-list]");
-    const toggle = card.querySelector<HTMLButtonElement>("[data-event-toggle]");
-    if (!list) return;
-
-    const entries = [...list.querySelectorAll<HTMLLIElement>("li")];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const datedEntries: Array<{
-      entry: HTMLLIElement;
-      start: Date;
-      end: Date | undefined;
-    }> = [];
-    entries.forEach((entry) => {
-      const start = parseDate(entry.dataset.startDate);
-      if (start) {
-        datedEntries.push({
-          entry,
-          start,
-          end: parseDate(entry.dataset.endDate),
-        });
-      }
-    });
-
-    if (datedEntries.length) {
-      const current = datedEntries.filter(({ start, end }) =>
-        start <= today && (end ?? start) >= today,
+  document
+    .querySelectorAll<HTMLElement>("[data-card-event-carousel]")
+    .forEach((carousel) => {
+      const viewport = carousel.querySelector<HTMLElement>(
+        "[data-card-event-viewport]",
       );
-      const upcoming = datedEntries.filter(({ start }) => start > today);
-      const selected = current.at(-1) ?? upcoming[0] ?? datedEntries.at(-1);
-      if (selected) {
-        entries.forEach((entry) => entry.classList.toggle("is-selected", entry === selected.entry));
-      }
-    }
+      const track = carousel.querySelector<HTMLElement>(
+        "[data-card-event-track]",
+      );
+      const previous = carousel.querySelector<HTMLButtonElement>(
+        "[data-card-event-previous]",
+      );
+      const next = carousel.querySelector<HTMLButtonElement>(
+        "[data-card-event-next]",
+      );
+      const dots = carousel.querySelector<HTMLElement>(
+        "[data-card-event-dots]",
+      );
+      if (!viewport || !track || !previous || !next || !dots) return;
 
-    toggle?.addEventListener("click", () => {
-      const expanded = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!expanded));
-      list.classList.toggle("is-expanded", !expanded);
+      const slides = [
+        ...track.querySelectorAll<HTMLElement>(".card-event__slide"),
+      ];
+      const visibleCount = () =>
+        window.matchMedia("(max-width: 620px)").matches
+          ? 1
+          : window.matchMedia("(max-width: 900px)").matches
+            ? 2
+            : 3;
+      let page = 0;
+      let pageCount = 1;
+      let pageDots: HTMLButtonElement[] = [];
+      let configuredCount = 0;
+
+      const configure = (count: number) => {
+        if (configuredCount === count) return;
+        configuredCount = count;
+        pageCount = Math.max(1, Math.ceil(slides.length / count));
+        page = Math.min(page, pageCount - 1);
+        dots.replaceChildren();
+        pageDots = Array.from({ length: pageCount }, (_, index) => {
+          const dot = document.createElement("button");
+          dot.className = "card-event__dot";
+          dot.type = "button";
+          dot.setAttribute(
+            "aria-label",
+            `Ir para o grupo ${index + 1} de ${pageCount}`,
+          );
+          dot.addEventListener("click", () => {
+            page = index;
+            update();
+          });
+          dots.append(dot);
+          return dot;
+        });
+      };
+
+      const update = () => {
+        const count = visibleCount();
+        configure(count);
+        page = Math.min(page, pageCount - 1);
+        track.style.width = `${(slides.length / count) * 100}%`;
+        slides.forEach((slide) => {
+          slide.style.flexBasis = `${100 / slides.length}%`;
+        });
+        track.style.transform = `translateX(-${(page * count * 100) / slides.length}%)`;
+        previous.disabled = page === 0;
+        next.disabled = page === pageCount - 1;
+        previous.hidden = pageCount <= 1;
+        next.hidden = pageCount <= 1;
+        dots.hidden = pageCount <= 1;
+        pageDots.forEach((dot, index) => {
+          dot.classList.toggle("is-active", index === page);
+          dot.setAttribute("aria-current", index === page ? "true" : "false");
+        });
+      };
+
+      previous.addEventListener("click", () => {
+        page = Math.max(0, page - 1);
+        update();
+      });
+      next.addEventListener("click", () => {
+        page = Math.min(pageCount - 1, page + 1);
+        update();
+      });
+      window.addEventListener("resize", update);
+      update();
     });
-  });
 </script>

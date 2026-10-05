@@ -36,29 +36,20 @@ export type BannerTextBlock = {
   backgroundImage?: string;
 };
 
-export type EventProgramEntry = {
-  /** Rótulo exibido para a data. */
-  date: string;
-  /** Data inicial no formato YYYY-MM-DD, usada para ordenar a programação. */
-  startDate?: string;
-  /** Data final opcional no formato YYYY-MM-DD para eventos contínuos. */
-  endDate?: string;
-  title: string;
-  time: string;
-  description?: string;
-};
-
 /** Um evento da agenda geral. Datas usam o formato YYYY-MM-DD. */
 export type EventItem = {
   id: string;
   image: string;
   imageAlt: string;
-  category: string;
+  categories?: string[];
+  /** Compatibilidade com o conteúdo anterior à adoção de categorias múltiplas. */
+  category?: string;
   title: string;
   description: string;
   location: string;
   startDate: string;
   startTime: string;
+  endTime?: string;
 };
 
 export type UpcomingEventsBlock = {
@@ -66,6 +57,7 @@ export type UpcomingEventsBlock = {
   id?: string;
   allLabel: string;
   allHref: string;
+  categories?: string[];
 };
 
 /** Cabeçalho reutilizável para apresentar uma seção. */
@@ -86,10 +78,9 @@ export type EventsListBlock = {
 export type CardEventBlock = {
   type: "card-event";
   id?: string;
-  tag?: string;
-  title: string;
-  text: string;
-  program: EventProgramEntry[];
+  categories: string[];
+  title?: string;
+  text?: string;
 };
 
 export type QuoteBlock = {

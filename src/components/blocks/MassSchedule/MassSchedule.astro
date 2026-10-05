@@ -5,11 +5,13 @@ import "./MassSchedule.scss";
 const { groups } = Astro.props as MassScheduleBlock;
 ---
 
-<section
-  id="missas"
-  class="mass-schedule"
->
-  <div class="mass-schedule__groups">
+<section id="missas" class="mass-schedule">
+  <div
+    class:list={[
+      "mass-schedule__groups",
+      { "mass-schedule__groups--single": groups.length === 1 },
+    ]}
+  >
     {
       groups.map((group) => (
         <section

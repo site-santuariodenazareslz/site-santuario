@@ -10,6 +10,8 @@ npm run sync:google
 npm run dev
 ```
 
+Execute `npm test` para validar o parser e as regras da agenda.
+
 ## Testar no GitHub Pages
 
 O projeto está configurado para publicação como GitHub Pages em:
@@ -88,7 +90,7 @@ O título é obrigatório. Para não exibir cabeçalho em uma seção, basta nã
 
 ### Header
 
-O header é um block que pode ser usado diretamente em uma página ou dentro de um fragmento `header`. A primeira linha de dados configura a marca e o CTA; as linhas seguintes criam os links, dropdowns e submenus do menu:
+O header global é carregado automaticamente em todas as páginas a partir do fragmento `header`; não adicione uma tabela `fragment` para ele em cada documento. A primeira linha de dados configura a marca e o CTA; as linhas seguintes criam os links, dropdowns e submenus do menu:
 
 | header            |               |                          |                       |            |
 | ----------------- | ------------- | ------------------------ | --------------------- | ---------- |
@@ -148,46 +150,62 @@ O título é obrigatório; os demais campos são opcionais. Quando houver imagem
 
 ### Card de evento
 
-Use `card-event` (ou `event-card`) para uma programação com datas e horários. A primeira linha de dados contém a tag opcional, título, texto rico e um identificador opcional para âncoras. As demais linhas são a programação: data inicial, data final opcional, título, horário e descrição opcional. As datas usam o formato `AAAA-MM-DD` e o componente exibe automaticamente um evento em andamento ou, se não houver, o próximo. A seta revela todos os eventos com animação. Negrito, itálico e quebras de linha no texto e nas descrições são preservados.
+`card-event` (também aceita `event-card`) não cadastra eventos. Ele seleciona eventos já cadastrados nos `events-list` pelas categorias e os apresenta em um carrossel finito: três cards lado a lado em telas largas, dois em tablets e um em telas estreitas. As setas navegam entre grupos e os indicadores permitem ir diretamente a um grupo. Os cards têm altura consistente e as imagens usam uma altura fixa. A primeira linha de dados contém o identificador opcional, uma ou mais categorias, um título opcional e um texto introdutório opcional:
 
-| card-event     |               |                                                                                                            |               |                                               |
-| -------------- | ------------- | ---------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------- |
-| tag (opcional) | título        | texto rico                                                                                                 | id (opcional) |                                               |
-| Setembro       | Missas de Rua | Durante o mês de setembro as equipes de serviço do Círio irão peregrinar com a Imagem da Virgem de Nazaré: | peregrinacoes |                                               |
-| 2026-09-07     |               | Missa no Ponto Final da Linha – Cohatrac IV                                                                | 19h30         |                                               |
-| 2026-09-08     |               | Missa na Praça da Escola Maria Pinha – Cohatrac I                                                          | 19h30         |                                               |
-| 2026-09-09     |               | Missa Votiva e Procissão no Santuário Nossa Senhora de Nazaré                                              | 18h           | Todos os grupos, pastorais e equipes do Círio |
+| card-event        |                                    |                      |                                    |
+| ----------------- | ---------------------------------- | -------------------- | ---------------------------------- |
+| # id (opcional)   | categorias (separadas por vírgula) | título (opcional)    | texto (opcional)                   |
+| programacao-cirio | Círio, Missas                      | Programação do Círio | Celebrações e atividades do Círio. |
 
-Tag e texto são opcionais. Para cada item da programação, data inicial, título e horário são obrigatórios. Para um evento contínuo por vários dias, preencha também a data final — por exemplo, `2026-10-08` e `2026-10-18`. Para o mesmo evento em dias não consecutivos, crie uma linha para cada data com o mesmo título; assim ele só aparece como próximo ou em andamento nos dias corretos.
+O bloco exibe eventos que correspondam a pelo menos uma das categorias selecionadas. Um evento selecionado por mais de uma categoria aparece apenas uma vez. Para cadastrar ou alterar os dados do evento, edite a linha correspondente no documento `events-list` do mês; não repita a programação no `card-event`.
+
+As tabelas antigas de `card-event` que ainda contêm linhas de programação precisam ser migradas: mova cada evento para o `events-list` do mês e substitua a tabela antiga por uma configuração de categorias. O sincronizador aponta essas tabelas antigas com uma mensagem de erro para evitar perder a programação silenciosamente.
 
 ### Agenda de eventos
 
-A agenda é formada por dois blocks independentes, que você pode inserir ou não em qualquer documento de página:
+A agenda usa três blocks relacionados:
 
-- `upcoming-events` mostra os três próximos eventos cadastrados em todos os blocks `events-list` do site.
-- `events-list` (também aceita `events`) mostra a lista completa e é onde os eventos são cadastrados.
+- `upcoming-events` mostra os três próximos eventos cadastrados em todos os `events-list`.
+- `events-list` (também aceita `events`) apresenta a agenda completa, agrupada por mês.
+- `card-event` apresenta em coluna os mesmos eventos filtrados pelas categorias selecionadas.
 
 Para mostrar os próximos eventos, inclua esta tabela, por exemplo, no documento da página inicial:
 
-| upcoming-events          |                         |             |
-| ------------------------ | ----------------------- | ----------- |
-| texto do link (opcional) | URL da lista (opcional) | id opcional |
-| Ver todos                | /eventos/               | eventos     |
+| upcoming-events          |                         |             |                       |
+| ------------------------ | ----------------------- | ----------- | --------------------- |
+| texto do link (opcional) | URL da lista (opcional) | id opcional | categorias (opcional) |
+| Ver todos                | /eventos/               | eventos     | Missas, Círio         |
 
-Se a tabela não estiver no documento, a seção simplesmente não aparece naquela página. Para incluir texto pequeno, título ou descrição antes dela, use uma tabela `section-header` imediatamente antes.
+Categorias são opcionais e podem ser separadas por vírgulas, ponto e vírgula, barra vertical ou linhas. Se o campo ficar vazio, o bloco considera eventos de todas as categorias. A tabela não é obrigatória; sem ela, a seção simplesmente não aparece naquela página. Para incluir texto pequeno, título ou descrição antes dela, use uma tabela `section-header` imediatamente antes.
 
-Para criar a página de agenda, crie uma pasta `eventos` no Drive e coloque nela um Google Doc com os fragments desejados (como `header` e `footer`) e a tabela abaixo. Cada linha após a configuração é um evento. A imagem pode ser uma URL pública ou ser colada na primeira célula; durante a sincronização ela é convertida para WebP e salva localmente.
+Na pasta raiz do Drive, mantenha a pasta `Eventos` para a agenda. Um Google Doc diretamente dentro dela pode definir a página `/eventos/`; organize os documentos que cadastram eventos por ano e mês:
 
-| events-list        |                     |             |                                  |                                                  |                                   |            |       |
-| ------------------ | ------------------- | ----------- | -------------------------------- | ------------------------------------------------ | --------------------------------- | ---------- | ----- |
-| id opcional        |                     |             |                                  |                                                  |                                   |            |       |
-| eventos            |                     |             |                                  |                                                  |                                   |            |       |
-| imagem             | texto alternativo   | categoria   | título do evento                 | descrição                                        | local                             | data       | hora  |
-| Cole a imagem aqui | Fiéis em celebração | Festividade | Festa de Nossa Senhora de Nazaré | Celebração solene com procissão e missa festiva. | Santuário Nossa Senhora de Nazaré | 2026-10-14 | 19:00 |
+```text
+Eventos/
+├── 2026/
+│   ├── outubro/
+│   │   └── outubro 2026 (Google Docs)
+│   └── novembro/
+│       └── novembro 2026 (Google Docs)
+└── 2027/
+	└── janeiro/
+		└── janeiro 2027 (Google Docs)
+```
 
-Imagem, título, descrição, local, data e hora são obrigatórios. Use datas no formato `AAAA-MM-DD` e horas no formato `HH:MM`. Categoria e texto alternativo são opcionais. Para incluir texto pequeno, título ou descrição antes da lista, use uma tabela `section-header` imediatamente antes. O botão **Adicionar ao calendário** gera um arquivo `.ics` com duração de uma hora, que o visitante pode abrir no Google Calendar, Calendário do iPhone, Outlook ou aplicativo equivalente.
+O Google Doc diretamente dentro de `Eventos` é o documento de apresentação da rota `/eventos/`: nele você define banner, cabeçalhos e a posição do block `events-list`. Essa tabela funciona como espaço de renderização; mantenha o cabeçalho e a linha de ID (`eventos`), mas não coloque linhas de eventos nela. O block lê automaticamente a coleção compartilhada formada pelos documentos mensais. Assim, o Doc da página não cadastra nem duplica eventos.
 
-Quando `npm run sync:google` é executado, todos os eventos de `events-list` são reunidos em `src/content/events.json`. Esse arquivo é a fonte do `upcoming-events`; por isso a home e a lista completa ficam sempre sincronizadas. Evite cadastrar o mesmo evento em mais de um `events-list`.
+Cada documento mensal contém seu próprio `events-list`, e é nele que os eventos são cadastrados. As pastas de ano/mês são usadas apenas para organizar e sincronizar o conteúdo, não geram páginas no site. Header e footer da página `/eventos/` continuam sendo incluídos automaticamente. Em cada tabela, a linha de orientação iniciada por `#` é ignorada; depois dela, a primeira linha de dados é o identificador opcional da lista e cada linha seguinte cadastra um evento:
+
+| events-list        |                     |                     |                                  |                                                  |                                   |                   |              |                              |
+| ------------------ | ------------------- | ------------------- | -------------------------------- | ------------------------------------------------ | --------------------------------- | ----------------- | ------------ | ---------------------------- |
+| id opcional        |                     |                     |                                  |                                                  |                                   |                   |              |                              |
+| eventos            |                     |                     |                                  |                                                  |                                   |                   |              |                              |
+| imagem             | texto alternativo   | categoria(s)        | título do evento                 | descrição                                        | local                             | data (AAAA-MM-DD) | hora (HH:MM) | hora final (opcional, HH:MM) |
+| Cole a imagem aqui | Fiéis em celebração | Festividade, Missas | Festa de Nossa Senhora de Nazaré | Celebração solene com procissão e missa festiva. | Santuário Nossa Senhora de Nazaré | 2026-10-14        | 19:00        | 21:00                        |
+
+Imagem, título, descrição, local, data e hora inicial são obrigatórios. Use datas no formato `AAAA-MM-DD` e horários no formato `HH:MM`. Hora final, categoria e texto alternativo são opcionais. Quando informada, a hora final aparece no card e define o fim do evento no arquivo `.ics`; se ficar vazia, o calendário mantém a duração padrão de uma hora. Para associar várias categorias, separe-as por vírgulas, ponto e vírgula, barra vertical ou linhas; por exemplo, `Missas, Círio`. Para incluir texto pequeno, título ou descrição antes da lista, use uma tabela `section-header` imediatamente antes. O botão **Adicionar ao calendário** gera um arquivo `.ics`.
+
+Quando `npm run sync:google` é executado, os `events-list` da pasta `Eventos` e das demais páginas/fragmentos são reunidos em `src/content/events.json`, a fonte compartilhada de `upcoming-events`, `events-list` e `card-event`. Evite cadastrar o mesmo evento mais de uma vez. A agenda ordena por data e, no mesmo dia, por horário; o horário não afeta a visibilidade: eventos de hoje permanecem durante todo o dia. A lista começa mostrando eventos do mês atual e do próximo; **Mostrar mais eventos** libera mais dois meses por clique e desaparece quando não houver eventos futuros restantes.
 
 ### Citação
 
@@ -319,7 +337,7 @@ Coloque um `section-header` imediatamente antes se quiser um título e uma descr
 
 ### Fragmentos reutilizáveis
 
-Crie uma pasta `fragmentos` dentro da pasta raiz do Drive. Dentro dela, crie uma pasta para cada fragmento, como `header` e `footer`, e coloque o documento correspondente dentro da pasta. Por exemplo:
+Crie uma pasta `fragmentos` dentro da pasta raiz do Drive. Dentro dela, crie pastas `header` e `footer` com os documentos globais correspondentes; o layout inclui esses dois fragmentos automaticamente em todas as páginas. Não é necessário inserir tabelas `fragment` de header ou footer nos documentos das páginas. Outros fragmentos reutilizáveis continuam podendo ser referenciados por uma tabela `fragment`.
 
 ```text
 fragmentos/
@@ -329,34 +347,33 @@ fragmentos/
 
 Essa estrutura gera `src/content/fragments/header/index.json`. O documento usa o mesmo contrato de blocks das páginas. O sincronizador também aceita documentos diretamente dentro de `fragmentos`, usando o nome do documento como nome do fragmento.
 
-Na página que deve usar um fragmento, adicione uma tabela cuja primeira linha seja `fragment` e cuja primeira célula da segunda linha contenha o nome do fragmento:
+Para usar outro fragmento em uma página, adicione uma tabela cuja primeira linha seja `fragment` e cuja primeira célula da segunda linha contenha o nome do fragmento:
 
 | fragment |     |
 | -------- | --- |
 | header   |     |
 
-A referência usa o caminho do documento dentro de `fragmentos`, sem a extensão do arquivo. Para documentos diretamente dentro da pasta, use apenas o nome, como `header`. A referência pode aparecer em qualquer posição e o mesmo fragmento pode ser usado em várias páginas.
+A referência usa o caminho do documento dentro de `fragmentos`, sem a extensão do arquivo. Para documentos diretamente dentro da pasta, use apenas o nome. A referência pode aparecer em qualquer posição e o mesmo fragmento pode ser usado em várias páginas.
 
 Para o footer, crie o documento `footer` em `fragmentos/footer/` e use uma tabela com esta estrutura:
 
-| footer          |                 |                                                   |                         |                                                 |                          |
-| --------------- | --------------- | ------------------------------------------------- | ----------------------- | ----------------------------------------------- | ------------------------ |
-| Logo (opcional) | Santuário       | Nossa Senhora de Nazaré                           | Descrição da comunidade | © 2025 Santuário. Todos os direitos reservados. | Diocese de Belém do Pará |
-| quick           | Início          | /                                                 |
-| quick           | Notícias        | /noticias/                                        |
-| service         | Círio de Nazaré | /cirio/                                           |
-| service         | Círio Ecológico | /cirio/cirio-ecologico/                           |
-| contact         | Tel             | (91) 3234-5678                                    |
-| contact         | E-mail          | secretaria@santuarionazare.org.br                 |
-| office          | Atendimento     | Seg - Sex: 08h00 às 18h00; Sábado: 08h00 às 12h00 |
+| footer            |                 |                                                   |                         |                                                 |                          |
+| ----------------- | --------------- | ------------------------------------------------- | ----------------------- | ----------------------------------------------- | ------------------------ |
+| # logo (opcional) | texto pequeno   | nome da marca                                     | descrição               | copyright                                       | diocese                  |
+| Cole o logo aqui  | Santuário       | Nossa Senhora de Nazaré                           | Descrição da comunidade | © 2025 Santuário. Todos os direitos reservados. | Diocese de Belém do Pará |
+| # tipo            | rótulo          | URL ou informação                                 |                         |                                                 |                          |
+| quick             | Início          | /                                                 |                         |                                                 |                          |
+| quick             | Notícias        | /noticias/                                        |                         |                                                 |                          |
+| service           | Círio de Nazaré | /cirio/                                           |                         |                                                 |                          |
+| service           | Círio Ecológico | /cirio/cirio-ecologico/                           |                         |                                                 |                          |
+| contact           | Tel             | (91) 3234-5678                                    |                         |                                                 |                          |
+| contact           | E-mail          | secretaria@santuarionazare.org.br                 |                         |                                                 |                          |
+| contact           | @Instagram      | https://www.instagram.com/santuariodenazareslz/   |                         |                                                 |                          |
+| office            | Atendimento     | Seg - Sex: 08h00 às 18h00; Sábado: 08h00 às 12h00 |                         |                                                 |                          |
 
-A primeira linha de dados contém, nesta ordem: logo opcional, texto pequeno da marca, nome da marca, descrição, copyright e diocese. Cole a imagem diretamente na primeira célula ou informe uma URL pública. Se a primeira célula ficar vazia, use a tabela antiga sem a coluna de logo e o footer exibirá a cruz dourada. Nas linhas seguintes, `quick` cria links rápidos, `service` cria links da seção **Círios**, `contact` cria informações de contato e `office` define o atendimento. Para redes sociais, use `contact` com o primeiro valor começando por `@`, por exemplo `@Instagram`, e a URL no terceiro campo; Instagram, YouTube, Facebook e WhatsApp aparecem com seus respectivos ícones. Em `contact` e `office`, use quebras de linha ou uma lista com marcadores no Google Docs para exibir cada informação em sua própria linha. A imagem será convertida para WebP durante `npm run sync:google`.
+A linha de orientação iniciada por `#` mostra a função de cada coluna e não aparece no site. Na linha da marca, informe nesta ordem: logo opcional, texto pequeno, nome da marca, descrição, copyright e diocese. Cole a imagem diretamente na primeira célula ou informe uma URL pública. Se não for usar logo, remova a coluna de logo e use o formato antigo de cinco colunas: texto pequeno, nome da marca, descrição, copyright e diocese; assim o footer exibe a cruz dourada. Nas linhas seguintes, `quick` cria links rápidos, `service` cria links da seção **Círios**, `contact` cria informações de contato e `office` define o atendimento. Para redes sociais, use `contact` com o rótulo começando por `@`, por exemplo `@Instagram`, e informe a URL na terceira coluna; Instagram, YouTube, Facebook e WhatsApp aparecem com seus respectivos ícones. Em `contact` e `office`, use quebras de linha ou uma lista com marcadores no Google Docs para exibir cada informação em sua própria linha. A imagem será convertida para WebP durante `npm run sync:google`.
 
-Em cada página, referencie o fragmento com:
-
-| fragment |     |
-| -------- | --- |
-| footer   |     |
+O fragmento `footer` segue o mesmo princípio do `header`: basta manter seu documento em `fragmentos/footer/`; ele será exibido automaticamente em todas as páginas.
 
 ## Conectar a um Google Doc real
 

@@ -1,13 +1,93 @@
 [
   {
-    "id": "2026-10-14-titulo",
-    "image": "/images/b46f5297c74f15f4.webp",
-    "imageAlt": "texto alternativo",
-    "category": "categoria",
-    "title": "título",
-    "description": "descrição",
-    "location": "Santuário nossa senhora de naraze",
-    "startDate": "2026-10-14",
+    "id": "2026-10-08-19-00-abertura-do-cirio",
+    "image": "/images/ec6954dec2afcb99.webp",
+    "imageAlt": "Círio cultural 2025",
+    "categories": [
+      "cirio"
+    ],
+    "title": "Abertura do Círio",
+    "description": "No dia 8 de outubro, participe da Missa de Abertura, às 19h, seguida do Círio Cultural, às 21h.",
+    "location": "Praça Nossa Senhora de Nazaré",
+    "startDate": "2026-10-08",
     "startTime": "19:00"
+  },
+  {
+    "id": "2026-10-09-19-00-2o-dia-do-cirio",
+    "image": "/images/357396cdf36d028c.webp",
+    "imageAlt": "Terço da Alvorada 2025",
+    "categories": [
+      "cirio"
+    ],
+    "title": "2º Dia do Círio",
+    "description": "No dia 9 de outubro, participe da programação no Santuário, com terços, missas às 17h e 19h e Adoração Eucarística às 18h.",
+    "location": "Praça Nossa Senhora de Nazaré",
+    "startDate": "2026-10-09",
+    "startTime": "19:00"
+  },
+  {
+    "id": "2026-10-10-22-00-romaria",
+    "image": "/images/a8543e4f8483787e.webp",
+    "imageAlt": "Romaria 2025",
+    "categories": [
+      "cirio"
+    ],
+    "title": "Romaria",
+    "description": "Participe desse momento de fé e devoção no dia 10 de outubro, com saída da Igreja Nossa Senhora do Carmo após a missa das 22h, seguindo em romaria até o Santuário de Nazaré.",
+    "location": "Igreja Nossa Senhora do Carmo",
+    "startDate": "2026-10-10",
+    "startTime": "22:00"
+  },
+  {
+    "id": "2026-10-11-20-00-4o-dia-do-cirio",
+    "image": "/images/5fb1d9afa6aa94dd.webp",
+    "imageAlt": "Círio cultural 2025",
+    "categories": [
+      "cirio"
+    ],
+    "title": "4º Dia do Círio",
+    "description": "No dia 11 de outubro, participe da programação com missas às 17h e 19h, Adoração Eucarística às 18h e Círio Cultural às 21h.",
+    "location": "Praça Nossa Senhora de Nazaré",
+    "startDate": "2026-10-11",
+    "startTime": "20:00"
+  },
+  {
+    "id": "2026-10-16-17-00-9o-dia-do-cirio",
+    "image": "/images/472ed75def8ad039.webp",
+    "imageAlt": "Círio cultural 2025",
+    "categories": [
+      "cirio"
+    ],
+    "title": "9º Dia do Círio",
+    "description": "No dia 15 de outubro, participe da programação com missas às 17h e 19h, Adoração Eucarística às 18h e Círio Cultural às 21h.",
+    "location": "Praça Nossa Senhora de Nazaré",
+    "startDate": "2026-10-16",
+    "startTime": "17:00"
+  },
+  {
+    "id": "2026-10-17-17-00-procissao-da-luz-e-trasladacao",
+    "image": "/images/a7df6f79c365b861.webp",
+    "imageAlt": "Procissão da Luz 2025",
+    "categories": [
+      "cirio"
+    ],
+    "title": "Procissão da Luz e Trasladação",
+    "description": "Participe desse momento de fé no dia 17 de outubro, com missa às 17h no Santuário de Nazaré, seguida da apresentação do manto e da trasladação da imagem de Cohatrac para a Cohab.",
+    "location": "Santuário de Nazaré",
+    "startDate": "2026-10-17",
+    "startTime": "17:00"
+  },
+  {
+    "id": "2026-10-18-17-00-encerramento-do-cirio",
+    "image": "/images/a6f40501ed6d2e20.webp",
+    "imageAlt": "Círio cultural 2025",
+    "categories": [
+      "cirio"
+    ],
+    "title": "Encerramento do Círio",
+    "description": "Participe da grande procissão do Círio no dia 18 de outubro, com saída às 17h da Paróquia Nossa Senhora do Perpétuo Socorro, seguindo da Cohab para o Cohatrac. A programação encerra com missa às 18h30, em frente à rotatória da Av. Nossa Senhora de Nazaré.",
+    "location": "Paróquia Nossa Senhora do Perpétuo Socorro",
+    "startDate": "2026-10-18",
+    "startTime": "17:00"
   }
 ]

@@ -7,17 +7,6 @@
       "name": "header"
     },
     {
-      "type": "hero",
-      "eyebrow": "Bem-vindo ao santuário",
-      "title": "Um lugar de",
-      "highlight": "Fé",
-      "titleAfter": "Esperança e Amor",
-      "description": "O Santuário Nossa Senhora de Nazaré é um espaço sagrado de fé e espiritualidade.",
-      "image": "/images/c16f84889145e092.webp",
-      "imageAlt": "Fachada do Santuário",
-      "caption": "Teste"
-    },
-    {
       "type": "banner-carousel",
       "slides": [
         {

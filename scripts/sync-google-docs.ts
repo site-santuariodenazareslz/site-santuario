@@ -7,7 +7,12 @@ import {
   prepareImageDirectory,
   removeUnusedImages,
 } from "./image-assets";
-import { writeEvents, writeFragments, writeNews, writePages } from "./content-writer";
+import {
+  writeEvents,
+  writeFragments,
+  writeNews,
+  writePages,
+} from "./content-writer";
 import type { EventItem, NewsItem, Page } from "../src/lib/types";
 
 const documentId = process.env.GOOGLE_DOCUMENT_ID;
@@ -79,6 +84,7 @@ async function pagesInFolder(folderId: string, path: string[] = []) {
   const slugs = new Set<string>();
 
   for (const folder of folders) {
+    if (path.length === 1 && path[0] === "eventos") continue;
     const slug = slugify(folder.name ?? "");
     if (!slug)
       throw new Error(
@@ -94,6 +100,28 @@ async function pagesInFolder(folderId: string, path: string[] = []) {
   }
 
   return pages;
+}
+
+async function eventPagesInFolder(
+  folderId: string,
+  includeDocuments = true,
+): Promise<Page[]> {
+  const children = await childrenOf(folderId);
+  const documents = children.filter(
+    (file) => file.mimeType === "application/vnd.google-apps.document",
+  );
+  const folders = children.filter(
+    (file) => file.mimeType === "application/vnd.google-apps.folder",
+  );
+  const pages = includeDocuments
+    ? await Promise.all(
+        documents.map((document) => pageFromDocument(document.id!)),
+      )
+    : [];
+  const nestedPages = await Promise.all(
+    folders.map((folder) => eventPagesInFolder(folder.id!)),
+  );
+  return [...pages, ...nestedPages.flat()];
 }
 
 async function fragmentsInFolder(folderId: string, path: string[] = []) {
@@ -186,6 +214,7 @@ let fragments: Array<{
   page: Awaited<ReturnType<typeof pageFromDocument>>;
 }> = [];
 let news: NewsItem[] = [];
+let eventPages: Page[] = [];
 await prepareImageDirectory();
 if (rootFolderId) {
   const rootChildren = await childrenOf(rootFolderId);
@@ -204,10 +233,17 @@ if (rootFolderId) {
       file.mimeType === "application/vnd.google-apps.folder" &&
       slugify(file.name ?? "") === "noticias",
   );
+  const eventsFolder = rootChildren.find(
+    (file) =>
+      file.mimeType === "application/vnd.google-apps.folder" &&
+      slugify(file.name ?? "") === "eventos",
+  );
   pages = await pagesInFolder(rootFolderId);
   if (fragmentFolder?.id)
     fragments = await fragmentsInFolder(fragmentFolder.id);
   if (newsFolder?.id) news = await newsInFolder(newsFolder.id);
+  if (eventsFolder?.id)
+    eventPages = await eventPagesInFolder(eventsFolder.id, false);
 } else {
   pages = [{ path: [], page: await pageFromDocument(documentId!) }];
 }
@@ -217,13 +253,17 @@ await writeFragments(fragments);
 await writeNews(news);
 await writeEvents(
   eventsFromPages([
-    ...pages.map(({ page }) => page),
+    ...pages
+      .filter(({ path }) => path.join("/") !== "eventos")
+      .map(({ page }) => page),
     ...fragments.map(({ page }) => page),
+    ...eventPages,
   ]),
 );
 await removeUnusedImages([
   ...pages.map(({ page }) => page),
   ...fragments.map(({ page }) => page),
+  ...eventPages,
   ...news.map(({ page }) => page),
 ]);
 console.log(`${pages.length} página(s) sincronizada(s) em src/content/pages/.`);

@@ -13,6 +13,10 @@
     gap: $space-5;
     margin: 0 $space-5;
   }
+  &__groups--single {
+    grid-template-columns: minmax(0, min(912px, 100%));
+    justify-content: center;
+  }
   &__group {
     padding: $space-5;
     border: 1px solid $color-border;

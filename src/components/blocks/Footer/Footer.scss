@@ -21,6 +21,10 @@
   max-width: $width;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 48px;
+  @media (max-width: $breakpoint-mobile), (max-width: $breakpoint-tablet) {
+    margin-top: 24px;
+  }
 
   &__main {
     @include content-width(1280px);

@@ -44,6 +44,23 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
+const categoriesFrom = (value: string) => [
+  ...new Set(
+    value
+      .split(/[,;|\n]/)
+      .map((category) => category.replace(/^[•*-]\s*/, "").trim())
+      .filter(Boolean),
+  ),
+];
+
+const normalizeEventTime = (value: string): string | undefined => {
+  const match = value.match(/^(\d{1,2}):([0-5]\d)$/);
+  if (!match) return undefined;
+  const hour = Number(match[1]);
+  if (hour > 23) return undefined;
+  return `${String(hour).padStart(2, "0")}:${match[2]}`;
+};
+
 const escapeHtml = (value: string) =>
   value
     .replace(/&/g, "&amp;")
@@ -52,7 +69,12 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-type ParsedCell = { text: string; rawText: string; html: string; image?: string };
+type ParsedCell = {
+  text: string;
+  rawText: string;
+  html: string;
+  image?: string;
+};
 
 function cellFromContent(
   content: StructuralElement[] | null | undefined,
@@ -142,7 +164,9 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       href: string;
       children?: Array<{ label: string; href: string }>;
     }> = [];
-    for (const [kindCell, labelCell, hrefCell, childHrefCell] of body.slice(1)) {
+    for (const [kindCell, labelCell, hrefCell, childHrefCell] of body.slice(
+      1,
+    )) {
       const kind = kindCell?.text.toLowerCase();
       // Compatibilidade: a tabela antiga usa apenas "rótulo | URL".
       if (kind !== "link" && kind !== "dropdown" && kind !== "submenu") {
@@ -282,7 +306,10 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       }))
       .filter((slide) => slide.image || slide.title);
 
-    if (!slides.length || slides.some((slide) => !slide.image || !slide.title)) {
+    if (
+      !slides.length ||
+      slides.some((slide) => !slide.image || !slide.title)
+    ) {
       throw new Error(
         "O block banner-carousel precisa informar imagem e título para cada slide.",
       );
@@ -290,7 +317,11 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     return { type: "banner-carousel", slides };
   }
 
-  if (blockName === "donation" || blockName === "doacao" || blockName === "doação") {
+  if (
+    blockName === "donation" ||
+    blockName === "doacao" ||
+    blockName === "doação"
+  ) {
     const [
       pixKeyCell,
       qrCodeCell,
@@ -318,7 +349,8 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       qrCode,
       qrCodeAlt: qrCodeAltCell?.text ?? "QR Code Pix",
       qrInstruction:
-        qrInstructionCell?.text ?? "Aponte a câmera do celular para o QR Code acima.",
+        qrInstructionCell?.text ??
+        "Aponte a câmera do celular para o QR Code acima.",
       inPersonNote: inPersonNoteCell?.text ?? "",
       bankDetails,
     };
@@ -365,7 +397,9 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       backgroundImageCell,
     ] = body[0] ?? [];
     if (!secondCell?.text)
-      throw new Error("O block banner-text precisa informar pelo menos um título.");
+      throw new Error(
+        "O block banner-text precisa informar pelo menos um título.",
+      );
     return {
       type: "banner-text",
       eyebrow: firstCell?.text ?? "",
@@ -379,51 +413,39 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
   }
 
   if (blockName === "card-event" || blockName === "event-card") {
-    const [tagCell, titleCell, textCell, idCell] = body[0] ?? [];
-    const program = body
-      .slice(1)
-      .map(([startDateCell, endDateCell, eventTitleCell, timeCell, descriptionCell]) => {
-        const startDate = startDateCell?.text ?? "";
-        const endDate = endDateCell?.text ?? "";
-        const formatDate = (value: string) => {
-          const [year, month, day] = value.split("-").map(Number);
-          if (!year || !month || !day) return value;
-          return new Intl.DateTimeFormat("pt-BR", {
-            day: "2-digit",
-            month: "short",
-          })
-            .format(new Date(year, month - 1, day))
-            .replace(".", "");
-        };
-        return {
-        date: endDate ? `${formatDate(startDate)} a ${formatDate(endDate)}` : formatDate(startDate),
-        startDate,
-        endDate: endDate || undefined,
-        title: eventTitleCell?.text ?? "",
-        time: timeCell?.text ?? "",
-        description: descriptionCell?.html ?? "",
-        };
-      })
-      .filter((entry) => entry.startDate && entry.title && entry.time);
-    if (!titleCell?.text)
-      throw new Error("O block card-event precisa informar um título.");
+    if (body.length > 1) {
+      throw new Error(
+        "O block card-event agora seleciona eventos por categoria. Mova a programação para um block events-list.",
+      );
+    }
+    const [idCell, categoriesCell, titleCell, textCell] = body[0] ?? [];
+    const categories = categoriesFrom(
+      categoriesCell?.rawText ?? categoriesCell?.text ?? "",
+    );
+    if (!categories.length)
+      throw new Error(
+        "O block card-event precisa informar ao menos uma categoria.",
+      );
     return {
       type: "card-event",
       id: idCell?.text || undefined,
-      tag: tagCell?.text || undefined,
-      title: titleCell.text,
-      text: textCell?.html ?? "",
-      program,
+      categories,
+      title: titleCell?.text || undefined,
+      text: textCell?.html.trim() || undefined,
     };
   }
 
   if (blockName === "upcoming-events" || blockName === "next-events") {
-    const [allLabelCell, allHrefCell, idCell] = body[0] ?? [];
+    const [allLabelCell, allHrefCell, idCell, categoriesCell] = body[0] ?? [];
+    const categories = categoriesFrom(
+      categoriesCell?.rawText ?? categoriesCell?.text ?? "",
+    );
     return {
       type: "upcoming-events",
       id: idCell?.text || undefined,
       allLabel: allLabelCell?.text ?? "Ver todos",
       allHref: allHrefCell?.text ?? "/eventos/",
+      categories: categories.length ? categories : undefined,
     };
   }
 
@@ -431,34 +453,54 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     const [idCell] = body[0] ?? [];
     const events = body
       .slice(1)
-      .map(([
-        imageCell, imageAltCell, categoryCell, eventTitleCell,
-        eventDescriptionCell, locationCell, startDateCell, startTimeCell,
-      ]) => {
-        const title = eventTitleCell?.text ?? "";
-        const startDate = startDateCell?.text ?? "";
-        return {
-          id: slugify(`${startDate}-${title}`),
-          image: imageCell?.image ?? imageCell?.text ?? "",
-          imageAlt: imageAltCell?.text ?? "",
-          category: categoryCell?.text ?? "",
-          title,
-          description: eventDescriptionCell?.rawText ?? "",
-          location: locationCell?.rawText ?? "",
-          startDate,
-          startTime: startTimeCell?.text ?? "",
-        };
-      })
+      .map(
+        ([
+          imageCell,
+          imageAltCell,
+          categoryCell,
+          eventTitleCell,
+          eventDescriptionCell,
+          locationCell,
+          startDateCell,
+          startTimeCell,
+          endTimeCell,
+        ]) => {
+          const title = eventTitleCell?.text ?? "";
+          const startDate = startDateCell?.text ?? "";
+          const rawStartTime = startTimeCell?.text ?? "";
+          const rawEndTime = endTimeCell?.text ?? "";
+          const startTime = normalizeEventTime(rawStartTime);
+          const endTime = rawEndTime
+            ? normalizeEventTime(rawEndTime)
+            : undefined;
+          return {
+            id: slugify(`${startDate}-${startTime ?? rawStartTime}-${title}`),
+            image: imageCell?.image ?? imageCell?.text ?? "",
+            imageAlt: imageAltCell?.text ?? "",
+            categories: categoriesFrom(
+              categoryCell?.rawText ?? categoryCell?.text ?? "",
+            ),
+            title,
+            description: eventDescriptionCell?.rawText ?? "",
+            location: locationCell?.rawText ?? "",
+            startDate,
+            startTime: startTime ?? "",
+            endTime,
+            hasValidEndTime: !rawEndTime || Boolean(endTime),
+          };
+        },
+      )
       .filter(
         (event) =>
-          event.image && event.title && event.description && event.location &&
+          event.image &&
+          event.title &&
+          event.description &&
+          event.location &&
+          event.hasValidEndTime &&
           /^\d{4}-\d{2}-\d{2}$/.test(event.startDate) &&
-          /^\d{2}:\d{2}$/.test(event.startTime),
-      );
-    if (!events.length)
-      throw new Error(
-        "O block events-list precisa informar pelo menos um evento com imagem, título, descrição, local, data e hora.",
-      );
+          Boolean(event.startTime),
+      )
+      .map(({ hasValidEndTime: _hasValidEndTime, ...event }) => event);
     return {
       type: "events-list",
       id: idCell?.text || undefined,
@@ -466,7 +508,11 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     };
   }
 
-  if (blockName === "quote" || blockName === "citation" || blockName === "citacao") {
+  if (
+    blockName === "quote" ||
+    blockName === "citation" ||
+    blockName === "citacao"
+  ) {
     const [textCell, authorCell] = body[0] ?? [];
     if (!textCell?.text)
       throw new Error("O block quote precisa informar o texto da citação.");
@@ -478,12 +524,15 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
   }
 
   if (blockName === "not-found" || blockName === "404") {
-    const [eyebrowCell, titleCell, descriptionCell, actionLabelCell, actionHrefCell] =
-      body[0] ?? [];
+    const [
+      eyebrowCell,
+      titleCell,
+      descriptionCell,
+      actionLabelCell,
+      actionHrefCell,
+    ] = body[0] ?? [];
     if (!titleCell?.text || !descriptionCell?.text) {
-      throw new Error(
-        "O block not-found precisa informar título e descrição.",
-      );
+      throw new Error("O block not-found precisa informar título e descrição.");
     }
     return {
       type: "not-found",

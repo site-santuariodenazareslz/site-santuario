@@ -18,18 +18,13 @@
         {
           "label": "Notícia",
           "href": "/noticias/"
-        }
-      ],
-      "services": [
-        {
-          "label": "Círio de Nazaré",
-          "href": "/cirio"
         },
         {
-          "label": "Círio Ecológico",
-          "href": "/cirio/cirio-ecologico"
+          "label": "Eventos",
+          "href": "/eventos"
         }
       ],
+      "services": [],
       "contacts": [
         {
           "icon": "Tel",

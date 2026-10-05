@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "node --import tsx --test tests/*.test.ts",
     "preview": "astro preview",
     "sync:google": "tsx scripts/sync-google-docs.ts"
   },

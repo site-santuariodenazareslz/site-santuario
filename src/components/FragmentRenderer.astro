@@ -15,6 +15,9 @@ import NewsBanner from "./blocks/NewsBanner/NewsBanner.astro";
 import NewsText from "./blocks/NewsText/NewsText.astro";
 import NewsTitle from "./blocks/NewsTitle/NewsTitle.astro";
 import NewsImage from "./blocks/NewsImage/NewsImage.astro";
+import UpcomingEvents from "./blocks/UpcomingEvents/UpcomingEvents.astro";
+import EventsList from "./blocks/EventsList/EventsList.astro";
+import SectionHeader from "./blocks/SectionHeader/SectionHeader.astro";
 import type { Block } from "../lib/types";
 
 const { blocks } = Astro.props as { blocks: Block[] };
@@ -35,6 +38,9 @@ const componentFor = {
   "news-text": NewsText,
   "news-title": NewsTitle,
   "news-image": NewsImage,
+  "upcoming-events": UpcomingEvents,
+  "events-list": EventsList,
+  "section-header": SectionHeader,
 } as const;
 
 if (blocks.some((block) => block.type === "fragment")) {

@@ -3,26 +3,18 @@
   "description": "Página gerada automaticamente a partir de um Google Doc.",
   "blocks": [
     {
-      "type": "section-header",
+      "type": "banner-text",
       "eyebrow": "Agenda",
-      "title": "Eventos"
+      "title": "Eventos",
+      "highlight": "",
+      "subtitle": "",
+      "date": "",
+      "backgroundImage": ""
     },
     {
       "type": "events-list",
       "id": "eventos",
-      "events": [
-        {
-          "id": "2026-10-14-titulo",
-          "image": "/images/b46f5297c74f15f4.webp",
-          "imageAlt": "texto alternativo",
-          "category": "categoria",
-          "title": "título",
-          "description": "descrição",
-          "location": "Santuário nossa senhora de naraze",
-          "startDate": "2026-10-14",
-          "startTime": "19:00"
-        }
-      ]
+      "events": []
     }
   ]
 }

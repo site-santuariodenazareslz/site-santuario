@@ -2,6 +2,7 @@ import { mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { EventItem, NewsItem, Page } from "../src/lib/types";
+import { sortEvents } from "../src/lib/event-utils";
 
 const pagesDirectory = fileURLToPath(
   new URL("../src/content/pages/", import.meta.url),
@@ -54,8 +55,7 @@ export async function writeNews(news: NewsItem[]): Promise<void> {
 export async function writeEvents(events: EventItem[]): Promise<void> {
   const uniqueEvents = [
     ...new Map(events.map((event) => [event.id, event])).values(),
-  ].sort((a, b) =>
-    `${a.startDate}T${a.startTime}`.localeCompare(`${b.startDate}T${b.startTime}`),
-  );
-  await writeFile(eventsFile, `${JSON.stringify(uniqueEvents, null, 2)}\n`);
+  ];
+  const sortedEvents = sortEvents(uniqueEvents);
+  await writeFile(eventsFile, `${JSON.stringify(sortedEvents, null, 2)}\n`);
 }

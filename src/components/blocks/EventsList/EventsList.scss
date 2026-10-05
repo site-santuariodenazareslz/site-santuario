@@ -4,7 +4,71 @@
   max-width: $width;
   margin: 0 auto;
   padding-inline: $space-5;
-  &__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+
+  &__months {
+    display: grid;
+    gap: 40px;
+  }
+
+  &__month > h2 {
+    margin: 0 0 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid $color-border;
+    color: $color-brown;
+    font-family: $font-serif;
+    font-size: 1.15rem;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  &__more {
+    display: block;
+    margin: 30px auto 0;
+    padding: 11px 20px;
+    border: 1px solid $color-gold;
+    border-radius: 4px;
+    color: $color-brown;
+    background: transparent;
+    cursor: pointer;
+    font-family: $font-sans;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  &__more[hidden] {
+    display: none !important;
+  }
+
+  &__more:hover,
+  &__more:focus-visible {
+    color: $color-white;
+    background: $color-gold;
+  }
+
+  &__empty {
+    margin: 24px 0;
+    color: $color-text-mid;
+    font-family: $font-sans;
+    text-align: center;
+  }
 }
-@media (max-width: 900px) { .events-list__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 700px) { .events-list { &__grid { grid-template-columns: 1fr; } } }
+
+@media (max-width: 900px) {
+  .events-list__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .events-list {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

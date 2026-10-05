@@ -1,15 +1,110 @@
 ---
 import type { EventsListBlock } from "../../../lib/types";
 import { events } from "../../../lib/events";
+import {
+  eventsOnOrAfterDate,
+  monthOffsetFromToday,
+} from "../../../lib/event-date";
+import { groupEventsByMonth } from "../../../lib/event-utils";
 import EventCard from "../EventCard/EventCard.astro";
 import "./EventsList.scss";
 
 const block = Astro.props as EventsListBlock;
-const listedEvents = block.events ?? events;
+const eventGroups = groupEventsByMonth(eventsOnOrAfterDate(events));
+const hasMoreMonthsAtBuild = eventGroups.some(
+  (group) => monthOffsetFromToday(group.key) > 1,
+);
 ---
 
-<section id={block.id ?? "eventos"} class="events-list">
-  <div class="events-list__grid">
-    {listedEvents.map((event) => <EventCard event={event} />)}
+<section id={block.id ?? "eventos"} class="events-list" data-events-list>
+  <div class="events-list__months">
+    {
+      eventGroups.map((group) => (
+        <section
+          class="events-list__month"
+          data-event-month
+          data-month-key={group.key}
+          hidden={monthOffsetFromToday(group.key) > 1}
+        >
+          <h2>{group.label}</h2>
+          <div class="events-list__grid">
+            {group.events.map((event) => (
+              <EventCard event={event} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
   </div>
+  <p
+    class="events-list__empty"
+    data-events-empty
+    hidden={eventGroups.length > 0}
+  >
+    Nenhum evento futuro está programado.
+  </p>
+  <button
+    class="events-list__more"
+    type="button"
+    data-events-more
+    hidden={!hasMoreMonthsAtBuild}
+  >
+    Mostrar mais eventos
+  </button>
 </section>
+
+<script>
+  import {
+    eventsOnOrAfterToday,
+    monthOffsetFromToday,
+  } from "../../../lib/event-date";
+
+  document
+    .querySelectorAll<HTMLElement>("[data-events-list]")
+    .forEach((list) => {
+      const cards = [
+        ...list.querySelectorAll<HTMLElement>("[data-event-card]"),
+      ];
+      const groups = [
+        ...list.querySelectorAll<HTMLElement>("[data-event-month]"),
+      ];
+      const moreButton =
+        list.querySelector<HTMLButtonElement>("[data-events-more]");
+      const emptyMessage = list.querySelector<HTMLElement>(
+        "[data-events-empty]",
+      );
+      const visibleEvents = eventsOnOrAfterToday(cards);
+      visibleEvents.forEach((card) => {
+        card.hidden = false;
+      });
+      let visibleMonthOffset = 1;
+
+      const update = () => {
+        groups.forEach((group) => {
+          const hasEvents = [
+            ...group.querySelectorAll<HTMLElement>("[data-event-card]"),
+          ].some((card) => !card.hidden);
+          const monthOffset = monthOffsetFromToday(
+            group.dataset.monthKey ?? "",
+          );
+          group.hidden = !hasEvents || monthOffset > visibleMonthOffset;
+        });
+        const hasMore = groups.some(
+          (group) =>
+            monthOffsetFromToday(group.dataset.monthKey ?? "") >
+              visibleMonthOffset &&
+            [...group.querySelectorAll<HTMLElement>("[data-event-card]")].some(
+              (card) => !card.hidden,
+            ),
+        );
+        if (moreButton) moreButton.hidden = !hasMore;
+        if (emptyMessage) emptyMessage.hidden = visibleEvents.length > 0;
+      };
+
+      moreButton?.addEventListener("click", () => {
+        visibleMonthOffset += 2;
+        update();
+      });
+      update();
+    });
+</script>

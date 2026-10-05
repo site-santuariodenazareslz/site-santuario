@@ -1,10 +1,31 @@
 ---
+import Header from "./blocks/Header/Header.astro";
+import Footer from "./blocks/Footer/Footer.astro";
 import BlockRenderer from "./BlockRenderer.astro";
 import BlockSpacer from "./BlockSpacer.astro";
-import type { Page } from "../lib/types";
+import headerFragment from "../content/fragments/header/index.json";
+import footerFragment from "../content/fragments/footer/index.json";
+import type { FooterBlock, HeaderBlock, Page } from "../lib/types";
 import "../styles/global.scss";
 
 const { page } = Astro.props as { page: Page };
+const header = (headerFragment as Page).blocks.find(
+  (block): block is HeaderBlock => block.type === "header",
+);
+const footer = (footerFragment as Page).blocks.find(
+  (block): block is FooterBlock => block.type === "footer",
+);
+
+if (!header || !footer) {
+  throw new Error("Os fragmentos globais precisam definir header e footer.");
+}
+
+const contentBlocks = page.blocks.filter(
+  (block) =>
+    block.type !== "header" &&
+    block.type !== "footer" &&
+    !(block.type === "fragment" && ["header", "footer"].includes(block.name)),
+);
 ---
 
 <!doctype html>
@@ -16,15 +37,17 @@ const { page } = Astro.props as { page: Page };
     <title>{page.title}</title>
   </head>
   <body>
+    <Header {...header} />
     <main>
       {
-        page.blocks.map((block, index) => (
+        contentBlocks.map((block, index) => (
           <>
             <BlockRenderer block={block} />
-            {index < page.blocks.length - 1 && <BlockSpacer />}
+            {index < contentBlocks.length - 1 && <BlockSpacer />}
           </>
         ))
       }
     </main>
+    <Footer {...footer} />
   </body>
 </html>
