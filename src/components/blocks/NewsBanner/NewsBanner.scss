@@ -1,8 +1,9 @@
 @use "../../../styles/tokens" as *;
 
 .news-banner {
+  max-width: 1280px;
+  margin: 0 auto;
   position: relative;
-  margin-inline: calc(50% - 50vw);
   overflow: hidden;
   background: $color-cream-dark;
 }

@@ -587,6 +587,23 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     };
   }
 
+  if (blockName === "teaser-image" || blockName === "teaser image") {
+    const [imageCell, imageAltCell, titleCell, textCell] = body[0] ?? [];
+    const image = imageCell?.image ?? imageCell?.text ?? "";
+    if (!image || !titleCell?.text || !textCell?.text) {
+      throw new Error(
+        "O block teaser-image precisa informar imagem, título e texto.",
+      );
+    }
+    return {
+      type: "teaser-image",
+      image,
+      imageAlt: imageAltCell?.text ?? "",
+      title: titleCell.text,
+      text: textCell.html || textCell.text,
+    };
+  }
+
   if (blockName === "news") {
     const [allLabelCell, allHrefCell, idCell] = body[0] ?? [];
     return {
@@ -642,7 +659,7 @@ export function parseGoogleDocument(document: GoogleDocument): Page {
     const paragraphs = content.filter((element) => element.paragraph).length;
     throw new Error(
       `Nenhum block válido foi encontrado. A API recebeu ${tables.length} tabela(s) e ${paragraphs} parágrafo(s). ` +
-        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, section-header, upcoming-events, events-list, quote, not-found, donation, mass-schedule, news, all-news, banner, title, text, image ou fragment.",
+        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, section-header, upcoming-events, events-list, quote, not-found, donation, mass-schedule, news, all-news, banner, title, text, image, teaser-image ou fragment.",
     );
   }
 

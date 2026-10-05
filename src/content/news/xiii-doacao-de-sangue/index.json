@@ -1,0 +1,53 @@
+{
+  "slug": "xiii-doacao-de-sangue",
+  "createdAt": "2026-10-05T15:00:20.499Z",
+  "page": {
+    "title": "XIII Doação de Sangue",
+    "description": "Página gerada automaticamente a partir de um Google Doc.",
+    "blocks": [
+      {
+        "type": "fragment",
+        "name": "header"
+      },
+      {
+        "type": "news-banner",
+        "image": "/images/2eaa6315dccf0449.webp",
+        "imageAlt": "",
+        "category": "Doação de Sangue"
+      },
+      {
+        "type": "news-title",
+        "title": "XIII Projeto Irmãos de Sangue reúne comunidade em gesto de solidariedade",
+        "titleHtml": "XIII Projeto Irmãos de Sangue reúne comunidade em gesto de solidariedade\n"
+      },
+      {
+        "type": "news-text",
+        "text": "O Santuário Nossa Senhora de Nazaré realizou, de sábado (19), a XIII edição do Projeto Irmãos de Sangue, iniciativa que integra a programação do Círio de Nazaré e busca incentivar a doação de sangue como um gesto concreto de solidariedade e cuidado com o próximo.\n\nA ação contou com a participação de doadores e voluntários, reunindo 215 pessoas presentes e 133 bolsas de sangue coletadas. Os números refletem o compromisso da comunidade com a promoção da vida e a importância de manter os estoques de sangue abastecidos.\n"
+      },
+      {
+        "type": "news-image",
+        "image": "/images/27cc7666a3408e23.webp",
+        "title": "",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-text",
+        "text": "Mais do que uma ação social, o Projeto Irmãos de Sangue expressa a vivência da fé por meio da solidariedade. Cada doação representa um gesto de amor ao próximo e pode contribuir para salvar vidas.\n\nO Santuário Nossa Senhora de Nazaré agradece, com carinho e gratidão, a todos os doadores, voluntários e parceiros que contribuíram para a realização desta edição.\n\nQue Nossa Senhora de Nazaré abençoe todos aqueles que fizeram parte desta corrente de solidariedade e cuidado com a vida.\n\nDoe sangue. Compartilhe vida.\n\nFeliz Círio!\n(19/09/2026)\n"
+      },
+      {
+        "type": "section-header",
+        "eyebrow": "Comunicados",
+        "title": "Todas as Notícias",
+        "description": "Confira as notícias do Santuário."
+      },
+      {
+        "type": "all-news",
+        "id": "todas-noticias"
+      },
+      {
+        "type": "fragment",
+        "name": "footer"
+      }
+    ]
+  }
+}

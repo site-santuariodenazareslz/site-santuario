@@ -1,0 +1,60 @@
+@use "../../../styles/tokens" as *;
+
+.teaser-image {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp($space-5, 6vw, $space-8);
+  max-width: $width;
+  margin: 0 auto;
+  padding: $space-5;
+
+  &__photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: $color-cream-dark;
+  }
+
+  &__body {
+    max-width: 560px;
+    color: $color-text-mid;
+    font-family: $font-sans;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  h2 {
+    margin: 0 0 $space-5;
+    color: $color-brown;
+    font-family: $font-serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  &__text {
+    white-space: pre-line;
+
+    p {
+      margin: 0 0 $space-4;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .teaser-image {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $space-5;
+    padding-inline: $space-5;
+
+    &__photo {
+      aspect-ratio: 16 / 10;
+    }
+  }
+}

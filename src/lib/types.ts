@@ -190,6 +190,14 @@ export type NewsImageBlock = {
   imageAlt: string;
 };
 
+export type TeaserImageBlock = {
+  type: "teaser-image";
+  image: string;
+  imageAlt: string;
+  title: string;
+  text: string;
+};
+
 export type Block =
   | FragmentBlock
   | HeaderBlock
@@ -209,6 +217,7 @@ export type Block =
   | NewsTitleBlock
   | NewsTextBlock
   | NewsImageBlock
+  | TeaserImageBlock
   | NewsListingBlock;
 
 export type NewsItem = {

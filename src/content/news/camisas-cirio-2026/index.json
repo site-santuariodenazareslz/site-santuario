@@ -1,0 +1,71 @@
+{
+  "slug": "camisas-cirio-2026",
+  "createdAt": "2026-10-05T15:34:20.124Z",
+  "page": {
+    "title": "Camisas Cirio 2026",
+    "description": "Página gerada automaticamente a partir de um Google Doc.",
+    "blocks": [
+      {
+        "type": "fragment",
+        "name": "header"
+      },
+      {
+        "type": "news-banner",
+        "image": "/images/b1cc891077e182c2.webp",
+        "imageAlt": "",
+        "category": "Camisas 2026"
+      },
+      {
+        "type": "news-title",
+        "title": "Camisas do Círio de Nazaré 2026 já estão à venda!",
+        "titleHtml": "Camisas do Círio de Nazaré 2026 já estão à venda!\n"
+      },
+      {
+        "type": "news-text",
+        "text": "Atenção, devotos de Nazaré! Já estão disponíveis para venda as camisas oficiais do Círio de Nazaré 2026, uma forma especial de vestir a fé e celebrar a Festa da Luz.\n\nAs camisas podem ser adquiridas na Loja Devotionis, localizada nas dependências do Santuário Nossa Senhora de Nazaré, pelo valor de R$ 35,00.\n\nPara este ano, os devotos podem escolher entre quatro opções de cores: branca, vinho, mostarda e azul.\n"
+      },
+      {
+        "type": "news-image",
+        "image": "/images/8227770a9938004a.webp",
+        "title": "Camisa da Cor Branca",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-image",
+        "image": "/images/80726eae0e34d6ee.webp",
+        "title": "Camisa da Cor Mostarda",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-image",
+        "image": "/images/6d539645bcd51b53.webp",
+        "title": "Camisa da Cor vinho",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-image",
+        "image": "/images/dccc3383ad4e29d9.webp",
+        "title": "Camisa da Cor Azul",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-text",
+        "text": "Garanta já a sua camisa e prepare-se para viver com fé, alegria e devoção mais uma edição do Círio de Nazaré!\n\nAdquira a sua e venha celebrar conosco a Festa da Luz!\n\nFeliz Círio!\n"
+      },
+      {
+        "type": "section-header",
+        "eyebrow": "Comunicados",
+        "title": "Todas as Notícias",
+        "description": "Confira as notícias do Santuário."
+      },
+      {
+        "type": "all-news",
+        "id": "todas-noticias"
+      },
+      {
+        "type": "fragment",
+        "name": "footer"
+      }
+    ]
+  }
+}

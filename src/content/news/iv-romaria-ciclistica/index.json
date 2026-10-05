@@ -1,0 +1,53 @@
+{
+  "slug": "iv-romaria-ciclistica",
+  "createdAt": "2026-10-05T15:12:40.444Z",
+  "page": {
+    "title": "IV Romaria Ciclística",
+    "description": "Página gerada automaticamente a partir de um Google Doc.",
+    "blocks": [
+      {
+        "type": "fragment",
+        "name": "header"
+      },
+      {
+        "type": "news-banner",
+        "image": "/images/d72fb49115e1f7ee.webp",
+        "imageAlt": "",
+        "category": "Romaria Ciclística"
+      },
+      {
+        "type": "news-title",
+        "title": "IV Romaria Ciclística reúne cerca de 400 fiéis no Círio Esportivo",
+        "titleHtml": "IV Romaria Ciclística reúne cerca de 400 fiéis no Círio Esportivo\n"
+      },
+      {
+        "type": "news-text",
+        "text": "No último domingo de setembro (27), o Círio Esportivo promoveu a IV Romaria Ciclística do Círio de Nazaré, reunindo cerca de 400 fiéis em um momento de fé, esporte e devoção pelas avenidas de São Luís.\n\nCom alegria e disposição, os participantes percorreram aproximadamente 16 quilômetros, acompanhando a imagem da Virgem Santíssima ao longo do trajeto. A romaria proporcionou à comunidade uma experiência de devoção vivida também por meio da prática esportiva e da convivência entre os participantes.\n\nAo retornarem ao Santuário Nossa Senhora de Nazaré, os ciclistas participaram de um momento de confraternização, que contou com o sorteio de uma bicicleta e de outros prêmios entre os participantes.\n"
+      },
+      {
+        "type": "news-image",
+        "image": "/images/8f35238647722ea3.webp",
+        "title": "",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-text",
+        "text": "O Santuário Nossa Senhora de Nazaré agradece especialmente à Jota Bike Shop, grande apoiadora da Romaria Ciclística e de outras iniciativas realizadas pela comunidade, pela parceria e contribuição para a realização do evento.\n\nA IV Romaria Ciclística reafirma a proposta do Círio Esportivo de unir fé, saúde, esporte e convivência comunitária, fortalecendo os laços de devoção a Nossa Senhora de Nazaré.\n\nConfira alguns registros dessa manhã de fé, esporte e alegria no Instagram do santuário!\n\nFeliz Círio!\n"
+      },
+      {
+        "type": "section-header",
+        "eyebrow": "Comunicados",
+        "title": "Todas as Notícias",
+        "description": "Confira as notícias do Santuário."
+      },
+      {
+        "type": "all-news",
+        "id": "todas-noticias"
+      },
+      {
+        "type": "fragment",
+        "name": "footer"
+      }
+    ]
+  }
+}

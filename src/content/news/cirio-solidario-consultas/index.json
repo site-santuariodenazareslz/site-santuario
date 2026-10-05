@@ -1,0 +1,53 @@
+{
+  "slug": "cirio-solidario-consultas",
+  "createdAt": "2026-10-05T15:03:56.738Z",
+  "page": {
+    "title": "Círio Solidário - Consultas",
+    "description": "Página gerada automaticamente a partir de um Google Doc.",
+    "blocks": [
+      {
+        "type": "fragment",
+        "name": "header"
+      },
+      {
+        "type": "news-banner",
+        "image": "/images/ca9c6fc2524a7ff3.webp",
+        "imageAlt": "",
+        "category": "Círio Solidário"
+      },
+      {
+        "type": "news-title",
+        "title": "Círio Solidário promove atendimento médico à comunidade",
+        "titleHtml": "Círio Solidário promove atendimento médico à comunidade\n"
+      },
+      {
+        "type": "news-text",
+        "text": "Na tarde de sexta-feira (25), o Santuário Nossa Senhora de Nazaré realizou mais uma ação do Círio Solidário, iniciativa que busca promover cuidado, acolhimento e atenção às necessidades da comunidade.\n\nEm parceria com o Instituto de Educação Médica (IDOMED), a ação ofereceu consultas de Clínica Geral, proporcionando atendimento e orientação médica àqueles que participaram da iniciativa.\n"
+      },
+      {
+        "type": "news-image",
+        "image": "/images/4bdafaf137a9a293.webp",
+        "title": "",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-text",
+        "text": "A ação integra um projeto quinzenal, desenvolvido com o propósito de ampliar o acesso ao cuidado e levar atendimento às pessoas que mais precisam. A iniciativa também reforça o compromisso do Círio Solidário com a promoção da dignidade, da saúde e do bem-estar da comunidade.\n\nO Santuário Nossa Senhora de Nazaré agradece especialmente ao IDOMED e a todos os voluntários que, com dedicação, conhecimento e carinho, colaboram para que essa missão continue acontecendo.\n\nQue Deus abençoe cada pessoa que contribui para essa corrente de solidariedade e cuidado com o próximo.\n\nConfira alguns registros desta ação.\n\nFeliz Círio! (25/09/2026)\n"
+      },
+      {
+        "type": "section-header",
+        "eyebrow": "Comunicados",
+        "title": "Todas as Notícias",
+        "description": "Confira as notícias do Santuário."
+      },
+      {
+        "type": "all-news",
+        "id": "todas-noticias"
+      },
+      {
+        "type": "fragment",
+        "name": "footer"
+      }
+    ]
+  }
+}

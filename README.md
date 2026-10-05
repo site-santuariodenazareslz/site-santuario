@@ -274,6 +274,16 @@ Use o identificador `mass-schedule` (ou `missas`) na primeira linha. Cada linha 
 
 O resultado é uma seção com cartões por grupo, adaptada para telas menores. Não inclua uma coluna de local.
 
+### Teaser com imagem
+
+Use `teaser-image` para exibir uma imagem ao lado de título e texto formatado. A imagem fica à esquerda em telas largas; em telas menores, o conteúdo empilha.
+
+| teaser-image     |                           | título             | texto rico                                                  |
+| ---------------- | ------------------------- | ------------------ | ----------------------------------------------------------- |
+| imagem do evento | Pessoas em uma celebração | A fé que nos reúne | A comunidade se reúne para celebrar. **Participe conosco.** |
+
+Use a primeira célula de dados para colar a imagem ou informar uma URL. Aplique negrito e itálico diretamente ao texto na tabela do Google Docs; essa formatação é mantida na página. O texto alternativo pode ficar vazio se a imagem for decorativa.
+
 ### Notícias
 
 Crie uma pasta `noticias` dentro da pasta raiz do Drive e coloque um documento para cada notícia. O nome do documento vira o slug da notícia e o `createdTime` do Drive define a ordem, da mais nova para a mais antiga:

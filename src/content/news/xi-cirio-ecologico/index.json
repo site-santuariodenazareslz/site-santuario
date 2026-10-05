@@ -1,0 +1,53 @@
+{
+  "slug": "xi-cirio-ecologico",
+  "createdAt": "2026-10-05T14:35:57.440Z",
+  "page": {
+    "title": "XI Círio Ecológico",
+    "description": "Página gerada automaticamente a partir de um Google Doc.",
+    "blocks": [
+      {
+        "type": "fragment",
+        "name": "header"
+      },
+      {
+        "type": "news-banner",
+        "image": "/images/a1cc83a9ac177e5f.webp",
+        "imageAlt": "",
+        "category": "Círio Ecológico"
+      },
+      {
+        "type": "news-title",
+        "title": "XI Círio Ecológico reúne comunidade em defesa da Casa Comum",
+        "titleHtml": "XI Círio Ecológico reúne comunidade em defesa da Casa Comum\n"
+      },
+      {
+        "type": "news-text",
+        "text": "Na manhã de sábado (12), o Santuário Nossa Senhora de Nazaré realizou a XI edição do Círio Ecológico, uma das expressões do Círio de Nazaré – Festa da Luz. A programação reuniu a comunidade em um momento de fé, convivência e conscientização sobre a importância do cuidado com a natureza, nossa Casa Comum.\n\nA manhã teve início com a Bênção dos Animais, seguida de uma programação diversificada voltada à educação ambiental e à promoção de práticas sustentáveis. Entre as ações realizadas esteve a Feirinha de Adoção de Animais, em parceria com a ONG Dindas Formiguinhas, além da vacinação antirrábica gratuita, promovida em parceria com a SEMUS.\n"
+      },
+      {
+        "type": "news-image",
+        "image": "/images/88c6c9e30787a1e2.webp",
+        "title": "",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-text",
+        "text": "O evento também contou com oficinas destinadas a crianças, jovens e adultos, incentivando práticas simples e sustentáveis que podem fazer parte do cotidiano. Entre as atividades estiveram oficinas de reaproveitamento de alimentos, utilização da borra de café e confecção de brinquedos com materiais recicláveis, como garrafas PET.\n\nNesta edição, o Círio Ecológico contou com mais de 100 inscritos e a participação de dezenas de voluntários, que contribuíram para a realização de uma manhã marcada pela integração, pelo aprendizado e pelo compromisso com a preservação da vida.\n\nInspirado pela encíclica Laudato Si’, do Papa Francisco, o Círio Ecológico recorda que o cuidado com a criação também faz parte da vivência da fé. A iniciativa busca fortalecer, junto à comunidade, a responsabilidade socioambiental e o compromisso com a preservação da vida em todas as suas formas.\n\nAssim, em meio à preparação para o Círio de Nazaré, a comunidade do Santuário é convidada a transformar a devoção em atitudes concretas de cuidado, reconhecendo que cuidar da Casa Comum é também cuidar da vida que Deus nos confiou.\n\nConfira alguns registros da XI edição do Círio Ecológico no Instagram do santuário ou no link 🔗 https://www.instagram.com/p/DdMlzV4Eek5/?img_index=18&amp;stkn=MTFmN3pnY2pheHR5dw==\n\nFeliz Círio. (12/09/2026)\n"
+      },
+      {
+        "type": "section-header",
+        "eyebrow": "Comunicados",
+        "title": "Todas as Notícias",
+        "description": "Confira as notícias do Santuário."
+      },
+      {
+        "type": "all-news",
+        "id": "todas-noticias"
+      },
+      {
+        "type": "fragment",
+        "name": "footer"
+      }
+    ]
+  }
+}

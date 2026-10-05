@@ -1,0 +1,53 @@
+{
+  "slug": "reinado-em-nazare-2026",
+  "createdAt": "2026-10-05T15:09:12.392Z",
+  "page": {
+    "title": "Reinado em Nazare 2026",
+    "description": "Página gerada automaticamente a partir de um Google Doc.",
+    "blocks": [
+      {
+        "type": "fragment",
+        "name": "header"
+      },
+      {
+        "type": "news-banner",
+        "image": "/images/8f60169147e20983.webp",
+        "imageAlt": "",
+        "category": "Reinado em Nazaré"
+      },
+      {
+        "type": "news-title",
+        "title": "Reinado em Nazaré 2026 celebra a infância com cores, alegria e fé",
+        "titleHtml": "Reinado em Nazaré 2026 celebra a infância com cores, alegria e fé\n"
+      },
+      {
+        "type": "news-text",
+        "text": "Na noite deste sábado (26), a Praça Nossa Senhora de Nazaré foi tomada por cores, alegria e muita torcida durante a última etapa do Reinado em Nazaré 2026, evento que integra a programação do Círio das Crianças.\n\nA noite foi marcada pelo desfile das crianças candidatas aos títulos de Príncipe, Princesa, Rei e Rainha de Nazaré 2026. Os participantes apresentaram trajes inspirados no tema deste ano, “O Nascimento de Jesus”, tendo como lema a passagem do Evangelho de Lucas: “O Espírito Santo descerá sobre ti” (Lc 1,35).\n\nO Reinado em Nazaré é realizado em duas etapas: a participação no Livro de Ouro e o Desfile, desenvolvido de acordo com o tema escolhido pela Coordenação do evento. A pontuação obtida nas duas etapas é somada para definir os vencedores do concurso.\n\nNesta edição, os títulos foram conquistados por:\n\n* Príncipe: Noah Santos Ribeiro\n* Princesa: Maria Eloah Dantas Oliveira\n* Rei: Jackson Nunes de Freitas Oliveira Junior\n* Rainha: Bruna Sophia Ferreira Pereira Sá\n"
+      },
+      {
+        "type": "news-image",
+        "image": "/images/9c014d6be3533e0e.webp",
+        "title": "",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-text",
+        "text": "Além do desfile, a programação contou com o Show Vozes de Nazaré, apresentado pela Banda Max Gratia, que animou a noite e reuniu familiares, amigos e paroquianos na Praça Nossa Senhora de Nazaré.\n\nO Reinado em Nazaré celebra a participação das crianças no Círio, unindo fé, cultura, criatividade e alegria em uma programação que fortalece, desde a infância, os laços da comunidade com Nossa Senhora de Nazaré. (26/09/2026)\n"
+      },
+      {
+        "type": "section-header",
+        "eyebrow": "Comunicados",
+        "title": "Todas as Notícias",
+        "description": "Confira as notícias do Santuário."
+      },
+      {
+        "type": "all-news",
+        "id": "todas-noticias"
+      },
+      {
+        "type": "fragment",
+        "name": "footer"
+      }
+    ]
+  }
+}

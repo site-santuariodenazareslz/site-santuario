@@ -61,10 +61,7 @@ export async function materializePageImages(
       if (block.type === "banner-text" && block.backgroundImage) {
         return {
           ...block,
-          backgroundImage: await toWebp(
-            block.backgroundImage,
-            getAccessToken,
-          ),
+          backgroundImage: await toWebp(block.backgroundImage, getAccessToken),
         };
       }
       if (block.type === "banner-carousel") {
@@ -107,6 +104,12 @@ export async function materializePageImages(
           image: await toWebp(block.image, getAccessToken),
         };
       }
+      if (block.type === "teaser-image" && block.image) {
+        return {
+          ...block,
+          image: await toWebp(block.image, getAccessToken),
+        };
+      }
       return block;
     }),
   );
@@ -120,7 +123,8 @@ function imagePathsFromPage(page: Page): string[] {
     if (
       block.type === "hero" ||
       block.type === "news-banner" ||
-      block.type === "news-image"
+      block.type === "news-image" ||
+      block.type === "teaser-image"
     )
       return [block.image];
     if (block.type === "banner-text")
