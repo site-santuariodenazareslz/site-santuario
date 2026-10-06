@@ -3,10 +3,16 @@ import type { TeaserImageBlock } from "../../../lib/types";
 import { siteUrl } from "../../../lib/urls";
 import "./TeaserImage.scss";
 
-const { image, imageAlt, title, text } = Astro.props as TeaserImageBlock;
+const {
+  image,
+  imageAlt,
+  title,
+  text,
+  imagePosition = "left",
+} = Astro.props as TeaserImageBlock;
 ---
 
-<section class="teaser-image">
+<section class:list={["teaser-image", `teaser-image--image-${imagePosition}`]}>
   <img class="teaser-image__photo" src={siteUrl(image)} alt={imageAlt} />
   <div class="teaser-image__body">
     <h2>{title}</h2>

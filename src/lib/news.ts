@@ -15,6 +15,24 @@ export type NewsSummary = {
   excerpt: string;
 };
 
+export function getAdjacentNews(
+  items: NewsSummary[],
+  currentSlug: string,
+): { previous?: NewsSummary; next?: NewsSummary } {
+  const ordered = [...items].sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt),
+  );
+  const currentIndex = ordered.findIndex((item) => item.slug === currentSlug);
+
+  if (currentIndex < 0) return {};
+  const previous = ordered[currentIndex + 1];
+  const next = currentIndex > 0 ? ordered[currentIndex - 1] : undefined;
+  return {
+    ...(previous ? { previous } : {}),
+    ...(next ? { next } : {}),
+  };
+}
+
 export function summarizeNews(item: NewsItem): NewsSummary {
   const banner = item.page.blocks.find(
     (block): block is NewsBannerBlock => block.type === "news-banner",
@@ -26,7 +44,7 @@ export function summarizeNews(item: NewsItem): NewsSummary {
     (block): block is NewsTitleBlock => block.type === "news-title",
   );
   // Compatibilidade para notícias geradas antes da separação dos blocks.
-  const legacyText = text as NewsTextBlock & { title?: string } | undefined;
+  const legacyText = text as (NewsTextBlock & { title?: string }) | undefined;
   const newsTitle = title?.title ?? legacyText?.title ?? "";
   if (!banner || !newsTitle)
     throw new Error(

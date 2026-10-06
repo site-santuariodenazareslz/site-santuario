@@ -19,6 +19,7 @@ import TeaserImage from "./blocks/TeaserImage/TeaserImage.astro";
 import UpcomingEvents from "./blocks/UpcomingEvents/UpcomingEvents.astro";
 import EventsList from "./blocks/EventsList/EventsList.astro";
 import SectionHeader from "./blocks/SectionHeader/SectionHeader.astro";
+import Sponsors from "./blocks/Sponsors/Sponsors.astro";
 import type { Block } from "../lib/types";
 
 const { blocks } = Astro.props as { blocks: Block[] };
@@ -43,6 +44,7 @@ const componentFor = {
   "upcoming-events": UpcomingEvents,
   "events-list": EventsList,
   "section-header": SectionHeader,
+  sponsors: Sponsors,
 } as const;
 
 if (blocks.some((block) => block.type === "fragment")) {

@@ -302,7 +302,7 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
         imageAlt: imageAltCell?.text ?? "",
         category: categoryCell?.text ?? "",
         title: titleCell?.text ?? "",
-        href: hrefCell?.text ?? "#",
+        href: hrefCell?.text.trim() || undefined,
       }))
       .filter((slide) => slide.image || slide.title);
 
@@ -315,6 +315,33 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       );
     }
     return { type: "banner-carousel", slides };
+  }
+
+  if (
+    blockName === "sponsors" ||
+    blockName === "supporters" ||
+    blockName === "apoiadores"
+  ) {
+    const sponsors = body.map(
+      ([categoryCell, imageCell, nameCell, hrefCell]) => ({
+        category: categoryCell?.text ?? "",
+        image: imageCell?.image ?? imageCell?.text ?? "",
+        name: nameCell?.text ?? "",
+        href: hrefCell?.text.trim() || undefined,
+      }),
+    );
+
+    if (
+      !sponsors.length ||
+      sponsors.some(
+        (sponsor) => !sponsor.category || !sponsor.image || !sponsor.name,
+      )
+    ) {
+      throw new Error(
+        "O block sponsors precisa informar categoria, logo e nome para cada apoiador.",
+      );
+    }
+    return { type: "sponsors", sponsors };
   }
 
   if (
@@ -588,7 +615,8 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
   }
 
   if (blockName === "teaser-image" || blockName === "teaser image") {
-    const [imageCell, imageAltCell, titleCell, textCell] = body[0] ?? [];
+    const [imageCell, imageAltCell, titleCell, textCell, positionCell] =
+      body[0] ?? [];
     const image = imageCell?.image ?? imageCell?.text ?? "";
     if (!image || !titleCell?.text || !textCell?.text) {
       throw new Error(
@@ -601,6 +629,11 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
       imageAlt: imageAltCell?.text ?? "",
       title: titleCell.text,
       text: textCell.html || textCell.text,
+      imagePosition: ["right", "direita"].includes(
+        positionCell?.text.trim().toLowerCase() ?? "",
+      )
+        ? "right"
+        : "left",
     };
   }
 
@@ -659,7 +692,7 @@ export function parseGoogleDocument(document: GoogleDocument): Page {
     const paragraphs = content.filter((element) => element.paragraph).length;
     throw new Error(
       `Nenhum block válido foi encontrado. A API recebeu ${tables.length} tabela(s) e ${paragraphs} parágrafo(s). ` +
-        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, card-event, section-header, upcoming-events, events-list, quote, not-found, donation, mass-schedule, news, all-news, banner, title, text, image, teaser-image ou fragment.",
+        "Cada block precisa ser uma tabela do Google Docs cuja primeira linha tenha o nome do block: header, footer, hero, banner-text, banner-carousel, sponsors, card-event, section-header, upcoming-events, events-list, quote, not-found, donation, mass-schedule, news, all-news, banner, title, text, image, teaser-image ou fragment.",
     );
   }
 

@@ -6,10 +6,6 @@
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
-        "type": "fragment",
-        "name": "header"
-      },
-      {
         "type": "news-banner",
         "image": "/images/8f60169147e20983.webp",
         "imageAlt": "",
@@ -33,20 +29,6 @@
       {
         "type": "news-text",
         "text": "Além do desfile, a programação contou com o Show Vozes de Nazaré, apresentado pela Banda Max Gratia, que animou a noite e reuniu familiares, amigos e paroquianos na Praça Nossa Senhora de Nazaré.\n\nO Reinado em Nazaré celebra a participação das crianças no Círio, unindo fé, cultura, criatividade e alegria em uma programação que fortalece, desde a infância, os laços da comunidade com Nossa Senhora de Nazaré. (26/09/2026)\n"
-      },
-      {
-        "type": "section-header",
-        "eyebrow": "Comunicados",
-        "title": "Todas as Notícias",
-        "description": "Confira as notícias do Santuário."
-      },
-      {
-        "type": "all-news",
-        "id": "todas-noticias"
-      },
-      {
-        "type": "fragment",
-        "name": "footer"
       }
     ]
   }

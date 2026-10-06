@@ -18,7 +18,7 @@ export type BannerCarouselSlide = {
   /** Exibida apenas quando preenchida. */
   category?: string;
   title: string;
-  href: string;
+  href?: string;
 };
 
 export type BannerCarouselBlock = {
@@ -196,6 +196,19 @@ export type TeaserImageBlock = {
   imageAlt: string;
   title: string;
   text: string;
+  imagePosition?: "left" | "right";
+};
+
+export type SponsorEntry = {
+  category: string;
+  image: string;
+  name: string;
+  href?: string;
+};
+
+export type SponsorsBlock = {
+  type: "sponsors";
+  sponsors: SponsorEntry[];
 };
 
 export type Block =
@@ -218,6 +231,7 @@ export type Block =
   | NewsTextBlock
   | NewsImageBlock
   | TeaserImageBlock
+  | SponsorsBlock
   | NewsListingBlock;
 
 export type NewsItem = {

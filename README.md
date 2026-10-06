@@ -241,7 +241,20 @@ Exemplo:
 | imagem do evento | Pessoas em uma celebração | Festividade | Festa de Nossa Senhora de Nazaré | /eventos/ |
 | imagem da igreja | Fachada do Santuário      |             | Conheça os horários das missas   | /missas/  |
 
-Cada slide precisa de imagem e título. A imagem pode ser colada na primeira célula ou informada como URL e é materializada em WebP durante a sincronização.
+Cada slide precisa de imagem e título. O link é opcional; quando a célula ficar vazia, o slide aparece sem link e sem o CTA **Saiba mais**. A imagem pode ser colada na primeira célula ou informada como URL e é materializada em WebP durante a sincronização.
+
+### Patrocinadores e apoiadores
+
+Use `sponsors` para exibir os logos em faixas separadas por categoria. Cada linha corresponde a uma marca; informe `Patrocínio` ou `Apoio` na categoria. O carrossel mostra até cinco logos em telas largas, avança um logo por vez e pode ser pausado. Para manter a leitura clara, em tablets mostra três logos e em celulares, dois.
+
+| sponsors    |                  |                              | link (opcional)            |
+| ----------- | ---------------- | ---------------------------- | -------------------------- |
+| # categoria | logo             | nome da marca                | URL da marca (opcional)    |
+| Patrocínio  | Cole o logo aqui | Prefeitura de São Luís       | https://saoluis.ma.gov.br/ |
+| Patrocínio  | Cole o logo aqui | Prefeitura de Paço do Lumiar |                            |
+| Apoio       | Cole o logo aqui | Loja das Cadeiras            |                            |
+
+Insira cada logo como uma imagem individual na segunda célula; não use uma montagem única com vários logos. O nome da marca é usado como texto alternativo. A URL é opcional; sem ela, o logo não será clicável. Imagens coladas ou URLs são convertidas para WebP durante `npm run sync:google`.
 
 ### Doações e Pix
 
@@ -276,13 +289,13 @@ O resultado é uma seção com cartões por grupo, adaptada para telas menores. 
 
 ### Teaser com imagem
 
-Use `teaser-image` para exibir uma imagem ao lado de título e texto formatado. A imagem fica à esquerda em telas largas; em telas menores, o conteúdo empilha.
+Use `teaser-image` para exibir uma imagem ao lado de título e texto formatado. Em telas largas, escolha o lado da imagem; em telas menores, a imagem fica acima do conteúdo.
 
-| teaser-image     |                           | título             | texto rico                                                  |
-| ---------------- | ------------------------- | ------------------ | ----------------------------------------------------------- |
-| imagem do evento | Pessoas em uma celebração | A fé que nos reúne | A comunidade se reúne para celebrar. **Participe conosco.** |
+| teaser-image     |                           | título             | texto rico                                                  | posição da imagem (opcional) |
+| ---------------- | ------------------------- | ------------------ | ----------------------------------------------------------- | ---------------------------- |
+| imagem do evento | Pessoas em uma celebração | A fé que nos reúne | A comunidade se reúne para celebrar. **Participe conosco.** | direita                      |
 
-Use a primeira célula de dados para colar a imagem ou informar uma URL. Aplique negrito e itálico diretamente ao texto na tabela do Google Docs; essa formatação é mantida na página. O texto alternativo pode ficar vazio se a imagem for decorativa.
+Use a primeira célula de dados para colar a imagem ou informar uma URL. Na última célula, informe `esquerda` ou `direita`; se deixar vazia, a imagem fica à esquerda. Aplique negrito e itálico diretamente ao texto na tabela do Google Docs; essa formatação é mantida na página. O texto alternativo pode ficar vazio se a imagem for decorativa.
 
 ### Notícias
 

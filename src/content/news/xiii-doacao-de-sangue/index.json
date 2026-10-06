@@ -6,10 +6,6 @@
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
-        "type": "fragment",
-        "name": "header"
-      },
-      {
         "type": "news-banner",
         "image": "/images/2eaa6315dccf0449.webp",
         "imageAlt": "",
@@ -33,20 +29,6 @@
       {
         "type": "news-text",
         "text": "Mais do que uma ação social, o Projeto Irmãos de Sangue expressa a vivência da fé por meio da solidariedade. Cada doação representa um gesto de amor ao próximo e pode contribuir para salvar vidas.\n\nO Santuário Nossa Senhora de Nazaré agradece, com carinho e gratidão, a todos os doadores, voluntários e parceiros que contribuíram para a realização desta edição.\n\nQue Nossa Senhora de Nazaré abençoe todos aqueles que fizeram parte desta corrente de solidariedade e cuidado com a vida.\n\nDoe sangue. Compartilhe vida.\n\nFeliz Círio!\n(19/09/2026)\n"
-      },
-      {
-        "type": "section-header",
-        "eyebrow": "Comunicados",
-        "title": "Todas as Notícias",
-        "description": "Confira as notícias do Santuário."
-      },
-      {
-        "type": "all-news",
-        "id": "todas-noticias"
-      },
-      {
-        "type": "fragment",
-        "name": "footer"
       }
     ]
   }

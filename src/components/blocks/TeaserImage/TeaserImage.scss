@@ -3,21 +3,29 @@
 .teaser-image {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "photo body";
   align-items: center;
   gap: clamp($space-5, 6vw, $space-8);
   max-width: $width;
   margin: 0 auto;
   padding: $space-5;
 
+  &--image-right {
+    grid-template-areas: "body photo";
+  }
+
   &__photo {
+    grid-area: photo;
     display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     background: $color-cream-dark;
+    border-radius: 10px;
   }
 
   &__body {
+    grid-area: body;
     max-width: 560px;
     color: $color-text-mid;
     font-family: $font-sans;
@@ -50,6 +58,9 @@
 @media (max-width: $breakpoint-tablet) {
   .teaser-image {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "photo"
+      "body";
     gap: $space-5;
     padding-inline: $space-5;
 

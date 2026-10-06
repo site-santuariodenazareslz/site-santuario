@@ -1,0 +1,51 @@
+---
+import type { NewsSummary } from "../../../lib/news";
+import { siteUrl } from "../../../lib/urls";
+import "./NewsNavigation.scss";
+
+const { previous, next } = Astro.props as {
+  previous?: NewsSummary;
+  next?: NewsSummary;
+};
+---
+
+{
+  (previous || next) && (
+    <nav class="news-navigation" aria-label="Navegação entre notícias">
+      {previous && (
+        <a
+          class="news-navigation__link news-navigation__link--previous"
+          href={siteUrl(`/noticias/${previous.slug}/`)}
+        >
+          <img
+            src={siteUrl(previous.image)}
+            alt={previous.imageAlt}
+            loading="lazy"
+          />
+          <span class="news-navigation__copy">
+            <span class="news-navigation__label">Notícia anterior</span>
+            <strong>{previous.title}</strong>
+          </span>
+          <span class="news-navigation__arrow" aria-hidden="true">
+            ←
+          </span>
+        </a>
+      )}
+      {next && (
+        <a
+          class="news-navigation__link news-navigation__link--next"
+          href={siteUrl(`/noticias/${next.slug}/`)}
+        >
+          <img src={siteUrl(next.image)} alt={next.imageAlt} loading="lazy" />
+          <span class="news-navigation__copy">
+            <span class="news-navigation__label">Próxima notícia</span>
+            <strong>{next.title}</strong>
+          </span>
+          <span class="news-navigation__arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+      )}
+    </nav>
+  )
+}

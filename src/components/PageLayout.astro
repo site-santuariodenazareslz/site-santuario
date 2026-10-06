@@ -3,12 +3,18 @@ import Header from "./blocks/Header/Header.astro";
 import Footer from "./blocks/Footer/Footer.astro";
 import BlockRenderer from "./BlockRenderer.astro";
 import BlockSpacer from "./BlockSpacer.astro";
+import NewsNavigation from "./blocks/NewsNavigation/NewsNavigation.astro";
 import headerFragment from "../content/fragments/header/index.json";
 import footerFragment from "../content/fragments/footer/index.json";
+import type { NewsSummary } from "../lib/news";
 import type { FooterBlock, HeaderBlock, Page } from "../lib/types";
+import { siteUrl } from "../lib/urls";
 import "../styles/global.scss";
 
-const { page } = Astro.props as { page: Page };
+const { page, newsNavigation } = Astro.props as {
+  page: Page;
+  newsNavigation?: { previous?: NewsSummary; next?: NewsSummary };
+};
 const header = (headerFragment as Page).blocks.find(
   (block): block is HeaderBlock => block.type === "header",
 );
@@ -34,6 +40,11 @@ const contentBlocks = page.blocks.filter(
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={page.description} />
+    <link
+      rel="icon"
+      type="image/webp"
+      href={siteUrl("/images/99f2a40cbf6fe023.webp")}
+    />
     <title>{page.title}</title>
   </head>
   <body>
@@ -47,6 +58,7 @@ const contentBlocks = page.blocks.filter(
           </>
         ))
       }
+      {newsNavigation && <NewsNavigation {...newsNavigation} />}
     </main>
     <Footer {...footer} />
   </body>

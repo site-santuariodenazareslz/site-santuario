@@ -6,10 +6,6 @@
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
-        "type": "fragment",
-        "name": "header"
-      },
-      {
         "type": "news-banner",
         "image": "/images/a1cc83a9ac177e5f.webp",
         "imageAlt": "",
@@ -39,14 +35,6 @@
         "eyebrow": "Comunicados",
         "title": "Todas as Notícias",
         "description": "Confira as notícias do Santuário."
-      },
-      {
-        "type": "all-news",
-        "id": "todas-noticias"
-      },
-      {
-        "type": "fragment",
-        "name": "footer"
       }
     ]
   }

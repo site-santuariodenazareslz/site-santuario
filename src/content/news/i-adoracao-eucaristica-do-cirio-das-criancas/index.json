@@ -6,10 +6,6 @@
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
-        "type": "fragment",
-        "name": "header"
-      },
-      {
         "type": "news-banner",
         "image": "/images/d3d7b808bfecb997.webp",
         "imageAlt": "",
@@ -33,20 +29,6 @@
       {
         "type": "news-text",
         "text": "Ao longo da Adoração, os participantes foram convidados a abrir o coração para a presença de Jesus e a reconhecer a ação do Espírito Santo em suas vidas. Por meio de uma linguagem especialmente preparada para o público infantil e juvenil, o momento proporcionou uma experiência de fé marcada pela simplicidade, alegria e intimidade com Deus.\n\nA realização da primeira Adoração do Círio das Crianças reforça o compromisso do Santuário em proporcionar às novas gerações momentos de formação, oração e vivência da fé, ajudando crianças e adolescentes a crescerem na amizade com Jesus e na devoção a Nossa Senhora de Nazaré.\n\nQue este encontro permaneça no coração de cada criança, adolescente e família que participou, fortalecendo a caminhada de fé e o desejo de estar sempre mais próximo de Jesus.\n\nConfira alguns registros desse momento especial!\n\nFeliz Círio! (03/10/2026)\n"
-      },
-      {
-        "type": "section-header",
-        "eyebrow": "Comunicados",
-        "title": "Todas as Notícias",
-        "description": "Confira as notícias do Santuário."
-      },
-      {
-        "type": "all-news",
-        "id": "todas-noticias"
-      },
-      {
-        "type": "fragment",
-        "name": "footer"
       }
     ]
   }

@@ -6,10 +6,6 @@
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
-        "type": "fragment",
-        "name": "header"
-      },
-      {
         "type": "news-banner",
         "image": "/images/b1cc891077e182c2.webp",
         "imageAlt": "",
@@ -51,20 +47,6 @@
       {
         "type": "news-text",
         "text": "Garanta já a sua camisa e prepare-se para viver com fé, alegria e devoção mais uma edição do Círio de Nazaré!\n\nAdquira a sua e venha celebrar conosco a Festa da Luz!\n\nFeliz Círio!\n"
-      },
-      {
-        "type": "section-header",
-        "eyebrow": "Comunicados",
-        "title": "Todas as Notícias",
-        "description": "Confira as notícias do Santuário."
-      },
-      {
-        "type": "all-news",
-        "id": "todas-noticias"
-      },
-      {
-        "type": "fragment",
-        "name": "footer"
       }
     ]
   }

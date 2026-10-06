@@ -19,6 +19,7 @@ import TeaserImage from "./blocks/TeaserImage/TeaserImage.astro";
 import UpcomingEvents from "./blocks/UpcomingEvents/UpcomingEvents.astro";
 import EventsList from "./blocks/EventsList/EventsList.astro";
 import SectionHeader from "./blocks/SectionHeader/SectionHeader.astro";
+import Sponsors from "./blocks/Sponsors/Sponsors.astro";
 import FragmentRenderer from "./FragmentRenderer.astro";
 import type { Block, Page } from "../lib/types";
 
@@ -47,6 +48,7 @@ const componentFor = {
   "upcoming-events": UpcomingEvents,
   "events-list": EventsList,
   "section-header": SectionHeader,
+  sponsors: Sponsors,
 } as const;
 
 function fragmentFor(name: string): Page | undefined {

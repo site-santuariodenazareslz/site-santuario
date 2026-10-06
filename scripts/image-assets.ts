@@ -75,6 +75,17 @@ export async function materializePageImages(
           ),
         };
       }
+      if (block.type === "sponsors") {
+        return {
+          ...block,
+          sponsors: await Promise.all(
+            block.sponsors.map(async (sponsor) => ({
+              ...sponsor,
+              image: await toWebp(sponsor.image, getAccessToken),
+            })),
+          ),
+        };
+      }
       if (block.type === "events-list") {
         return {
           ...block,
@@ -131,6 +142,8 @@ function imagePathsFromPage(page: Page): string[] {
       return block.backgroundImage ? [block.backgroundImage] : [];
     if (block.type === "banner-carousel")
       return block.slides.map((slide) => slide.image);
+    if (block.type === "sponsors")
+      return block.sponsors.map((sponsor) => sponsor.image);
     if (block.type === "events-list")
       return (block.events ?? []).map((event) => event.image);
     if (block.type === "donation") return [block.qrCode];

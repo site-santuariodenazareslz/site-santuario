@@ -1,5 +1,6 @@
 ---
 import PageLayout from "../../components/PageLayout.astro";
+import { getAdjacentNews, summarizeNews } from "../../lib/news";
 import type { NewsItem, Page } from "../../lib/types";
 
 export function getStaticPaths() {
@@ -13,10 +14,17 @@ export function getStaticPaths() {
 }
 
 const { item } = Astro.props as { item: NewsItem };
+const modules = import.meta.glob("../../content/news/**/index.json", {
+  eager: true,
+});
+const newsItems = Object.values(modules).map(
+  (module) => (module as { default: NewsItem }).default,
+);
+const newsNavigation = getAdjacentNews(newsItems.map(summarizeNews), item.slug);
 const page: Page = {
   ...item.page,
   blocks: [{ type: "fragment", name: "header" }, ...item.page.blocks],
 };
 ---
 
-<PageLayout page={page} />
+<PageLayout page={page} newsNavigation={newsNavigation} />

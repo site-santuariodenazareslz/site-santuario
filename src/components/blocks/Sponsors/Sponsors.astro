@@ -1,0 +1,206 @@
+---
+import type { SponsorsBlock } from "../../../lib/types";
+import { siteUrl } from "../../../lib/urls";
+import "./Sponsors.scss";
+
+const { sponsors } = Astro.props as SponsorsBlock;
+const categories = [...new Set(sponsors.map((sponsor) => sponsor.category))];
+const groups = categories.map((category, index) => ({
+  category,
+  id: `sponsors-${index}`,
+  entries: sponsors.filter((sponsor) => sponsor.category === category),
+}));
+---
+
+<section class="sponsors" aria-label="Patrocinadores e apoiadores">
+  {
+    groups.map(({ category, id, entries }) => (
+      <section class="sponsors__group" aria-labelledby={`${id}-title`}>
+        <h2 class="sponsors__heading" id={`${id}-title`}>
+          {category}
+        </h2>
+        <div class="sponsors__carousel" data-sponsors-carousel>
+          <div class="sponsors__viewport">
+            <div class="sponsors__track" data-sponsors-track>
+              {entries.map((sponsor) => (
+                <div class="sponsors__item" data-sponsors-item>
+                  {sponsor.href ? (
+                    <a
+                      class="sponsors__logo"
+                      href={sponsor.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Visitar ${sponsor.name}`}
+                    >
+                      <img
+                        src={siteUrl(sponsor.image)}
+                        alt={sponsor.name}
+                        loading="lazy"
+                      />
+                    </a>
+                  ) : (
+                    <div class="sponsors__logo">
+                      <img
+                        src={siteUrl(sponsor.image)}
+                        alt={sponsor.name}
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          {entries.length > 2 && (
+            <button
+              class="sponsors__toggle"
+              type="button"
+              aria-label={`Pausar movimento de ${category}`}
+              aria-pressed="false"
+              data-sponsors-toggle
+            >
+              Pausar
+            </button>
+          )}
+        </div>
+      </section>
+    ))
+  }
+</section>
+
+<script>
+  const interval = 2500;
+
+  document
+    .querySelectorAll<HTMLElement>("[data-sponsors-carousel]")
+    .forEach((carousel) => {
+      const track = carousel.querySelector<HTMLElement>(
+        "[data-sponsors-track]",
+      );
+      const toggle = carousel.querySelector<HTMLButtonElement>(
+        "[data-sponsors-toggle]",
+      );
+      if (!track || !toggle) return;
+
+      const originalItems = [
+        ...track.querySelectorAll<HTMLElement>("[data-sponsors-item]"),
+      ];
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+      const visibleCount = () =>
+        window.matchMedia("(max-width: 520px)").matches
+          ? 2
+          : window.matchMedia("(max-width: 700px)").matches
+            ? 3
+            : 5;
+      let index = 0;
+      let timer: number | undefined;
+      let userPaused = false;
+      let hovered = false;
+      let focused = false;
+      let configuredCount = 0;
+
+      const update = (animate = true) => {
+        const firstItem = track.querySelector<HTMLElement>(
+          "[data-sponsors-item]",
+        );
+        if (!firstItem) return;
+        const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+        const step = firstItem.getBoundingClientRect().width + gap;
+        track.style.transition = animate ? "transform 500ms ease" : "none";
+        track.style.transform = `translateX(${-index * step}px)`;
+      };
+
+      const configure = () => {
+        const count = visibleCount();
+        if (configuredCount === count) return;
+        configuredCount = count;
+        track
+          .querySelectorAll("[data-sponsors-clone]")
+          .forEach((clone) => clone.remove());
+        index = 0;
+        if (originalItems.length > count) {
+          originalItems.slice(0, count).forEach((item) => {
+            const clone = item.cloneNode(true) as HTMLElement;
+            clone.dataset.sponsorsClone = "true";
+            clone.setAttribute("aria-hidden", "true");
+            clone.querySelectorAll("a").forEach((link) => (link.tabIndex = -1));
+            clone.querySelectorAll("img").forEach((image) => (image.alt = ""));
+            track.append(clone);
+          });
+        }
+        update(false);
+      };
+
+      const stop = () => {
+        if (timer) window.clearInterval(timer);
+        timer = undefined;
+      };
+
+      const start = () => {
+        stop();
+        if (
+          userPaused ||
+          hovered ||
+          focused ||
+          reducedMotion.matches ||
+          originalItems.length <= visibleCount()
+        )
+          return;
+        timer = window.setInterval(() => {
+          index += 1;
+          update();
+          if (index === originalItems.length) {
+            track.addEventListener(
+              "transitionend",
+              () => {
+                index = 0;
+                update(false);
+              },
+              { once: true },
+            );
+          }
+        }, interval);
+      };
+
+      configure();
+      start();
+      toggle.addEventListener("click", () => {
+        userPaused = !userPaused;
+        toggle.setAttribute("aria-pressed", String(userPaused));
+        toggle.setAttribute(
+          "aria-label",
+          `${userPaused ? "Continuar" : "Pausar"} movimento de ${carousel.closest(".sponsors__group")?.querySelector("h2")?.textContent ?? "logos"}`,
+        );
+        toggle.textContent = userPaused ? "Continuar" : "Pausar";
+        start();
+      });
+      carousel.addEventListener("mouseenter", () => {
+        hovered = true;
+        stop();
+      });
+      carousel.addEventListener("mouseleave", () => {
+        hovered = false;
+        start();
+      });
+      carousel.addEventListener("focusin", () => {
+        focused = true;
+        stop();
+      });
+      carousel.addEventListener("focusout", (event) => {
+        if (!carousel.contains(event.relatedTarget as Node | null)) {
+          focused = false;
+          start();
+        }
+      });
+      window.addEventListener("resize", () => {
+        configure();
+        start();
+      });
+      reducedMotion.addEventListener("change", start);
+      document.addEventListener("visibilitychange", () =>
+        document.hidden ? stop() : start(),
+      );
+    });
+</script>

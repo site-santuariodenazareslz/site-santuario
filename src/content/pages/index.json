@@ -10,25 +10,17 @@
       "type": "banner-carousel",
       "slides": [
         {
-          "image": "/images/17ccfa2cf99554d8.webp",
-          "imageAlt": "Fiéis durante celebração",
-          "category": "Festividade",
-          "title": "Festa de Nossa Senhora de Nazaré",
-          "href": "#teste"
-        },
-        {
-          "image": "/images/bfac146c4b87bdc2.webp",
-          "imageAlt": "Fachada do santuário",
+          "image": "/images/c16dbb5821353e7b.webp",
+          "imageAlt": "Faixada Santuário de nazaré",
           "category": "",
-          "title": "Confira os horários das missas",
-          "href": "#teste"
+          "title": "Bem-vindo ao Santuário Nossa Senhora de Nazaré"
         },
         {
-          "image": "/images/bfac146c4b87bdc2.webp",
-          "imageAlt": "Comunidade reunida",
-          "category": "Comunicado",
-          "title": "Acompanhe as novidades da comunidade",
-          "href": "#teste"
+          "image": "/images/1749e7ed15266b81.webp",
+          "imageAlt": "Círio de Nazaré 2026",
+          "category": "",
+          "title": "Círio de Nazaré 2026",
+          "href": "https://site-santuariodenazareslz.github.io/site-santuario/cirio/"
         }
       ]
     },

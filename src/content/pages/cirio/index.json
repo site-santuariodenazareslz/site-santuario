@@ -58,8 +58,117 @@
       "type": "teaser-image",
       "image": "/images/542e40a4e50e3262.webp",
       "imageAlt": "Terço da Alvorada 2025",
-      "title": "Terço da alvorada todos os dias às 6h!",
-      "text": "Quando na chegada dos primeiros raios de sol, convidamos os devotos de Nazaré para comparecer no Santuário para rezar as maravilhas do Senhor.\n\nIniciando a programação diária do novenário, todos os dias, às 6h, acontece o terço da Alvorada.\u000b\u000bAcontecerá nos dias 8, 9, 10, 12, 13, 14, 15, 16, 17.\n"
+      "title": "Terço da alvorada nos dias do Círio às 6h!",
+      "text": "Quando na chegada dos primeiros raios de sol, convidamos os devotos de Nazaré para comparecer no Santuário para rezar as maravilhas do Senhor.\n\nIniciando a programação diária do novenário, todos os dias, às 6h, acontece o terço da Alvorada.\n\nAcontecerá nos dias 8, 9, 10, 12, 13, 14, 15, 16, 17.\n",
+      "imagePosition": "left"
+    },
+    {
+      "type": "teaser-image",
+      "image": "/images/d6fdf599b77277c7.webp",
+      "imageAlt": "Comidas do Círio 2025",
+      "title": "Venda de comidas típicas e pratos variados nos dias do Círio",
+      "text": "Durante todos os dias do Círio, a partir das 18h, teremos uma variedade de delícias esperando por você! \nComidas típicas\nChurrasquinhos\nTortas e muito mais!\n",
+      "imagePosition": "right"
+    },
+    {
+      "type": "sponsors",
+      "sponsors": [
+        {
+          "category": "Patrocínio",
+          "image": "/images/7a1b7134413a30be.webp",
+          "name": "Prefeitura de São Luís",
+          "href": "https://www.saoluis.ma.gov.br/"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/04ee3dc11fa7dc62.webp",
+          "name": "Prefeitura de Paço do Lumiar",
+          "href": "https://pacodolumiar.ma.gov.br/home"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/c10c69032c369325.webp",
+          "name": "Frente Parlamentar Católica & Câmara Municipal de São Luís"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/6ed2b5f29492e84d.webp",
+          "name": "Governo do Maranhão",
+          "href": "https://www.ma.gov.br/inicio"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/0ac185bd15a0da22.webp",
+          "name": "Grupo AR",
+          "href": "https://www.instagram.com/grupoar.slz/"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/faf1f5a40aab9dc1.webp",
+          "name": "Santo Onofre",
+          "href": "https://www.instagram.com/sigasantonofre/"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/f8ecd8fb0d60a405.webp",
+          "name": "Instituto Ovídio Machado",
+          "href": "https://www.institutoovidiomachado.org/"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/e086e9049ee6e14e.webp",
+          "name": "Colégio Cenaza",
+          "href": "https://www.colegiocenaza.com.br/"
+        },
+        {
+          "category": "Patrocínio",
+          "image": "/images/87203d5ef4e79d2e.webp",
+          "name": "Ateliê Azevedo",
+          "href": "https://www.instagram.com/atelieazevedo/"
+        },
+        {
+          "category": "Apoio",
+          "image": "/images/cf2d0d9efb380c15.webp",
+          "name": "Lojão das Cadeiras",
+          "href": "https://www.instagram.com/lojaodascadeiras/"
+        },
+        {
+          "category": "Apoio",
+          "image": "/images/d94c176d4f12f11e.webp",
+          "name": "Jota Bike Shop",
+          "href": "https://www.instagram.com/jotabikeshop/"
+        },
+        {
+          "category": "Apoio",
+          "image": "/images/da2d25668ed032a2.webp",
+          "name": "Reva Comunicação",
+          "href": "https://www.instagram.com/revacomunicacao/"
+        },
+        {
+          "category": "Apoio",
+          "image": "/images/600af26014eef70c.webp",
+          "name": "JR Material de Construção",
+          "href": "https://www.instagram.com/jrconstrucaoslz/"
+        },
+        {
+          "category": "Apoio",
+          "image": "/images/039d1004d6afc374.webp",
+          "name": "Smaak Bebidas",
+          "href": "https://www.instagram.com/smaakbebidas/"
+        },
+        {
+          "category": "Apoio",
+          "image": "/images/312bc3ccee708fec.webp",
+          "name": "Pousada Sossego dos Nascimentos",
+          "href": "https://www.instagram.com/sossegodosnascimento/"
+        },
+        {
+          "category": "Apoio",
+          "image": "/images/c2e1e865e8e29082.webp",
+          "name": "Linuxell Informática",
+          "href": "https://linuxell.com.br/"
+        }
+      ]
     }
   ]
 }

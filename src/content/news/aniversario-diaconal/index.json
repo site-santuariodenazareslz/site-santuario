@@ -6,10 +6,6 @@
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
-        "type": "fragment",
-        "name": "header"
-      },
-      {
         "type": "news-banner",
         "image": "/images/aa6d5a1612ef554d.webp",
         "imageAlt": "",
@@ -33,20 +29,6 @@
       {
         "type": "news-text",
         "text": "Ao longo desses oito anos, os diáconos têm testemunhado, por meio de seu ministério, a beleza de uma vocação vivida com zelo, dedicação e amor, permanecendo próximos do povo de Deus e colaborando na missão evangelizadora da Igreja.\n\nNeste momento de celebração, o Santuário também expressa sua gratidão às famílias dos diáconos, que caminham ao lado deles e contribuem, com compreensão e dedicação, para que a missão assumida possa ser vivida e frutificar.\n\nQue Deus continue fortalecendo a caminhada vocacional de Paulo, Bartolomeu e Francisco, concedendo-lhes sabedoria, perseverança, coragem e humildade para seguirem servindo ao Reino de Deus.\n\nQue Nossa Senhora de Nazaré interceda por suas vidas, suas famílias e seu ministério, acompanhando cada passo dessa missão confiada por Deus.\n\nParabéns, diáconos Paulo, Bartolomeu e Francisco! Que Deus os abençoe e Nossa Senhora de Nazaré os proteja sempre!\n\n“Servi-O fielmente, de todo o coração.”\n1 Samuel 12,24 \n(29/09/2026)\n"
-      },
-      {
-        "type": "section-header",
-        "eyebrow": "Comunicados",
-        "title": "Todas as Notícias",
-        "description": "Confira as notícias do Santuário."
-      },
-      {
-        "type": "all-news",
-        "id": "todas-noticias"
-      },
-      {
-        "type": "fragment",
-        "name": "footer"
       }
     ]
   }

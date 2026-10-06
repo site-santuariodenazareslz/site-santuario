@@ -6,10 +6,6 @@
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
-        "type": "fragment",
-        "name": "header"
-      },
-      {
         "type": "news-banner",
         "image": "/images/d72fb49115e1f7ee.webp",
         "imageAlt": "",
@@ -33,20 +29,6 @@
       {
         "type": "news-text",
         "text": "O Santuário Nossa Senhora de Nazaré agradece especialmente à Jota Bike Shop, grande apoiadora da Romaria Ciclística e de outras iniciativas realizadas pela comunidade, pela parceria e contribuição para a realização do evento.\n\nA IV Romaria Ciclística reafirma a proposta do Círio Esportivo de unir fé, saúde, esporte e convivência comunitária, fortalecendo os laços de devoção a Nossa Senhora de Nazaré.\n\nConfira alguns registros dessa manhã de fé, esporte e alegria no Instagram do santuário!\n\nFeliz Círio!\n"
-      },
-      {
-        "type": "section-header",
-        "eyebrow": "Comunicados",
-        "title": "Todas as Notícias",
-        "description": "Confira as notícias do Santuário."
-      },
-      {
-        "type": "all-news",
-        "id": "todas-noticias"
-      },
-      {
-        "type": "fragment",
-        "name": "footer"
       }
     ]
   }
