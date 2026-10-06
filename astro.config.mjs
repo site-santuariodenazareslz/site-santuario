@@ -3,7 +3,6 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   output: "static",
-  site: "https://site-santuariodenazareslz.github.io",
-  base: "/site-santuario",
+  site: "https://santuariodenazareslz.com.br",
   integrations: [sitemap()],
 });
