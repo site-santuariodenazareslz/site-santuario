@@ -107,22 +107,7 @@ googleCalendarUrl.search = new URLSearchParams({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Adicionar ${event.title} ao Google Calendar`}
-        >Google Calendar</a
-      >
-      <button
-        class="event-card__calendar"
-        type="button"
-        data-calendar-event
-        data-title={event.title}
-        data-description={event.description}
-        data-location={event.location}
-        data-start-date={event.startDate}
-        data-start-time={event.startTime}
-        data-end-date={calendarEndDate}
-        data-end-time={calendarEndTime}
-        aria-label={`Salvar convite de ${event.title} para outro calendário`}
-        title="Baixa um convite para adicionar este evento em outro aplicativo de calendário"
-        >Salvar convite</button
+        >Adicionar ao calendário do Google</a
       >
     </div>
   </div>
@@ -134,60 +119,4 @@ googleCalendarUrl.search = new URLSearchParams({
   hidePastEvents([
     ...document.querySelectorAll<HTMLElement>("[data-event-card]"),
   ]);
-
-  const escapeIcsText = (value: string) =>
-    value
-      .replace(/\\/g, "\\\\")
-      .replace(/;/g, "\\;")
-      .replace(/,/g, "\\,")
-      .replace(/\n/g, "\\n");
-  const toIcsDate = (date: string, time: string) =>
-    `${date.replaceAll("-", "")}T${time.replace(":", "")}00`;
-
-  document
-    .querySelectorAll<HTMLButtonElement>("[data-calendar-event]")
-    .forEach((button) => {
-      button.addEventListener("click", () => {
-        const data = button.dataset;
-        if (
-          !data.title ||
-          !data.startDate ||
-          !data.startTime ||
-          !data.endDate ||
-          !data.endTime
-        )
-          return;
-        const content = [
-          "BEGIN:VCALENDAR",
-          "VERSION:2.0",
-          "PRODID:-//Santuario Nossa Senhora de Nazare//Agenda//PT-BR",
-          "CALSCALE:GREGORIAN",
-          "BEGIN:VEVENT",
-          `UID:${crypto.randomUUID()}@santuario`,
-          `DTSTAMP:${new Date()
-            .toISOString()
-            .replace(/[-:]/g, "")
-            .replace(/\.\d{3}/, "")}`,
-          `DTSTART:${toIcsDate(data.startDate, data.startTime)}`,
-          `DTEND:${toIcsDate(data.endDate, data.endTime)}`,
-          `SUMMARY:${escapeIcsText(data.title)}`,
-          `DESCRIPTION:${escapeIcsText(data.description ?? "")}`,
-          `LOCATION:${escapeIcsText(data.location ?? "")}`,
-          "END:VEVENT",
-          "END:VCALENDAR",
-        ].join("\r\n");
-        const url = URL.createObjectURL(
-          new Blob([content], { type: "text/calendar;charset=utf-8" }),
-        );
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `${data.title
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .replace(/[^a-z0-9]+/g, "-")}.ics`;
-        link.click();
-        URL.revokeObjectURL(url);
-      });
-    });
 </script>
