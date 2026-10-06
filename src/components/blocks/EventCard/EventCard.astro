@@ -45,6 +45,19 @@ const calendarEndTime = [
   String(calendarEnd.getHours()).padStart(2, "0"),
   String(calendarEnd.getMinutes()).padStart(2, "0"),
 ].join(":");
+const calendarDateTime = (date: string, time: string) =>
+  `${date.replaceAll("-", "")}T${time.replace(":", "")}00`;
+const googleCalendarUrl = new URL(
+  "https://calendar.google.com/calendar/render",
+);
+googleCalendarUrl.search = new URLSearchParams({
+  action: "TEMPLATE",
+  text: event.title,
+  dates: `${calendarDateTime(event.startDate, event.startTime)}/${calendarDateTime(calendarEndDate, calendarEndTime)}`,
+  details: event.description,
+  location: event.location,
+  ctz: "America/Fortaleza",
+}).toString();
 ---
 
 <article
@@ -87,18 +100,28 @@ const calendarEndTime = [
       </div>
       <div><dt>Local</dt><dd>{event.location}</dd></div>
     </dl>
-    <button
-      class="event-card__calendar"
-      type="button"
-      data-calendar-event
-      data-title={event.title}
-      data-description={event.description}
-      data-location={event.location}
-      data-start-date={event.startDate}
-      data-start-time={event.startTime}
-      data-end-date={calendarEndDate}
-      data-end-time={calendarEndTime}>Adicionar ao calendário</button
-    >
+    <div class="event-card__calendar-actions">
+      <a
+        class="event-card__calendar"
+        href={googleCalendarUrl.toString()}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Adicionar ${event.title} ao Google Calendar`}
+        >Google Calendar</a
+      >
+      <button
+        class="event-card__calendar"
+        type="button"
+        data-calendar-event
+        data-title={event.title}
+        data-description={event.description}
+        data-location={event.location}
+        data-start-date={event.startDate}
+        data-start-time={event.startTime}
+        data-end-date={calendarEndDate}
+        data-end-time={calendarEndTime}>Baixar .ics</button
+      >
+    </div>
   </div>
 </article>
 

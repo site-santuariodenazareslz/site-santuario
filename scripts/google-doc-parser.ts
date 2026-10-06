@@ -84,17 +84,29 @@ function cellFromContent(
   let rawText = "";
   let html = "";
   let image: string | undefined;
+  let isInList = false;
   for (const element of content ?? []) {
     const parts = element.paragraph?.elements ?? [];
-    if (element.paragraph?.bullet) rawText += "• ";
+    const isBullet = Boolean(element.paragraph?.bullet);
+    if (isBullet) {
+      rawText += "• ";
+      if (!isInList) html += "<ul>";
+      isInList = true;
+    } else if (isInList) {
+      html += "</ul>";
+      isInList = false;
+    }
+    let paragraphHtml = "";
     for (const part of parts) {
       const value = part.textRun?.content ?? "";
       text += value;
       rawText += value;
       if (value) {
         const style = part.textRun?.textStyle;
-        const formatted = escapeHtml(value);
-        html +=
+        const formatted = escapeHtml(
+          isBullet ? value.replace(/\n+$/, "") : value,
+        );
+        paragraphHtml +=
           style?.bold && style?.italic
             ? `<strong><em>${formatted}</em></strong>`
             : style?.bold
@@ -111,7 +123,11 @@ function cellFromContent(
           ?.imageProperties?.contentUri
       : undefined;
     if (contentUri) image = contentUri;
+    html += isBullet
+      ? `<li>${paragraphHtml.replace(/\n+$/, "")}</li>`
+      : paragraphHtml;
   }
+  if (isInList) html += "</ul>";
   return { text: clean(text), rawText: cleanMultiline(rawText), html, image };
 }
 
@@ -322,7 +338,14 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     blockName === "supporters" ||
     blockName === "apoiadores"
   ) {
-    const sponsors = body.map(
+    const firstRow = body[0] ?? [];
+    const hasIdRow = Boolean(
+      firstRow[0]?.text &&
+      firstRow.slice(1).every((cell) => !cell?.text && !cell?.image),
+    );
+    const id = hasIdRow ? firstRow[0].text : undefined;
+    const sponsorRows = hasIdRow ? body.slice(1) : body;
+    const sponsors = sponsorRows.map(
       ([categoryCell, imageCell, nameCell, hrefCell]) => ({
         category: categoryCell?.text ?? "",
         image: imageCell?.image ?? imageCell?.text ?? "",
@@ -341,7 +364,7 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
         "O block sponsors precisa informar categoria, logo e nome para cada apoiador.",
       );
     }
-    return { type: "sponsors", sponsors };
+    return { type: "sponsors", id, sponsors };
   }
 
   if (

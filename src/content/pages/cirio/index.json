@@ -67,11 +67,12 @@
       "image": "/images/d6fdf599b77277c7.webp",
       "imageAlt": "Comidas do Círio 2025",
       "title": "Venda de comidas típicas e pratos variados nos dias do Círio",
-      "text": "Durante todos os dias do Círio, a partir das 18h, teremos uma variedade de delícias esperando por você! \nComidas típicas\nChurrasquinhos\nTortas e muito mais!\n",
+      "text": "Durante todos os dias do Círio, a partir das 18h, teremos uma variedade de delícias esperando por você! \n<ul><li>Comidas típicas</li><li>Churrasquinhos</li><li>Tortas e muito mais!</li></ul>",
       "imagePosition": "right"
     },
     {
       "type": "sponsors",
+      "id": "patrocinadores",
       "sponsors": [
         {
           "category": "Patrocínio",

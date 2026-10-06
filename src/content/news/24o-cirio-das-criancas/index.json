@@ -1,0 +1,41 @@
+{
+  "slug": "24o-cirio-das-criancas",
+  "createdAt": "2026-10-06T01:55:04.364Z",
+  "page": {
+    "title": "24º Círio das Crianças",
+    "description": "Página gerada automaticamente a partir de um Google Doc.",
+    "blocks": [
+      {
+        "type": "news-banner",
+        "image": "/images/cc4e5f8e8bfa0145.webp",
+        "imageAlt": "",
+        "category": "Encerramento círio das Crianças"
+      },
+      {
+        "type": "news-title",
+        "title": "24º Círio das Crianças é encerrado com fé, gratidão e alegria",
+        "titleHtml": "24º Círio das Crianças é encerrado com fé, gratidão e alegria\n"
+      },
+      {
+        "type": "news-text",
+        "text": "Na noite deste domingo (4), o Santuário Nossa Senhora de Nazaré encerrou a programação do 24º Círio das Crianças, reunindo pequenos devotos, famílias e toda a comunidade em um momento de fé, alegria e gratidão.\n\nA celebração teve como reflexão o subtema “Assim como o Pai me enviou, eu também vos envio”, recordando a todos que a experiência da fé também é um chamado à missão e ao anúncio do Evangelho.\n"
+      },
+      {
+        "type": "news-image",
+        "image": "/images/9d9f0bf788c450ae.webp",
+        "title": "",
+        "imageAlt": ""
+      },
+      {
+        "type": "news-text",
+        "text": "A Santa Missa foi presidida pelo Padre James Serrão, Reitor do Santuário, e concelebrada pelo Padre Orlando e pelo Diácono Bartolomeu.\n\nAo longo dos dias de programação, crianças e adolescentes tiveram a oportunidade de vivenciar momentos de oração, formação, devoção e convivência, fortalecendo desde cedo sua caminhada de fé e sua relação com Nossa Senhora de Nazaré.\n\nO encerramento foi marcado ainda pelo Show Vozes de Nazaré, que, após a celebração, reuniu a comunidade em uma noite de música e alegria, celebrando o caminho percorrido durante mais uma edição do Círio das Crianças.\n\nCom o coração cheio de gratidão, encerramos este Círio levando conosco a certeza de que uma fé cultivada desde a infância pode florescer e transformar vidas, formando novas gerações de discípulos de Jesus e devotos de Nossa Senhora.\n\nAgora, a comunidade se prepara para dar continuidade às celebrações do Círio de Nazaré com o Novenário, que terá início no dia 8 de outubro.\n\nContinue celebrando conosco esta grande festa de fé e devoção!\n\nViva Nossa Senhora de Nazaré!\n\nFeliz Círio!\n"
+      },
+      {
+        "type": "section-header",
+        "eyebrow": "Comunicados",
+        "title": "Todas as Notícias",
+        "description": "Confira as notícias do Santuário."
+      }
+    ]
+  }
+}

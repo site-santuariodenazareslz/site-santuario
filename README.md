@@ -203,7 +203,7 @@ Cada documento mensal contém seu próprio `events-list`, e é nele que os event
 | imagem             | texto alternativo   | categoria(s)        | título do evento                 | descrição                                        | local                             | data (AAAA-MM-DD) | hora (HH:MM) | hora final (opcional, HH:MM) |
 | Cole a imagem aqui | Fiéis em celebração | Festividade, Missas | Festa de Nossa Senhora de Nazaré | Celebração solene com procissão e missa festiva. | Santuário Nossa Senhora de Nazaré | 2026-10-14        | 19:00        | 21:00                        |
 
-Imagem, título, descrição, local, data e hora inicial são obrigatórios. Use datas no formato `AAAA-MM-DD` e horários no formato `HH:MM`. Hora final, categoria e texto alternativo são opcionais. Quando informada, a hora final aparece no card e define o fim do evento no arquivo `.ics`; se ficar vazia, o calendário mantém a duração padrão de uma hora. Para associar várias categorias, separe-as por vírgulas, ponto e vírgula, barra vertical ou linhas; por exemplo, `Missas, Círio`. Para incluir texto pequeno, título ou descrição antes da lista, use uma tabela `section-header` imediatamente antes. O botão **Adicionar ao calendário** gera um arquivo `.ics`.
+Imagem, título, descrição, local, data e hora inicial são obrigatórios. Use datas no formato `AAAA-MM-DD` e horários no formato `HH:MM`. Hora final, categoria e texto alternativo são opcionais. Quando informada, a hora final aparece no card e define o fim do evento; se ficar vazia, o calendário mantém a duração padrão de uma hora. Para associar várias categorias, separe-as por vírgulas, ponto e vírgula, barra vertical ou linhas; por exemplo, `Missas, Círio`. Para incluir texto pequeno, título ou descrição antes da lista, use uma tabela `section-header` imediatamente antes. Nos cards, **Google Calendar** abre o evento preenchido no Google Calendar; **Baixar .ics** salva um arquivo que pode ser importado em outros aplicativos de calendário.
 
 Quando `npm run sync:google` é executado, os `events-list` da pasta `Eventos` e das demais páginas/fragmentos são reunidos em `src/content/events.json`, a fonte compartilhada de `upcoming-events`, `events-list` e `card-event`. Evite cadastrar o mesmo evento mais de uma vez. A agenda ordena por data e, no mesmo dia, por horário; o horário não afeta a visibilidade: eventos de hoje permanecem durante todo o dia. A lista começa mostrando eventos do mês atual e do próximo; **Mostrar mais eventos** libera mais dois meses por clique e desaparece quando não houver eventos futuros restantes.
 
@@ -247,14 +247,16 @@ Cada slide precisa de imagem e título. O link é opcional; quando a célula fic
 
 Use `sponsors` para exibir os logos em faixas separadas por categoria. Cada linha corresponde a uma marca; informe `Patrocínio` ou `Apoio` na categoria. O carrossel mostra até cinco logos em telas largas, avança um logo por vez e pode ser pausado. Para manter a leitura clara, em tablets mostra três logos e em celulares, dois.
 
-| sponsors    |                  |                              | link (opcional)            |
-| ----------- | ---------------- | ---------------------------- | -------------------------- |
-| # categoria | logo             | nome da marca                | URL da marca (opcional)    |
-| Patrocínio  | Cole o logo aqui | Prefeitura de São Luís       | https://saoluis.ma.gov.br/ |
-| Patrocínio  | Cole o logo aqui | Prefeitura de Paço do Lumiar |                            |
-| Apoio       | Cole o logo aqui | Loja das Cadeiras            |                            |
+| sponsors        |                  |                              | link (opcional)            |
+| --------------- | ---------------- | ---------------------------- | -------------------------- |
+| # id (opcional) |                  |                              |                            |
+| patrocinadores  |                  |                              |                            |
+| # categoria     | logo             | nome da marca                | URL da marca (opcional)    |
+| Patrocínio      | Cole o logo aqui | Prefeitura de São Luís       | https://saoluis.ma.gov.br/ |
+| Patrocínio      | Cole o logo aqui | Prefeitura de Paço do Lumiar |                            |
+| Apoio           | Cole o logo aqui | Loja das Cadeiras            |                            |
 
-Insira cada logo como uma imagem individual na segunda célula; não use uma montagem única com vários logos. O nome da marca é usado como texto alternativo. A URL é opcional; sem ela, o logo não será clicável. Imagens coladas ou URLs são convertidas para WebP durante `npm run sync:google`.
+O ID é opcional; informe-o sozinho na primeira linha de dados para criar uma âncora, por exemplo `patrocinadores` (URL: `#patrocinadores`). Se não precisar de âncora, omita essa linha e comece diretamente pelas marcas. Insira cada logo como uma imagem individual na segunda célula; não use uma montagem única com vários logos. O nome da marca é usado como texto alternativo. A URL é opcional; sem ela, o logo não será clicável. Imagens coladas ou URLs são convertidas para WebP durante `npm run sync:google`.
 
 ### Doações e Pix
 

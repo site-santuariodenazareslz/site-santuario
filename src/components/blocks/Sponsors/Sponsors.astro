@@ -3,7 +3,7 @@ import type { SponsorsBlock } from "../../../lib/types";
 import { siteUrl } from "../../../lib/urls";
 import "./Sponsors.scss";
 
-const { sponsors } = Astro.props as SponsorsBlock;
+const { id: sectionId, sponsors } = Astro.props as SponsorsBlock;
 const categories = [...new Set(sponsors.map((sponsor) => sponsor.category))];
 const groups = categories.map((category, index) => ({
   category,
@@ -12,7 +12,11 @@ const groups = categories.map((category, index) => ({
 }));
 ---
 
-<section class="sponsors" aria-label="Patrocinadores e apoiadores">
+<section
+  id={sectionId}
+  class="sponsors"
+  aria-label="Patrocinadores e apoiadores"
+>
   {
     groups.map(({ category, id, entries }) => (
       <section class="sponsors__group" aria-labelledby={`${id}-title`}>
@@ -20,6 +24,20 @@ const groups = categories.map((category, index) => ({
           {category}
         </h2>
         <div class="sponsors__carousel" data-sponsors-carousel>
+          {entries.length > 2 && (
+            <button
+              class="sponsors__arrow sponsors__arrow--previous"
+              type="button"
+              aria-label={`Logos anteriores de ${category}`}
+              title="Logos anteriores"
+              data-sponsors-previous
+              hidden
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+          )}
           <div class="sponsors__viewport">
             <div class="sponsors__track" data-sponsors-track>
               {entries.map((sponsor) => (
@@ -53,6 +71,20 @@ const groups = categories.map((category, index) => ({
           </div>
           {entries.length > 2 && (
             <button
+              class="sponsors__arrow sponsors__arrow--next"
+              type="button"
+              aria-label={`Próximos logos de ${category}`}
+              title="Próximos logos"
+              data-sponsors-next
+              hidden
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          )}
+          {entries.length > 2 && (
+            <button
               class="sponsors__toggle"
               type="button"
               aria-label={`Pausar movimento de ${category}`}
@@ -79,6 +111,12 @@ const groups = categories.map((category, index) => ({
       );
       const toggle = carousel.querySelector<HTMLButtonElement>(
         "[data-sponsors-toggle]",
+      );
+      const previous = carousel.querySelector<HTMLButtonElement>(
+        "[data-sponsors-previous]",
+      );
+      const next = carousel.querySelector<HTMLButtonElement>(
+        "[data-sponsors-next]",
       );
       if (!track || !toggle) return;
 
@@ -119,8 +157,22 @@ const groups = categories.map((category, index) => ({
         track
           .querySelectorAll("[data-sponsors-clone]")
           .forEach((clone) => clone.remove());
-        index = 0;
+        const canMove = originalItems.length > count;
+        if (previous) previous.hidden = !canMove;
+        if (next) next.hidden = !canMove;
+        toggle.hidden = !canMove;
+        index = canMove ? count : 0;
         if (originalItems.length > count) {
+          const leadingClones = document.createDocumentFragment();
+          originalItems.slice(-count).forEach((item) => {
+            const clone = item.cloneNode(true) as HTMLElement;
+            clone.dataset.sponsorsClone = "true";
+            clone.setAttribute("aria-hidden", "true");
+            clone.querySelectorAll("a").forEach((link) => (link.tabIndex = -1));
+            clone.querySelectorAll("img").forEach((image) => (image.alt = ""));
+            leadingClones.append(clone);
+          });
+          track.prepend(leadingClones);
           originalItems.slice(0, count).forEach((item) => {
             const clone = item.cloneNode(true) as HTMLElement;
             clone.dataset.sponsorsClone = "true";
@@ -132,6 +184,27 @@ const groups = categories.map((category, index) => ({
         }
         update(false);
       };
+
+      const move = (direction: number) => {
+        if (originalItems.length <= visibleCount()) return;
+        index += direction;
+        update();
+      };
+
+      track.addEventListener("transitionend", (event) => {
+        if (
+          event.target !== track ||
+          (event as TransitionEvent).propertyName !== "transform"
+        )
+          return;
+        if (index === configuredCount - 1) {
+          index = originalItems.length + configuredCount - 1;
+          update(false);
+        } else if (index === originalItems.length + configuredCount) {
+          index = configuredCount;
+          update(false);
+        }
+      });
 
       const stop = () => {
         if (timer) window.clearInterval(timer);
@@ -149,23 +222,20 @@ const groups = categories.map((category, index) => ({
         )
           return;
         timer = window.setInterval(() => {
-          index += 1;
-          update();
-          if (index === originalItems.length) {
-            track.addEventListener(
-              "transitionend",
-              () => {
-                index = 0;
-                update(false);
-              },
-              { once: true },
-            );
-          }
+          move(1);
         }, interval);
       };
 
       configure();
       start();
+      previous?.addEventListener("click", () => {
+        move(-1);
+        start();
+      });
+      next?.addEventListener("click", () => {
+        move(1);
+        start();
+      });
       toggle.addEventListener("click", () => {
         userPaused = !userPaused;
         toggle.setAttribute("aria-pressed", String(userPaused));
@@ -196,6 +266,7 @@ const groups = categories.map((category, index) => ({
       });
       window.addEventListener("resize", () => {
         configure();
+        update(false);
         start();
       });
       reducedMotion.addEventListener("change", start);

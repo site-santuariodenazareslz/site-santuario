@@ -208,6 +208,7 @@ export type SponsorEntry = {
 
 export type SponsorsBlock = {
   type: "sponsors";
+  id?: string;
   sponsors: SponsorEntry[];
 };
 

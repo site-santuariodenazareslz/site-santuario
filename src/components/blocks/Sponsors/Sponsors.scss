@@ -28,6 +28,7 @@
   }
 
   &__viewport {
+    position: relative;
     overflow: hidden;
   }
 
@@ -84,6 +85,59 @@
     &:focus-visible {
       color: $color-primary;
       text-decoration: underline;
+    }
+  }
+
+  &__arrow {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid $color-border;
+    border-radius: 50%;
+    color: $color-brown;
+    background: $color-white;
+    box-shadow: 0 2px 8px rgba($color-brown, 0.14);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+
+    &:hover,
+    &:focus-visible {
+      border-color: $color-gold;
+      color: $color-white;
+      background: $color-gold;
+      outline: none;
+    }
+
+    &[hidden] {
+      display: none;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    path {
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    &--previous {
+      left: 8px;
+    }
+
+    &--next {
+      right: 8px;
     }
   }
 }

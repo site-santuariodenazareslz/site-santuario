@@ -128,16 +128,24 @@
   }
   &__calendar {
     width: 100%;
-    margin-top: auto;
     padding: 10px 12px;
     border: 1px solid $color-gold;
     border-radius: 5px;
     color: $color-brown;
     background: transparent;
-    cursor: pointer;
     font-family: $font-sans;
     font-size: 0.78rem;
     font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  &__calendar-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: auto;
   }
   &__calendar:hover,
   &__calendar:focus-visible {

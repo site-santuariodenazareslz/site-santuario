@@ -3,10 +3,6 @@
   "description": "Página gerada automaticamente a partir de um Google Doc.",
   "blocks": [
     {
-      "type": "fragment",
-      "name": "header"
-    },
-    {
       "type": "banner-carousel",
       "slides": [
         {
@@ -122,10 +118,6 @@
           "value": "Paroquia Nossa Senhora de Nazare"
         }
       ]
-    },
-    {
-      "type": "fragment",
-      "name": "footer"
     }
   ]
 }
