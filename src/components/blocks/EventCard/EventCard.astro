@@ -119,7 +119,10 @@ googleCalendarUrl.search = new URLSearchParams({
         data-start-date={event.startDate}
         data-start-time={event.startTime}
         data-end-date={calendarEndDate}
-        data-end-time={calendarEndTime}>Baixar .ics</button
+        data-end-time={calendarEndTime}
+        aria-label={`Salvar convite de ${event.title} para outro calendário`}
+        title="Baixa um convite para adicionar este evento em outro aplicativo de calendário"
+        >Salvar convite</button
       >
     </div>
   </div>
