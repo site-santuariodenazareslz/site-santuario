@@ -1,12 +1,45 @@
 @use "../../../styles/tokens" as *;
 
 .upcoming-events {
-  padding-inline: $space-5;
+  max-width: $width;
+  width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
   background: $color-cream;
 
-  &__grid, &__empty { max-width: $width; margin-right: auto; margin-left: auto; }
-  &__all { display: table; margin: $space-5 auto 0; padding-bottom: 2px; border-bottom: 2px solid $color-gold; color: $color-brown; font-family: $font-sans; font-size: .82rem; font-weight: 600; text-decoration: none; }
-  &__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-  &__empty { color: $color-text-mid; font-family: $font-sans; text-align: center; }
+  &__grid,
+  &__empty {
+    max-width: $width;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  &__all {
+    display: table;
+    margin: $space-5 auto 0;
+    padding-bottom: 2px;
+    border-bottom: 2px solid $color-gold;
+    color: $color-brown;
+    font-family: $font-sans;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 0 24px;
+  }
+  &__empty {
+    color: $color-text-mid;
+    font-family: $font-sans;
+    text-align: center;
+  }
 }
-@media (max-width: 700px) { .upcoming-events { &__grid { grid-template-columns: 1fr; } } }
+@media (max-width: 700px) {
+  .upcoming-events {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

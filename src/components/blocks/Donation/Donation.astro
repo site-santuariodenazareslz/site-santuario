@@ -3,22 +3,11 @@ import type { DonationBlock } from "../../../lib/types";
 import { siteUrl } from "../../../lib/urls";
 import "./Donation.scss";
 
-const {
-  pixKey,
-  qrCode,
-  qrCodeAlt,
-  qrInstruction,
-  inPersonNote,
-  bankDetails,
-} = Astro.props as DonationBlock;
+const { pixKey, qrCode, qrCodeAlt, qrInstruction, inPersonNote, bankDetails } =
+  Astro.props as DonationBlock;
 ---
 
-<section
-  id="dizimo"
-  class="donation"
-  data-donation
-  data-pix-key={pixKey}
->
+<section id="dizimo" class="donation" data-donation data-pix-key={pixKey}>
   <div class="donation__card">
     <div class="donation__details">
       {
@@ -71,9 +60,28 @@ const {
         donation.querySelector<HTMLButtonElement>("[data-copy-pix]");
       if (!button) return;
       const label = button.querySelector("span");
+
+      const copyText = async (text: string) => {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      };
+
       button.addEventListener("click", async () => {
         try {
-          await navigator.clipboard.writeText(donation.dataset.pixKey ?? "");
+          await copyText(donation.dataset.pixKey ?? "");
           button.classList.add("is-copied");
           if (label) label.textContent = "Copiado!";
           window.setTimeout(() => {

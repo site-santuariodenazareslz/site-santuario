@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://site-santuariodenazareslz.github.io/site-santuario/sitemap-index.xml
+Sitemap: https://santuariodenazareslz.com.br/sitemap-index.xml
