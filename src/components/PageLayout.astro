@@ -4,6 +4,7 @@ import Footer from "./blocks/Footer/Footer.astro";
 import BlockRenderer from "./BlockRenderer.astro";
 import BlockSpacer from "./BlockSpacer.astro";
 import NewsNavigation from "./blocks/NewsNavigation/NewsNavigation.astro";
+import CookieConsent from "./CookieConsent.astro";
 import SeoMeta from "./SeoMeta.astro";
 import headerFragment from "../content/fragments/header/index.json";
 import footerFragment from "../content/fragments/footer/index.json";
@@ -63,5 +64,6 @@ const contentBlocks = page.blocks.filter(
       {newsNavigation && <NewsNavigation {...newsNavigation} />}
     </main>
     <Footer {...footer} />
+    <CookieConsent />
   </body>
 </html>

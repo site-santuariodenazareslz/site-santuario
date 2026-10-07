@@ -39,6 +39,8 @@ jobs:
         run: npm run sync:google
 
       - name: Build site
+        env:
+          PUBLIC_GA_ID: ${{ vars.PUBLIC_GA_ID }}
         run: npm run build
 
       - name: Upload artifact
