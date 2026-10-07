@@ -49,6 +49,7 @@ const componentFor = {
   "events-list": EventsList,
   "section-header": SectionHeader,
   sponsors: Sponsors,
+  seo: () => null,
 } as const;
 
 function fragmentFor(name: string): Page | undefined {

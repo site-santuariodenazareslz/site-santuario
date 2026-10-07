@@ -1,10 +1,17 @@
 {
-  "slug": "cirio-solidario-consultas",
+  "slug": "cirio-solidario-promove-atendimento-medico-a-comunidade",
   "createdAt": "2026-10-05T15:03:56.738Z",
   "page": {
-    "title": "Círio Solidário - Consultas",
+    "title": "Círio Solidário promove atendimento médico à comunidade",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
+      {
+        "type": "seo",
+        "description": "Círio Solidário promove atendimento médico gratuito à comunidade em parceria com o IDOMED, fortalecendo ações de cuidado, acolhimento e solidariedade.",
+        "metaDescription": "Círio Solidário oferece atendimento de Clínica Geral à comunidade em ação do Santuário Nossa Senhora de Nazaré em parceria com o IDOMED.",
+        "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXcEAYCXFgRjNuzOrkU3C2Ljhpu6dh4Heu51PPRozBcNfetWQm4M8qyTCQTYffPWOw_FC_t3WVPqFn66poJIaoNlhDJAtD46-eas6ngTY5sR0rGm5jPDn-D_Xf2n4_DxPZpgh-mLEiBn4lPIVMVjjziuqpQYrq1LQSqfsm0vQEBHoDE3EFXT=s2048?key=XqmUxCIpEcnPqjNk9mAJQw",
+        "imageAlt": "Círio Solidário promove atendimento médico à comunidade no Santuário Nossa Senhora de Nazaré"
+      },
       {
         "type": "news-banner",
         "image": "/images/ca9c6fc2524a7ff3.webp",

@@ -3,6 +3,13 @@
   "description": "Página gerada automaticamente a partir de um Google Doc.",
   "blocks": [
     {
+      "type": "seo",
+      "description": "Santuário Nossa Senhora de Nazaré, em São Luís-MA. Conheça nossa comunidade, celebrações, eventos, Círio de Nazaré, notícias e ações de fé e evangelização.",
+      "metaDescription": "Conheça o Santuário Nossa Senhora de Nazaré, em São Luís-MA. Um espaço de fé, devoção e comunidade, com celebrações, eventos, notícias e a tradicional Festa do Círio de Nazaré.",
+      "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXcA955NDfjC1eCNnl5kD5EVxPaV42eaw4ayBC1zDSgcKnqRtNqIKR-smZ3AdHnotx2u_U7kq51A9cviGGwtLGz8_NM-Kq4uohIOmTJHuXEuD2cHSLXNcWTdlOBDLA6xEK5xh5DJ9xP_je3CU2FyAA8wcSocP9J5V4heIEV6LJDgAUYn0C4C=s2048?key=R8G0t3GR-Yq_iqwkinitNA",
+      "imageAlt": "Faixada do Santuário Nossa Senhora de Nazaré"
+    },
+    {
       "type": "banner-carousel",
       "slides": [
         {
@@ -16,7 +23,7 @@
           "imageAlt": "Círio de Nazaré 2026",
           "category": "",
           "title": "Círio de Nazaré 2026",
-          "href": "https://site-santuariodenazareslz.github.io/site-santuario/cirio/"
+          "href": "https://santuariodenazareslz.com.br/cirio"
         }
       ]
     },

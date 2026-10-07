@@ -1,14 +1,21 @@
 {
-  "slug": "iv-romaria-ciclistica",
+  "slug": "iv-romaria-ciclistica-reune-cerca-de-400-fieis-no-cirio-esportivo",
   "createdAt": "2026-10-05T15:12:40.444Z",
   "page": {
-    "title": "IV Romaria Ciclística",
+    "title": "IV Romaria Ciclística reúne cerca de 400 fiéis no Círio Esportivo",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
+        "type": "seo",
+        "description": "Cerca de 400 fiéis participaram da IV Romaria Ciclística do Círio de Nazaré, em uma manhã de fé, esporte, saúde e devoção pelas ruas de São Luís.",
+        "metaDescription": "IV Romaria Ciclística reúne cerca de 400 fiéis em 16 km de percurso pelas avenidas de São Luís, unindo fé, esporte e devoção.",
+        "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXc9Z-QCU118Z8yET9tWrRiUHTVHE5_KKp3Pd_4Lj9C93bTfZ4PZ7PRITnexwEKG-GKglUBV5SCj0HStmsEoqh-0JHni13ICDivVv6rfc9MPmTEhgdFZDmgB7U6OycrJMponm_ydPsZ95u5LYBo8PsOtKbxbHpaHFuo7_mu6dr6nspJP4fQQ=s2048?key=3NxY8jrLXb0HJzHX1wUGlQ",
+        "imageAlt": "Padre James participa da IV Romaria Ciclística do Círio de Nazaré pelas ruas de São Luís."
+      },
+      {
         "type": "news-banner",
         "image": "/images/d72fb49115e1f7ee.webp",
-        "imageAlt": "",
+        "imageAlt": "Padre James participa da IV Romaria Ciclística do Círio de Nazaré pelas ruas de São Luís.",
         "category": "Romaria Ciclística"
       },
       {

@@ -1,0 +1,50 @@
+---
+import { resolvePageSeo } from "../lib/seo";
+import type { Page } from "../lib/types";
+import { siteUrl } from "../lib/urls";
+
+interface Props {
+  page: Page;
+  pathname: string;
+}
+
+const { page, pathname } = Astro.props as Props;
+const seo = resolvePageSeo(page);
+const siteName = "Santuário Nossa Senhora de Nazaré";
+const pageUrl = new URL(
+  siteUrl(pathname),
+  Astro.site ?? "https://santuariodenazareslz.com.br",
+);
+const imageUrl = seo.image
+  ? new URL(
+      siteUrl(seo.image),
+      Astro.site ?? "https://santuariodenazareslz.com.br",
+    )
+  : undefined;
+---
+
+<meta name="description" content={seo.metaDescription} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={seo.title} />
+<meta property="og:description" content={seo.description} />
+<meta property="og:url" content={pageUrl.toString()} />
+{imageUrl && <meta property="og:image" content={imageUrl.toString()} />}
+{
+  imageUrl && seo.imageAlt && (
+    <meta property="og:image:alt" content={seo.imageAlt} />
+  )
+}
+
+<meta
+  name="twitter:card"
+  content={imageUrl ? "summary_large_image" : "summary"}
+/>
+<meta name="twitter:title" content={seo.title} />
+<meta name="twitter:description" content={seo.description} />
+{imageUrl && <meta name="twitter:image" content={imageUrl.toString()} />}
+{
+  imageUrl && seo.imageAlt && (
+    <meta name="twitter:image:alt" content={seo.imageAlt} />
+  )
+}

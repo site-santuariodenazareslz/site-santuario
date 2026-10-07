@@ -1,14 +1,21 @@
 {
-  "slug": "reinado-em-nazare-2026",
+  "slug": "reinado-em-nazare-2026-celebra-a-infancia-com-cores-alegria-e-fe",
   "createdAt": "2026-10-05T15:09:12.392Z",
   "page": {
-    "title": "Reinado em Nazare 2026",
+    "title": "Reinado em Nazaré 2026 celebra a infância com cores, alegria e fé",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
+        "type": "seo",
+        "description": "Reinado em Nazaré 2026 reúne crianças em uma noite de cores, alegria e fé, com desfile e celebração dos novos Príncipe, Princesa, Rei e Rainha de Nazaré.",
+        "metaDescription": "Reinado em Nazaré 2026 celebra a infância com desfile, criatividade, alegria e fé durante a programação do Círio das Crianças.",
+        "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXdafWPH-DWwwRH7JqvK_iPRpv0lvHzTnJn09Oi2u5UQE9Oq3hG1a7tLYQ3doZCnXUv9D4sAJOYaTLqtA2G4k8RsO9Tm1jeBSdPIWDRZWyDqhTDf_WcD4y5TbhARFV2lbUaZ9K-la1yAtHoKs20-ddGeDSgBzqXgMd3Z6a77F5s6O3JGnQ43=s2048?key=lQFU8MqJ5xQBgOrwuJ9wiA",
+        "imageAlt": "Crianças vencedoras do Reinado em Nazaré 2026 vestidas para o desfile do Círio das Crianças."
+      },
+      {
         "type": "news-banner",
         "image": "/images/8f60169147e20983.webp",
-        "imageAlt": "",
+        "imageAlt": "Crianças vencedoras do Reinado em Nazaré 2026 vestidas para o desfile do Círio das Crianças.",
         "category": "Reinado em Nazaré"
       },
       {

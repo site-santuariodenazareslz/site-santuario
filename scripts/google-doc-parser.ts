@@ -462,6 +462,18 @@ function blockFromRows(rows: ParsedCell[][]): Block | null {
     };
   }
 
+  if (blockName === "seo") {
+    const [descriptionCell, metaDescriptionCell, imageCell, imageAltCell] =
+      body[0] ?? [];
+    return {
+      type: "seo",
+      description: descriptionCell?.text || undefined,
+      metaDescription: metaDescriptionCell?.text || undefined,
+      image: imageCell?.image ?? imageCell?.text ?? undefined,
+      imageAlt: imageAltCell?.text || undefined,
+    };
+  }
+
   if (blockName === "card-event" || blockName === "event-card") {
     if (body.length > 1) {
       throw new Error(

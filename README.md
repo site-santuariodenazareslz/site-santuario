@@ -47,6 +47,22 @@ Abra `http://localhost:4321`. O conteúdo é atualizado ao executar `npm run syn
 npm run build
 ```
 
+## SEO por página
+
+Cada página pode incluir uma tabela `seo` no Google Docs. Ela não aparece no site e define os metadados usados pelo compartilhamento e pelos buscadores:
+
+| seo                           |                           |                    |                             |     |
+| ----------------------------- | ------------------------- | ------------------ | --------------------------- | --- |
+| descrição de compartilhamento | meta description          | imagem             | texto alternativo da imagem |
+| Programação do Círio 2026     | Programação do Círio 2026 | Cole a imagem aqui | Círio de Nazaré             |
+
+- `descrição de compartilhamento`: usada pelo Open Graph e pelo Twitter.
+- `meta description`: usada na tag HTML `description` para SEO.
+- `imagem`: imagem usada em Open Graph e Twitter.
+- `texto alternativo da imagem`: descrição acessível da imagem.
+
+Quando uma imagem não for informada, o sincronizador procura o primeiro bloco `news-banner` da página. Quando `meta description` não for informado, a página usa `description`.
+
 ## Contrato editorial para o Google Docs
 
 Cada tabela representa um block. A primeira linha contém apenas seu identificador; as demais linhas são os dados.

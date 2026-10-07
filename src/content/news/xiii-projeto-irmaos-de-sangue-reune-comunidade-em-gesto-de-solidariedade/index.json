@@ -1,14 +1,21 @@
 {
-  "slug": "xiii-doacao-de-sangue",
+  "slug": "xiii-projeto-irmaos-de-sangue-reune-comunidade-em-gesto-de-solidariedade",
   "createdAt": "2026-10-05T15:00:20.499Z",
   "page": {
-    "title": "XIII Doação de Sangue",
+    "title": "XIII Projeto Irmãos de Sangue reúne comunidade em gesto de solidariedade",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
+        "type": "seo",
+        "description": "XIII Projeto Irmãos de Sangue reúne doadores e voluntários em um gesto de solidariedade e cuidado com a vida durante a programação do Círio de Nazaré.",
+        "metaDescription": "XIII Projeto Irmãos de Sangue reúne a comunidade do Santuário Nossa Senhora de Nazaré em uma ação de solidariedade, com 133 bolsas de sangue coletadas.",
+        "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXdpglwlNb4sip-UwJ3gEym6Y3fkoMxp4cOtQ9SPRxNRViD-oV9LoFX-TUMDmaRCRJB86kz6sKgb1kd5o6yiR9mCiVEOolqZv-4Ds2vi7_Ow6hE1aZyphXirCwxVDVTAQkB3fLb3AB7p5lRFLsqMNnJSCwlEm9eGhF5QG9OSYa0Ohc2x1rpL=s2048?key=ysmsiDMdA7XHIDDNB9vtUg",
+        "imageAlt": "Voluntários e participantes do XIII Projeto Irmãos de Sangue reunidos durante a ação de doação de sangue."
+      },
+      {
         "type": "news-banner",
         "image": "/images/2eaa6315dccf0449.webp",
-        "imageAlt": "",
+        "imageAlt": "Voluntários e participantes do XIII Projeto Irmãos de Sangue reunidos durante a ação de doação de sangue.",
         "category": "Doação de Sangue"
       },
       {

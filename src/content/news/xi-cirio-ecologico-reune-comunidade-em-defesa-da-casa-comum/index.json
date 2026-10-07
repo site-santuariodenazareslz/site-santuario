@@ -1,14 +1,21 @@
 {
-  "slug": "xi-cirio-ecologico",
+  "slug": "xi-cirio-ecologico-reune-comunidade-em-defesa-da-casa-comum",
   "createdAt": "2026-10-05T14:35:57.440Z",
   "page": {
-    "title": "XI Círio Ecológico",
+    "title": "XI Círio Ecológico reúne comunidade em defesa da Casa Comum",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
+        "type": "seo",
+        "description": "XI Círio Ecológico reúne comunidade do Santuário Nossa Senhora de Nazaré em uma manhã de fé, educação ambiental, adoção de animais e práticas sustentáveis.",
+        "metaDescription": "Confira como foi o XI Círio Ecológico do Santuário Nossa Senhora de Nazaré, com bênção dos animais, oficinas, adoção e ações de conscientização ambiental.",
+        "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXdwJ2f08o76Pc4KbkNTwJSXelDavhec-WYE3HbYKPARkU7Ak7jjOklOmxklSRYaxjft51avGe0wkJUDRxo8g7dKpnNeGC5iuZBF0utnpOkC6Ipw78Fk_QZFPceIMkGljE9_z8xC6trUe24lKnCzkBV5c-Glv0_u9bFlD6MRwoAeI9BHfFYB=s2048?key=mtcqs-Uol9Cr25JptVY6Dw",
+        "imageAlt": "XI Círio Ecológico do Santuário Nossa Senhora de Nazaré reúne comunidade em ações de fé e conscientização ambiental"
+      },
+      {
         "type": "news-banner",
         "image": "/images/a1cc83a9ac177e5f.webp",
-        "imageAlt": "",
+        "imageAlt": "XI Círio Ecológico do Santuário Nossa Senhora de Nazaré reúne comunidade em ações de fé e conscientização ambiental",
         "category": "Círio Ecológico"
       },
       {

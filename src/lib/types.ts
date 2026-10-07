@@ -199,6 +199,14 @@ export type TeaserImageBlock = {
   imagePosition?: "left" | "right";
 };
 
+export type SeoBlock = {
+  type: "seo";
+  description?: string;
+  metaDescription?: string;
+  image?: string;
+  imageAlt?: string;
+};
+
 export type SponsorEntry = {
   category: string;
   image: string;
@@ -232,6 +240,7 @@ export type Block =
   | NewsTextBlock
   | NewsImageBlock
   | TeaserImageBlock
+  | SeoBlock
   | SponsorsBlock
   | NewsListingBlock;
 
@@ -247,6 +256,13 @@ export type NewsListingBlock = {
   allLabel?: string;
   allHref?: string;
   currentPage?: number;
+};
+
+export type PageSeo = {
+  description?: string;
+  metaDescription?: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 export type Page = {

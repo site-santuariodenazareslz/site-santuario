@@ -1,14 +1,21 @@
 {
-  "slug": "aniversario-diaconal",
+  "slug": "santuario-celebra-oito-anos-de-ministerio-diaconal-de-paulo-bartolomeu-e-francisco",
   "createdAt": "2026-10-05T15:06:28.493Z",
   "page": {
-    "title": "Aniversario Diaconal",
+    "title": "Santuário celebra oito anos de ministério diaconal de Paulo, Bartolomeu e Francisco",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
+        "type": "seo",
+        "description": "Celebre conosco o aniversário diaconal no Santuário Nossa Senhora de Nazaré, em São Luís-MA. Confira os detalhes desta celebração de fé e gratidão.",
+        "metaDescription": "O Santuário Nossa Senhora de Nazaré celebra mais um aniversário diaconal. Confira os detalhes deste momento especial de fé, gratidão e comunhão com a comunidade.",
+        "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXfFyYoC2A4tt4xms09G7DXbjJXcWHsIUdm4X_iOotUsB0ct7iUrBA9ozkV8YfmqlBx7U_2G_nKwY7OHMyTbl50ghI98iaBmbISBhAUwH68drFjGy1SHPcRVdCiZz5yfMs9DRNuIpqOMiWAcHXFfqjBp-sUQVY5-Dyr9-FXUsZdSNTLxFrnl=s2048?key=aQf8mGGOE6MQbTybdK3shw",
+        "imageAlt": "Oitavo Aniversário de Ordenação Diaconal"
+      },
+      {
         "type": "news-banner",
         "image": "/images/aa6d5a1612ef554d.webp",
-        "imageAlt": "",
+        "imageAlt": "Oitavo Aniversário de Ordenação Diaconal",
         "category": "Aniversário Diaconal"
       },
       {

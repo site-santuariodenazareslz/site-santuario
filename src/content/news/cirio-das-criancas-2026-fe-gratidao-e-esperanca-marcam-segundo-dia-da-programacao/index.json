@@ -1,15 +1,22 @@
 {
-  "slug": "manto-do-cirio-das-criancas-2026",
+  "slug": "cirio-das-criancas-2026-fe-gratidao-e-esperanca-marcam-segundo-dia-da-programacao",
   "createdAt": "2026-10-05T15:17:47.670Z",
   "page": {
-    "title": "Manto do Círio das Crianças 2026",
+    "title": "Círio das Crianças 2026: fé, gratidão e esperança marcam segundo dia da programação",
     "description": "Página gerada automaticamente a partir de um Google Doc.",
     "blocks": [
       {
+        "type": "seo",
+        "description": "O segundo dia do Círio das Crianças 2026 foi marcado por fé, gratidão e esperança, com a apresentação do Manto do Círio e uma programação especial.",
+        "metaDescription": "Círio das Crianças 2026 celebra fé e esperança com apresentação do Manto e programação especial em homenagem a Nossa Senhora de Nazaré.",
+        "image": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXcDZRFbmQb6coW4WAscK06Z5PVFQ4YUFEKHCrmgGrdN_rtNveSdmBhW2m7uZubc_5WSupTeSZ6j_Tyv5l4g_9rJq-DFGrTufzdv6Eg89XTiPXHgfFs6eAHxvloIQoMwMzzhqN8cxo9Nl-w3yGj04fSLZRJO4AUQvbwPoRdBQ0HA1YuYKM45=s2048?key=S2yDTZ0oqSPunByPiij6dQ",
+        "imageAlt": "Padres apresentam o Manto do Círio das Crianças 2026 durante celebração no Santuário Nossa Senhora de Nazaré."
+      },
+      {
         "type": "news-banner",
         "image": "/images/5f8755e494fae4f1.webp",
-        "imageAlt": "",
-        "category": "Manto círio das Crianças"
+        "imageAlt": "Padres apresentam o Manto do Círio das Crianças 2026 durante celebração no Santuário Nossa Senhora de Nazaré.",
+        "category": "Círio das Crianças"
       },
       {
         "type": "news-title",

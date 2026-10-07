@@ -4,6 +4,7 @@ import Footer from "./blocks/Footer/Footer.astro";
 import BlockRenderer from "./BlockRenderer.astro";
 import BlockSpacer from "./BlockSpacer.astro";
 import NewsNavigation from "./blocks/NewsNavigation/NewsNavigation.astro";
+import SeoMeta from "./SeoMeta.astro";
 import headerFragment from "../content/fragments/header/index.json";
 import footerFragment from "../content/fragments/footer/index.json";
 import type { NewsSummary } from "../lib/news";
@@ -30,6 +31,7 @@ const contentBlocks = page.blocks.filter(
   (block) =>
     block.type !== "header" &&
     block.type !== "footer" &&
+    block.type !== "seo" &&
     !(block.type === "fragment" && ["header", "footer"].includes(block.name)),
 );
 ---
@@ -39,7 +41,7 @@ const contentBlocks = page.blocks.filter(
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={page.description} />
+    <SeoMeta page={page} pathname={Astro.url.pathname} />
     <link
       rel="icon"
       type="image/webp"
