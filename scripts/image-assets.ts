@@ -4,11 +4,47 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import type { Page } from "../src/lib/types";
+import { isSafeUrl } from "../src/lib/urls";
 
 const imageDirectory = fileURLToPath(
   new URL("../public/images/", import.meta.url),
 );
-const imageUrlPattern = /^https?:\/\//i;
+const allowedMimeTypes = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
+const maxImageBytes = 10 * 1024 * 1024;
+const timeoutMs = 15_000;
+
+export function isSafeImageSource(value: string): boolean {
+  if (!isSafeUrl(value) || !value.startsWith("https://")) return false;
+  try {
+    const url = new URL(value);
+    return !url.username && !url.password && !url.pathname.includes("\n");
+  } catch {
+    return false;
+  }
+}
+
+export function isSafeImageResponse(
+  response: Pick<Response, "status" | "headers" | "arrayBuffer">,
+): boolean {
+  if (response.status !== 200) return false;
+
+  const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
+  if (!allowedMimeTypes.has(contentType.split(";", 1)[0]?.trim() ?? "")) {
+    return false;
+  }
+
+  const contentLength = Number(response.headers.get("content-length") ?? "0");
+  if (!Number.isFinite(contentLength) || contentLength > maxImageBytes) {
+    return false;
+  }
+
+  return true;
+}
 
 export async function prepareImageDirectory(): Promise<void> {
   await mkdir(imageDirectory, { recursive: true });
@@ -18,29 +54,59 @@ async function toWebp(
   source: string,
   getAccessToken?: () => Promise<string | null>,
 ): Promise<string> {
-  if (!imageUrlPattern.test(source)) return source;
+  if (!isSafeImageSource(source)) return source;
 
   const headers = new Headers();
   const token = await getAccessToken?.();
   if (token) headers.set("Authorization", `Bearer ${token}`);
 
-  const response = await fetch(source, { headers });
-  if (!response.ok) {
-    throw new Error(
-      `Não foi possível baixar a imagem ${source}: ${response.status} ${response.statusText}`,
-    );
-  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
-  const input = Buffer.from(await response.arrayBuffer());
-  const output = await sharp(input).webp({ quality: 85 }).toBuffer();
-  const filename = `${createHash("sha256").update(output).digest("hex").slice(0, 16)}.webp`;
-  const destination = join(imageDirectory, filename);
   try {
-    await access(destination);
-  } catch {
-    await writeFile(destination, output);
+    const response = await fetch(source, {
+      headers,
+      signal: controller.signal,
+      redirect: "follow",
+    });
+    if (!isSafeImageResponse(response)) {
+      throw new Error(
+        `A imagem ${source} não possui um tipo ou tamanho seguro para download.`,
+      );
+    }
+
+    const input = Buffer.from(await response.arrayBuffer());
+    if (input.length > maxImageBytes) {
+      throw new Error(`A imagem ${source} excedeu o tamanho máximo permitido.`);
+    }
+
+    const metadata = await sharp(input).metadata();
+    if (
+      !metadata.format ||
+      !["jpeg", "png", "webp", "gif"].includes(metadata.format)
+    ) {
+      throw new Error(
+        `A imagem ${source} não contém um formato de imagem válido.`,
+      );
+    }
+
+    const output = await sharp(input).webp({ quality: 85 }).toBuffer();
+    const filename = `${createHash("sha256").update(output).digest("hex").slice(0, 16)}.webp`;
+    const destination = join(imageDirectory, filename);
+    try {
+      await access(destination);
+    } catch {
+      await writeFile(destination, output);
+    }
+    return `/images/${filename}`;
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error(`Tempo limite excedido ao baixar a imagem ${source}.`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
-  return `/images/${filename}`;
 }
 
 export async function materializePageImages(

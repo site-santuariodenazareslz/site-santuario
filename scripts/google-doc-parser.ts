@@ -1,4 +1,5 @@
 import type { Block, Page } from "../src/lib/types";
+import { sanitizeHtml } from "./sanitization";
 
 export type GoogleDocument = {
   title?: string | null;
@@ -128,7 +129,12 @@ function cellFromContent(
       : paragraphHtml;
   }
   if (isInList) html += "</ul>";
-  return { text: clean(text), rawText: cleanMultiline(rawText), html, image };
+  return {
+    text: clean(text),
+    rawText: cleanMultiline(rawText),
+    html: sanitizeHtml(html),
+    image,
+  };
 }
 
 const cleanMultiline = (value = "") =>

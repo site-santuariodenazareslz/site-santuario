@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -25,7 +26,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.12.0
           cache: npm
 
       - name: Install dependencies
@@ -43,6 +44,9 @@ jobs:
           PUBLIC_GA_ID: ${{ vars.PUBLIC_GA_ID }}
         run: npm run build
 
+      - name: Verify build output
+        run: test -s dist/index.html && test -d dist/_astro
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -51,6 +55,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     environment:
       name: github-pages

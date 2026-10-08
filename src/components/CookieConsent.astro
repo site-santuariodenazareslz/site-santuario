@@ -73,27 +73,25 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
   };
 
   const consent = document.querySelector(".cookie-consent");
-  if (!consent) return;
+  const acceptButton = consent?.querySelector("[data-cookie-accept]");
+  const rejectButton = consent?.querySelector("[data-cookie-reject]");
 
-  const acceptButton = consent.querySelector("[data-cookie-accept]");
-  const rejectButton = consent.querySelector("[data-cookie-reject]");
+  if (consent && acceptButton && rejectButton) {
+    const setConsent = (accepted) => {
+      saveConsent(accepted);
+      consent.hidden = true;
 
-  if (!acceptButton || !rejectButton) return;
+      if (accepted) loadAnalytics();
+    };
 
-  const setConsent = (accepted) => {
-    saveConsent(accepted);
-    consent.hidden = true;
+    if (localStorage.getItem(storageKey) === "accepted") {
+      consent.hidden = true;
+      loadAnalytics();
+    } else if (localStorage.getItem(storageKey) === "rejected") {
+      consent.hidden = true;
+    }
 
-    if (accepted) loadAnalytics();
-  };
-
-  if (localStorage.getItem(storageKey) === "accepted") {
-    consent.hidden = true;
-    loadAnalytics();
-  } else if (localStorage.getItem(storageKey) === "rejected") {
-    consent.hidden = true;
+    acceptButton.addEventListener("click", () => setConsent(true));
+    rejectButton.addEventListener("click", () => setConsent(false));
   }
-
-  acceptButton.addEventListener("click", () => setConsent(true));
-  rejectButton.addEventListener("click", () => setConsent(false));
 </script>
