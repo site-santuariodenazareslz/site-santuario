@@ -6,9 +6,10 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
 
 {
   gaId && (
-    <aside
+    <div
       class="cookie-consent"
       role="dialog"
+      aria-modal="false"
       aria-labelledby="cookie-consent-title"
       aria-describedby="cookie-consent-description"
     >
@@ -39,7 +40,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
           </button>
         </div>
       </div>
-    </aside>
+    </div>
   )
 }
 
