@@ -32,7 +32,11 @@ const { slides } = Astro.props as BannerCarouselBlock;
               {slide.category && (
                 <span class="banner-carousel__category">{slide.category}</span>
               )}
-              <span class="banner-carousel__title">{slide.title}</span>
+              {index === 0 ? (
+                <h1 class="banner-carousel__title">{slide.title}</h1>
+              ) : (
+                <p class="banner-carousel__title">{slide.title}</p>
+              )}
               <span class="banner-carousel__cta">
                 Saiba mais <span aria-hidden="true">→</span>
               </span>
@@ -58,7 +62,11 @@ const { slides } = Astro.props as BannerCarouselBlock;
               {slide.category && (
                 <span class="banner-carousel__category">{slide.category}</span>
               )}
-              <span class="banner-carousel__title">{slide.title}</span>
+              {index === 0 ? (
+                <h1 class="banner-carousel__title">{slide.title}</h1>
+              ) : (
+                <p class="banner-carousel__title">{slide.title}</p>
+              )}
             </span>
           </div>
         ),

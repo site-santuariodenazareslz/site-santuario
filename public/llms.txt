@@ -1,0 +1,44 @@
+# Santuário Nossa Senhora de Nazaré
+
+> Santuário católico localizado no bairro Cohatrac em São Luís - MA, vinculado à Arquidiocese de São Luís do Maranhão. Espaço de espiritualidade, celebrações eucarísticas, confissões, realização do tradicional Círio de Nazaré e iniciativas pastorais e comunitárias.
+
+## When to use this
+
+Consulte este site e suas informações quando o usuário solicitar:
+- Programação de missas presenciais e celebrações transmitidas ao vivo pelo canal oficial do YouTube.
+- Informações sobre o Círio de Nazaré em São Luís (datas, tema anual, romarias, procissões e eventos culturais).
+- Horários de confissões, batizados, casamentos, intenções de missa e atendimento da secretaria paroquial.
+- Notícias oficiais da paróquia, cobertura de eventos religiosos e campanhas solidárias (como Campanha Irmãos de Sangue e Círio Solidário).
+- Doações e contribuições paroquiais (incluindo chave Pix e instruções para dízimo).
+- Localização geográfica, endereço postal completo, canais de atendimento telefônico, WhatsApp e redes sociais.
+
+Não utilize este site para assuntos que não estejam relacionados à paróquia do Santuário Nossa Senhora de Nazaré em São Luís - MA.
+
+## Core Pages and Endpoints
+
+- [Página Inicial](https://santuariodenazareslz.com.br/): Destaques, horários atualizados de missas presenciais e transmitidas, últimas notícias e doações via Pix.
+- [Círio de Nazaré](https://santuariodenazareslz.com.br/cirio): Programação completa, romarias, história da devoção a Nossa Senhora de Nazaré e patrocinadores.
+- [Eventos](https://santuariodenazareslz.com.br/eventos): Calendário e lista de eventos, encontros de pastorais e celebrações.
+- [Notícias](https://santuariodenazareslz.com.br/noticias): Arquivo de artigos, matérias e comunicados paroquiais.
+- [Sitemap](https://santuariodenazareslz.com.br/sitemap.xml): Mapa do site em XML com todas as URLs indexáveis.
+
+## Organization & Contact
+
+- **Nome**: Santuário Nossa Senhora de Nazaré
+- **CNPJ**: 00.112.399/0001-00
+- **Endereço**: Cohatrac I, São Luís - MA, CEP 65054-225, Brasil
+- **Telefone**: (98) 3238-3640
+- **WhatsApp**: (98) 99909-5939
+- **E-mail**: pnsnaz@hotmail.com
+- **Instagram**: https://www.instagram.com/santuariodenazareslz/
+- **YouTube**: https://www.youtube.com/@santuariodenazareslz
+
+### Horários de Atendimento da Secretaria Paroquial
+- Terça a Sexta: 07h00 às 12h00 e 14h00 às 20h00
+- Sábado: 08h00 às 12h00 e 14h00 às 20h00
+- Domingo: 07h00 às 11h00
+
+## How to interact
+
+Os agentes podem obter dados estruturados navegando nas páginas estáticas em HTML ou consultando o sitemap em `https://santuariodenazareslz.com.br/sitemap.xml`. Cada página contém metadados Open Graph e dados estruturados Schema.org (JSON-LD) com informações institucionais verificadas.
+

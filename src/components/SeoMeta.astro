@@ -1,5 +1,5 @@
 ---
-import { resolvePageSeo } from "../lib/seo";
+import { buildJsonLdSchema, resolvePageSeo } from "../lib/seo";
 import type { Page } from "../lib/types";
 import { siteUrl } from "../lib/urls";
 
@@ -11,16 +11,16 @@ interface Props {
 const { page, pathname } = Astro.props as Props;
 const seo = resolvePageSeo(page);
 const siteName = "Santuário Nossa Senhora de Nazaré";
-const pageUrl = new URL(
-  siteUrl(pathname),
-  Astro.site ?? "https://santuariodenazareslz.com.br",
-);
-const imageUrl = seo.image
-  ? new URL(
-      siteUrl(seo.image),
-      Astro.site ?? "https://santuariodenazareslz.com.br",
-    )
-  : undefined;
+const siteOrigin = Astro.site
+  ? Astro.site.origin
+  : "https://santuariodenazareslz.com.br";
+const pageUrl = new URL(siteUrl(pathname), siteOrigin);
+const imageUrl = seo.image ? new URL(siteUrl(seo.image), siteOrigin) : undefined;
+const jsonLd = buildJsonLdSchema({
+  siteOrigin,
+  pageUrl: pageUrl.toString(),
+  seo,
+});
 ---
 
 <meta name="description" content={seo.metaDescription} />
@@ -48,3 +48,6 @@ const imageUrl = seo.image
     <meta name="twitter:image:alt" content={seo.imageAlt} />
   )
 }
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+

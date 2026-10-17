@@ -72,6 +72,7 @@
     text-transform: uppercase;
   }
   &__title {
+    margin: 0;
     max-width: 700px;
     font-family: $font-serif;
     font-size: clamp(1.4rem, 3vw, 2.35rem);

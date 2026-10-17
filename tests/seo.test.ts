@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { parseGoogleDocument } from "../scripts/google-doc-parser";
-import { resolvePageSeo } from "../src/lib/seo";
+import { buildJsonLdSchema, resolvePageSeo } from "../src/lib/seo";
 import type { Page } from "../src/lib/types";
 
 const page = (overrides: Partial<Page> = {}): Page => ({
@@ -150,4 +150,56 @@ test("usa o banner da página quando o block SEO não configura a imagem", () =>
   assert.equal(seo.metaDescription, "Descrição da página");
   assert.equal(seo.image, "/images/noticia.webp");
   assert.equal(seo.imageAlt, "Imagem da notícia");
+});
+
+test("gera dados estruturados JSON-LD completos com Organization, CatholicChurch e contactPoint", () => {
+  const seo = resolvePageSeo(page());
+  const jsonLd = buildJsonLdSchema({
+    siteOrigin: "https://santuariodenazareslz.com.br",
+    pageUrl: "https://santuariodenazareslz.com.br/",
+    seo,
+  });
+
+  assert.equal(jsonLd["@context"], "https://schema.org");
+  assert.ok(Array.isArray(jsonLd["@graph"]));
+
+  const org = jsonLd["@graph"].find(
+    (item: any) =>
+      Array.isArray(item["@type"]) && item["@type"].includes("Organization"),
+  ) as any;
+
+  assert.ok(org, "Entidade Organization deve existir no schema");
+  assert.equal(org.name, "Santuário Nossa Senhora de Nazaré");
+  assert.equal(org.taxID, "00.112.399/0001-00");
+  assert.equal(org.telephone, "+55-98-3238-3640");
+  assert.equal(org.email, "pnsnaz@hotmail.com");
+
+  assert.equal(org.address["@type"], "PostalAddress");
+  assert.equal(org.address.addressLocality, "São Luís");
+  assert.equal(org.address.addressRegion, "MA");
+  assert.equal(org.address.postalCode, "65054-225");
+  assert.equal(org.address.addressCountry, "BR");
+
+  assert.ok(Array.isArray(org.contactPoint));
+  assert.ok(org.contactPoint.length >= 2);
+  assert.equal(org.contactPoint[0].contactType, "customer service");
+  assert.equal(org.contactPoint[0].email, "pnsnaz@hotmail.com");
+
+  assert.ok(Array.isArray(org.sameAs));
+  assert.ok(
+    org.sameAs.includes("https://www.instagram.com/santuariodenazareslz/"),
+  );
+  assert.ok(
+    org.sameAs.includes("https://www.youtube.com/@santuariodenazareslz"),
+  );
+
+  const website = jsonLd["@graph"].find(
+    (item: any) => item["@type"] === "WebSite",
+  );
+  assert.ok(website, "Entidade WebSite deve existir");
+
+  const webPage = jsonLd["@graph"].find(
+    (item: any) => item["@type"] === "WebPage",
+  );
+  assert.ok(webPage, "Entidade WebPage deve existir");
 });
