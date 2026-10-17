@@ -21,7 +21,12 @@ const { slides } = Astro.props as BannerCarouselBlock;
             tabindex={index === 0 ? 0 : -1}
             data-carousel-slide
           >
-            <img src={siteUrl(slide.image)} alt={slide.imageAlt} />
+            <img
+              src={siteUrl(slide.image)}
+              alt={slide.imageAlt}
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchpriority={index === 0 ? "high" : undefined}
+            />
             <span class="banner-carousel__overlay" aria-hidden="true" />
             <span class="banner-carousel__content">
               {slide.category && (
@@ -42,7 +47,12 @@ const { slides } = Astro.props as BannerCarouselBlock;
             aria-hidden={index === 0 ? "false" : "true"}
             data-carousel-slide
           >
-            <img src={siteUrl(slide.image)} alt={slide.imageAlt} />
+            <img
+              src={siteUrl(slide.image)}
+              alt={slide.imageAlt}
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchpriority={index === 0 ? "high" : undefined}
+            />
             <span class="banner-carousel__overlay" aria-hidden="true" />
             <span class="banner-carousel__content">
               {slide.category && (
